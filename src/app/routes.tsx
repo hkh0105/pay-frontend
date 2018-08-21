@@ -13,14 +13,14 @@ export const Routes: React.SFC = () => {
     <ConnectedRouter history={history}>
       <ConnectedScrollToTop>
         <Switch>
-          <Route path="/" render={() => <ConnectedPrivateRoute component={Settings} />} />
-          <Route path="/payments/:reservation_id" render={() => <ConnectedPrivateRoute component={Payment} />} />
-          <Route path="/settings" render={() => <ConnectedPrivateRoute component={Settings} />} />
-          <Route path="/settings/cards/add" render={() => <ConnectedPrivateRoute component={AddCard} />} />
-          <Route path="/settings/pin/register" render={() => <ConnectedPrivateRoute component={SetPin} />} />
-          <Route path="/setings/onetouch" render={() => <ConnectedPrivateRoute component={SetOnetouch} />} />
-          <Route path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
-          <Route path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
+          <Route exact={true} path="/" render={() => <ConnectedPrivateRoute component={Settings} />} />
+          <Route exact={true} path="/payments/:reservation_id" render={() => <ConnectedPrivateRoute component={Payment} />} />
+          <Route exact={true} path="/settings" render={() => <ConnectedPrivateRoute component={Settings} />} />
+          <Route exact={true} path="/settings/cards/add" render={() => <ConnectedPrivateRoute component={AddCard} />} />
+          <Route exact={true} path="/settings/pin/register" render={() => <ConnectedPrivateRoute component={SetPin} />} />
+          <Route exact={true} path="/setings/onetouch" render={() => <ConnectedPrivateRoute component={SetOnetouch} />} />
+          <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
+          <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
           <Route render={() => <Error404 />} />
         </Switch>
       </ConnectedScrollToTop>

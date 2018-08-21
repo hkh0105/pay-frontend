@@ -37,7 +37,7 @@ module.exports = {
     contentBase: [
       outputDir,
       path.join(baseDir, 'public'), 
-      path.join(baseDir, 'src'), 
+      path.join(baseDir, 'src'), // to support sourcemap
     ],
     proxy: {
       '/api': 'http://localhost:3030', // TODO: change to backend local host
