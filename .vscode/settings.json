@@ -1,0 +1,12 @@
+{
+  "tslint.configFile": "tslint.js",
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
+  "javascript.suggestionActions.enabled": false,
+  "search.exclude": {
+    "**/node_modules": true,
+    "dist/**": true
+  }
+}
