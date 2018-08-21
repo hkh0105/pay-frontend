@@ -36,7 +36,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         include: path.join(srcDir, 'app'),
-        use: ['babel-loader', 'awesome-typescript-loader'],
+        use: ['babel-loader?cacheDirectory', 'awesome-typescript-loader'],
       },
       {
         test: /\.hbs$/,

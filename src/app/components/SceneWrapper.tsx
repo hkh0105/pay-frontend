@@ -1,3 +1,4 @@
+import { Header } from 'app/components/Header';
 import { breakpoints, full, half } from 'app/styles';
 import { css } from 'emotion';
 import * as React from 'react';
@@ -6,6 +7,9 @@ export const SceneWrapper: React.SFC = ({ children }) => (
   <>
     <div className={sceneBg} />
     <main className={sceneMain}>
+      <Header>
+        리디페이 아이콘
+      </Header>
       {children}
     </main>
   </>

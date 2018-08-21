@@ -8,7 +8,7 @@ export const Error404: React.SFC = () => {
   return (
     <main className="SceneWrapper">
       <Helmet>
-        <title>404 Not Found - 리디셀렉트</title>
+        <title>404 Not Found - 리디페이</title>
       </Helmet>
       <div className="ErrorPage">
         <h2 className="ErrorPage_Title">404 Not Found</h2>
@@ -35,9 +35,9 @@ export const Error404: React.SFC = () => {
               color="blue"
               size="large"
               wrapperElement="a"
-              wrapperProps={{ href: '/home' }}
+              wrapperProps={{ href: '/' }}
             >
-              홈으로 돌아가기
+              리디페이 설정 보기
             </Button>
           </li>
         </ul>
