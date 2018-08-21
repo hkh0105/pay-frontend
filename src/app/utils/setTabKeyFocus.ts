@@ -20,7 +20,7 @@ function removeFocusOnMouseDown(element: HTMLElement) {
   });
 }
 
-export default function setTabKeyFocus() {
+export function setTabKeyFocus() {
   window.addEventListener('DOMContentLoaded', () => {
     const body = document.querySelector('body');
     if (!body) {
