@@ -8,26 +8,29 @@ const {
   baseDir,
   outputDir, 
 } = require('./paths');
-const { htmlWebpackPluginFiles } = require('./helpers');
 
 module.exports = {
   mode: 'development',
+  output: {
+    // webpack dev server doesn't allow to use `contenthash`
+    filename: '[name].[hash].min.js',
+    chunkFilename: '[name].[hash].min.js',
+  },
   devtool: 'eval-cheap-module-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      API_SEVER_URL: '"https://pay.ridi.io/api"',
+      API_SEVER_URL: '"https://pay.local.ridi.io/api"',
       BOOKS_SERVER_URL: '"https://dev.ridi.io"',
     }),
     new HtmlWebpackPlugin({
       template: 'template/index.hbs',
       cache: true,
-      files: htmlWebpackPluginFiles,
     }),
     new webpack.EvalSourceMapDevToolPlugin({
       test: /\.(jsx?|tsx?)($|\?)/i,
       module: true,
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     port: 9000,

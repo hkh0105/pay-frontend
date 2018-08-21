@@ -2,6 +2,7 @@
 const path = require('path');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ChunkRenamePlugin = require('webpack-chunk-rename-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const {  
   baseDir, 
@@ -17,9 +18,6 @@ module.exports = {
   },
   output: {
     path: outputDir,
-    filename: '[name].[hash].min.js',
-    chunkFilename: '[name].[chunkhash].min.js',
-    hashDigestLength: 8,
   },
   module: {
     rules: [
@@ -45,6 +43,13 @@ module.exports = {
         include: path.join(srcDir, 'template'),
         loader: 'handlebars-loader',
       },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ]
+      }
     ],
   },
   resolve: {
@@ -63,13 +68,13 @@ module.exports = {
       name: 'manifest',
     },
     splitChunks: {
-      chunks: 'all',
       cacheGroups: {
-        vendors: {
-          name: 'vendors',
+        vendors: false,
+        common: {
+          name: 'common',
           chunks: 'all',
           test (chunk) {
-            return chunk.context && chunk.context.includes('node_modules') && !(/core-js/).test(chunk.context);
+            return chunk.context && chunk.context.includes('node_modules') && !(/core-js/).test(chunk.identifier());
           },
         },
       },
@@ -79,7 +84,10 @@ module.exports = {
     new CheckerPlugin(),
     new ChunkRenamePlugin({
       initialChunksWithEntry: true,
-      vendors: '[name].min.js',
+      common: '[name].[chunkhash].min.js',
+    }),
+    new MiniCssExtractPlugin({
+      chunkFilename: 'styles.[chunkhash].css',
     }),
   ],
   performance: {

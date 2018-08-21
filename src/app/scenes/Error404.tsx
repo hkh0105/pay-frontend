@@ -1,7 +1,8 @@
+import { css } from 'emotion';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
-// import { Button } from '@ridi/rsg/components/dist/button';
+import { Button } from '@ridi/rsg/components/dist/button';
 
 export const Error404: React.SFC = () => {
   return (
@@ -18,7 +19,7 @@ export const Error404: React.SFC = () => {
         </p>
         <ul className="ErrorPage_ButtonList">
           <li className="ErrorPage_ButtonList_Item">
-            {/* <Button
+            <Button
               className="ErrorPage_Button"
               color="gray"
               size="large"
@@ -26,10 +27,10 @@ export const Error404: React.SFC = () => {
               onClick={() => window.history.back()}
             >
               이전 페이지
-            </Button> */}
+            </Button>
           </li>
           <li className="ErrorPage_ButtonList_Item">
-            {/* <Button
+            <Button
               className="ErrorPage_Button"
               color="blue"
               size="large"
@@ -37,7 +38,7 @@ export const Error404: React.SFC = () => {
               wrapperProps={{ href: '/home' }}
             >
               홈으로 돌아가기
-            </Button> */}
+            </Button>
           </li>
         </ul>
       </div>
