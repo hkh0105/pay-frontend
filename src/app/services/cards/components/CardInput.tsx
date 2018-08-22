@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { FocusMovableInput, FocusMovableInputProps } from 'app/components';
 import { numberOnly, NumberOnlyProps } from 'app/hocs';
+import { innerInput, innerInputObscured, innerInputPlaceholder } from 'app/services/cards/components/CardForm.styles';
 
 export type BaseInputProps =
   FocusMovableInputProps &
@@ -24,12 +25,12 @@ const BaseInput: React.SFC<BaseInputProps> = ({
   <FocusMovableInput
     refObject={refObject}
     maxLength={maxLength}
-    className={classNames([
-      'RegisterCreditCard_InnerInput',
-      { 'RegisterCreditCard_InnerInput-obscured': isObscured },
-      { 'RegisterCreditCard_InnerInput-empty': value.length === 0 },
+    className={classNames(
+      innerInput,
+      { [innerInputObscured]: isObscured },
+      { [innerInputPlaceholder]: value.length === 0 },
       className,
-    ])}
+    )}
     autoCorrect="off"
     value={value}
     onChange={onChange}

@@ -1,7 +1,7 @@
 import { resetInputFocus } from 'app/styles';
 import { css } from 'emotion';
 
-const focusFree = css({
+export const focusFree = css({
   '*': resetInputFocus
 });
 

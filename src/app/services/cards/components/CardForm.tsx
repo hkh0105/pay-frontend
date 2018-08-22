@@ -18,11 +18,14 @@ import {
   initialCardFormState,
   initialCardInputRefs,
 } from 'app/services/cards/components';
+import { agreeToTermsCheckbox, cardInputBox, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { a11y } from 'app/styles';
 import {
   cleanUpCardNumber,
   getCardTypeByNumber,
   prettifyCardNumber,
 } from 'app/utils';
+import { cx } from 'emotion';
 
 const isTouchDevice = detectIt.hasTouch;
 
@@ -161,9 +164,9 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
         id="RegisterCreditCard_Form"
         className="RegisterCreditCard_Form"
       >
-        <div className="RegisterCreditCard_InputGroup">
-          <div className="RegisterCreditCard_InputBox RegisterCreditCard_CardNumber">
-            <label htmlFor={cardNumberInputKey.cardnumber} className="RegisterCreditCard_Label">
+        <div className={cardInputGroup}>
+          <div className={cardInputBox60}>
+            <label htmlFor={cardNumberInputKey.cardnumber} className={cardInputBoxLabel}>
               카드 번호
             </label>
             {this.renderCardInput({
@@ -176,36 +179,36 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
                 onKeyDown: preventDefaultOnSpaceKeyEvent,
               },
             })}
-            <div className="RegisterCreditCard_InputBox_Border-interactive" />
+            <div className={cardInputBoxBorderInteractive} />
           </div>
-          <div className="RegisterCreditCard_InputBox_HorizontalGroup">
+          <div className={cardInputBoxInlineGroup}>
             <div
               id="ccexp"
-              className="RegisterCreditCard_InputBox RegisterCreditCard_InputBox-inline RegisterCreditCard_ExpDate"
+              className={cardInputBoxInline}
             >
-              <p className="RegisterCreditCard_Label">유효 기간</p>
+              <p className={cardInputBoxLabel}>유효 기간</p>
               {this.renderCardInput({
                 currentInputKey: cardNumberInputKey.ccmonth,
                 prevInputKey: cardNumberInputKey.cardnumber,
                 nextInputKey: cardNumberInputKey.ccyear,
                 placeholder: 'MM',
-                className: 'RegisterCreditCard_InnerInput-just',
+                className: innerInputJust,
               })}
-              <label htmlFor={cardNumberInputKey.ccmonth} className="a11y">
+              <label htmlFor={cardNumberInputKey.ccmonth} className={a11y}>
                 만료 월
               </label>
-              <span className="RegisterCreditCard_ExpDate_Delimiter">/</span>
+              <span className={expDateDelimiter}>/</span>
               {this.renderCardInput({
                 currentInputKey: cardNumberInputKey.ccyear,
                 prevInputKey: cardNumberInputKey.ccmonth,
                 nextInputKey: cardNumberInputKey.password,
                 placeholder: 'YY',
-                className: 'RegisterCreditCard_InnerInput-just',
+                className: innerInputJust,
               })}
-              <label htmlFor={cardNumberInputKey.ccyear} className="a11y">
+              <label htmlFor={cardNumberInputKey.ccyear} className={a11y}>
                 만료 연도
               </label>
-              <div className="RegisterCreditCard_InputBox_Border-interactive" />
+              <div className={cardInputBoxBorderInteractive} />
             </div>
             {/*
               [name="new-password"] for preventing wrong autofill in password field
@@ -214,8 +217,8 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
               referenced from: https://stackoverflow.com/questions/47775041/disable-autofill-in-chrome-63
             */}
             <input style={{ display: 'none' }}/>
-            <div className="RegisterCreditCard_InputBox RegisterCreditCard_InputBox-inline RegisterCreditCard_Password">
-              <label htmlFor={cardNumberInputKey.password} className="RegisterCreditCard_Label">
+            <div className={cardInputBoxInline}>
+              <label htmlFor={cardNumberInputKey.password} className={cardInputBoxLabel}>
                 카드 비밀번호
               </label>
               {this.renderCardInput({
@@ -232,29 +235,29 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
                   role: 'presentation',
                 },
               })}
-              <div className="RegisterCreditCard_InputBox_Border-interactive" />
+              <div className={cardInputBoxBorderInteractive} />
             </div>
           </div>
-          <div className="RegisterCreditCard_InputBox RegisterCreditCard_BirthDate">
-            <label htmlFor={cardNumberInputKey.birthdate} className="RegisterCreditCard_Label">생년월일</label>
+          <div className={cardInputBox60}>
+            <label htmlFor={cardNumberInputKey.birthdate} className={cardInputBoxLabel}>생년월일</label>
             {this.renderCardInput({
               currentInputKey: cardNumberInputKey.birthdate,
               prevInputKey: cardNumberInputKey.password,
               placeholder: '6자리 입력 (예: 840331)',
             })}
-            <div className="RegisterCreditCard_InputBox_Border-interactive" />
+            <div className={cardInputBoxBorderInteractive} />
           </div>
         </div>
-        <div className="RegisterCreditCard_InputGroup">
-          <div className="RegisterCreditCard_InputBox RegisterCreditCard_AgreeToTerms">
+        <div className={cardInputGroup}>
+          <div className={cardInputBoxAgreeToTerms}>
             <CheckBox
-              className="RegisterCreditCard_AgreeToTerms_Checkbox"
+              className={agreeToTermsCheckbox}
               checked={!!checkboxInputs[cardCheckboxInputKey.agreeToTerms].checked}
               onChange={this.getHandleChangeCheckbox(cardCheckboxInputKey.agreeToTerms)}
             >
               이용약관 동의
             </CheckBox>
-            <div className="RegisterCreditCard_InputBox_Border" />
+            <div className={cardInputBoxBorder} />
             <Link className="RegisterCreditCard_TermsLink" to="/register/terms">
               약관 보기
             </Link>

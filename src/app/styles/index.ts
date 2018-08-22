@@ -5,12 +5,14 @@ import 'normalize.css/normalize.css';
 import '@ridi/rsg/stylesheets/dist/rui-no-reset.css';
 
 export const defaultFontFamily = 'Noto Sans KR, NotoSansKR, Sans-serif';
+export const museoSansFontFamily = 'museo_sans, Noto Sans KR, NotoSansKR, Sans-serif';
+export const securityFontFamily = 'text-security-disc';
 export const full = '100%';
 export const half = '50%';
 
 export const breakpoints = {
   desktopView: '@media (min-width: 481px)',
-  hover: '@media (hover: hover)'
+  mouseDevice: '@media (hover: hover)'
 };
 
 export const defaultFontStyle = {
