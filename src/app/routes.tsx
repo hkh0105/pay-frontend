@@ -18,7 +18,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path="/settings" render={() => <ConnectedPrivateRoute component={Settings} />} />
           <Route exact={true} path="/settings/cards/add" render={() => <ConnectedPrivateRoute component={AddCard} />} />
           <Route exact={true} path="/settings/pin/register" render={() => <ConnectedPrivateRoute component={SetPin} />} />
-          <Route exact={true} path="/setings/onetouch" render={() => <ConnectedPrivateRoute component={SetOnetouch} />} />
+          <Route exact={true} path="/settings/onetouch" render={() => <ConnectedPrivateRoute component={SetOnetouch} />} />
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
           <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
           <Route render={() => <Error404 />} />
