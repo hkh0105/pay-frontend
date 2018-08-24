@@ -19,51 +19,39 @@ const descriptionStyle = css({
   color: colors.bluegray_40,
   fontSize: '14px',
   textAlign: 'center',
+  lineHeight: '22px',
 });
 
 const formStyle = css({
-  display: 'flex',
   margin: '40px 40px 0',
 });
 
-const formInputStyle = css({
-  flex: '1',
-});
-
-const formSubmitButtonstyle = css({
-  width: '60px',
-  marginLeft: '6px',
+const buttonStyle = css({
+  display: 'block',
+  width: '200px',
+  margin: '0 auto',
+  fontSize: '16px',
+  '& + &': {
+    marginTop: '8px',
+  },
 })
 
 interface State {
-  password: string;
   isSubmitting: boolean;
 }
 
 export class SetOnetouch extends React.PureComponent<{}, State> {
   public state: State = {
-    password: '',
     isSubmitting: false,
   }
 
-  private isSubmitAvailable = () => this.state.password.length >= 6;
-
-  private handlePasswordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ password: e.target.value });
-  };
-
-  private handlePasswordInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!this.isSubmitAvailable() || e.key !== 'Enter') {
-      return;
-    }
+  private handleEnableButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
     this.submit();
-  };
+  }
 
-  private handleSubmitButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (!this.isSubmitAvailable()) {
-      return;
-    }
-    this.submit();
+
+  private handleSkipButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    // TODO: Replace current page
   }
 
   private submit = async () => {
@@ -76,7 +64,7 @@ export class SetOnetouch extends React.PureComponent<{}, State> {
       await postConfirmPassword();
       // TODO: Perform further action here
       alert('Confirmed!');
-      this.setState({ isSubmitting: false, password: '' });
+      this.setState({ isSubmitting: false });
     } catch (e) {
       alert(e);
       this.setState({ isSubmitting: false });
@@ -90,27 +78,26 @@ export class SetOnetouch extends React.PureComponent<{}, State> {
           <title>원터치 결제 설정 - 리디페이</title>
         </Helmet>
         <div>
-          <h2 className={titleStyle}>리디북스 비밀번호 입력</h2>
-          <p className={descriptionStyle}>10만원 초과 결제 시 비밀번호를 입력해주셔야 합니다.</p>
+          <h2 className={titleStyle}>원터치 결제를 사용하시겠습니까?</h2>
+          <p className={descriptionStyle}>원터치 결제는 등록하신 카드로<br/><strong>비밀번호 입력 없이 바로 결제</strong>하는 기능입니다.</p>
           <div className={formStyle}>
-            <div className={cx(formInputStyle, cardInputBox)}>
-              <input
-                className={innerInput}
-                type="password"
-                value={this.state.password}
-                onChange={this.handlePasswordInputChange}
-                onKeyPress={this.handlePasswordInputKeyPress}
-                disabled={this.state.isSubmitting}
-              />
-              <div className={cardInputBoxBorderInteractive} />
-            </div>
             <Button
-              className={formSubmitButtonstyle}
+              className={buttonStyle}
+              size="large"
               color="blue"
-              disabled={!this.isSubmitAvailable()}
-              onClick={this.handleSubmitButtonClick}
+              disabled={this.state.isSubmitting}
+              onClick={this.handleEnableButtonClick}
               spinner={this.state.isSubmitting}
-            >확인</Button>
+              >원터치 결제 사용</Button>
+            <Button
+              className={buttonStyle}
+              size="large"
+              color="gray"
+              outline={true}
+              disabled={this.state.isSubmitting}
+              onClick={this.handleSkipButtonClick}
+            >사용 안함</Button>
+
           </div>
         </div>
       </SceneWrapper>
