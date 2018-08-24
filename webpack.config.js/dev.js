@@ -4,9 +4,9 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const {   
+const {
   baseDir,
-  outputDir, 
+  outputDir,
 } = require('./paths');
 
 module.exports = {
@@ -33,10 +33,10 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    port: 9000,
+    port: process.env.port || 9000,
     contentBase: [
       outputDir,
-      path.join(baseDir, 'public'), 
+      path.join(baseDir, 'public'),
       path.join(baseDir, 'src'), // to support sourcemap
     ],
     proxy: {
