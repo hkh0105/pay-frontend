@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import { history } from 'app/config';
 import { AddCard, Error404, Payment, SetOnetouch, SetPin, Settings, ValidatePassword, ValidatePin } from 'app/scenes';
 
+import { TestCardPlates } from 'app/components/CardPlate';
 import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
 
 export const Routes: React.SFC = () => {
@@ -21,6 +22,9 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path="/settings/onetouch" render={() => <ConnectedPrivateRoute component={SetOnetouch} />} />
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
           <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
+          {process.env.NODE_ENV !== 'production' && <>
+          <Route exact={true} path="/test/card-plates" render={() => <ConnectedPrivateRoute component={TestCardPlates} />} />
+          </>}
           <Route render={() => <Error404 />} />
         </Switch>
       </ConnectedScrollToTop>
