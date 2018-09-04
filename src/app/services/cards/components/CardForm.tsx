@@ -1,5 +1,6 @@
 import { Button } from '@ridi/rsg/components/dist/button';
 import { CheckBox } from '@ridi/rsg/components/dist/check_box';
+import * as classNames from 'classnames';
 import detectIt from 'detect-it';
 import { every } from 'lodash-es';
 import * as React from 'react';
@@ -18,7 +19,7 @@ import {
   initialCardFormState,
   initialCardInputRefs,
 } from 'app/services/cards/components';
-import { agreeToTermsCheckbox, cardInputBox, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
 import { a11y } from 'app/styles';
 import {
   cleanUpCardNumber,
@@ -258,20 +259,18 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
               이용약관 동의
             </CheckBox>
             <div className={cardInputBoxBorder} />
-            <Link className="RegisterCreditCard_TermsLink" to="/register/terms">
+            <Link className={agreementLinkClass} to="/register/terms">
               약관 보기
             </Link>
           </div>
         </div>
-        <Button
-          className="RegisterCreditCard_SubmitButton"
-          color="blue"
-          size="large"
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}
+        <button
+          className={classNames(cardFormSubmitButtonClass, { [cardFormSubmitDisabledButtonClass]: !this.isFormValid() })}
+          onClick={(e) => e.preventDefault()}
           disabled={!this.isFormValid()}
         >
           카드 등록
-        </Button>
+        </button>
       </form>
     );
   }

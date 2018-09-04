@@ -1,5 +1,6 @@
 import { css } from 'emotion';
 
+import { colors } from 'app/constants/colors';
 import {
   breakpoints,
   defaultFontFamily,
@@ -141,8 +142,8 @@ export const cardInputBoxBorder = css(cardInputBoxBorderCommonStyle);
 export const cardInputBoxBorderInteractive = css({
   ...cardInputBoxBorderCommonStyle,
   [`
-    .${cardInputBox}:hover &, 
-    .${cardInputBox60}:hover &, 
+    .${cardInputBox}:hover &,
+    .${cardInputBox60}:hover &,
     .${cardInputBoxInline}:hover &
   `]: {
     [breakpoints.mouseDevice]: {
@@ -151,7 +152,7 @@ export const cardInputBoxBorderInteractive = css({
     }
   },
   [`
-    .${innerInput}:focus ~ &, 
+    .${innerInput}:focus ~ &,
     .${innerInput}:focus:hover ~ &
   `]: {
     borderColor: '#1f8ce6',
@@ -199,3 +200,31 @@ export const agreeToTermsCheckbox = css({
     fontWeight: '700'
   }
 } as {});
+
+export const agreementLinkClass = css({
+  color: colors.slategray_40,
+  fontSize: '13px',
+  textDecoration: 'none',
+  marginTop: '1px'
+});
+
+export const cardFormSubmitButtonClass = css({
+  display: 'block',
+  width: '100%',
+  fontSize: '16px',
+  height: '50px',
+  marginTop: '20px',
+  backgroundColor: colors.dodgerblue_50,
+  borderColor: colors.dodgerblue_60,
+  borderWidth: '1px',
+  borderRadius: '3px',
+  color: '#fff',
+  letterSpacing: '-0.4px',
+  fontWeight: 'bold'
+});
+
+export const cardFormSubmitDisabledButtonClass = css({
+  backgroundColor: colors.lightsteelblue_50,
+  border: 0,
+  opacity: 1
+});
