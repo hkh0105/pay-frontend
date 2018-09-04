@@ -1,4 +1,4 @@
-import { Icon } from '@ridi/rsg/components/dist/icon';
+import { Icon } from '@ridi/rsg';
 import { css, cx } from 'emotion';
 import * as React from 'react';
 

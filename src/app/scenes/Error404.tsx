@@ -2,7 +2,7 @@ import { css } from 'emotion';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { Button } from '@ridi/rsg/components/dist/button';
+import { Button } from '@ridi/rsg';
 
 export const Error404: React.SFC = () => {
   return (
@@ -34,8 +34,8 @@ export const Error404: React.SFC = () => {
               className="ErrorPage_Button"
               color="blue"
               size="large"
-              wrapperElement="a"
-              wrapperProps={{ href: '/' }}
+              component="a"
+              // href="/"
             >
               리디페이 설정 보기
             </Button>

@@ -1,5 +1,4 @@
-import { Button } from '@ridi/rsg/components/dist/button';
-import { CheckBox } from '@ridi/rsg/components/dist/check_box';
+import { CheckBox } from '@ridi/rsg';
 import * as classNames from 'classnames';
 import detectIt from 'detect-it';
 import { every } from 'lodash-es';

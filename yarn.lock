@@ -86,9 +86,9 @@
   dependencies:
     lodash "^4.17.10"
 
-"@ridi/rsg@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@ridi/rsg/-/rsg-2.0.1.tgz#4c20ac0ac9d41eff7bede9462946a5ef192179b1"
+"@ridi/rsg@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@ridi/rsg/-/rsg-2.0.3.tgz#6487cdc846cbf8ead03d0f7727beeaa1833021a7"
   dependencies:
     "@ridi/object-case-converter" "^2.0.0"
     classnames "^2.2.5"
@@ -96,6 +96,7 @@
     react "^16.2.0"
     react-dom "^16.2.0"
     react-lazyload "^2.3.0"
+    react-router-dom "^4.3.1"
 
 "@ridi/tslint-config@0.1.0":
   version "0.1.0"
@@ -5862,7 +5863,7 @@ react-redux@^5.0.6:
     loose-envify "^1.1.0"
     prop-types "^15.6.0"
 
-react-router-dom@^4.2.2:
+react-router-dom@^4.2.2, react-router-dom@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
   dependencies:

@@ -53,7 +53,7 @@
   "dependencies": {
     "@ridi/event-tracker": "^0.1.2",
     "@ridi/object-case-converter": "^2.0.0-alpha",
-    "@ridi/rsg": "2.0.1",
+    "@ridi/rsg": "2.0.3",
     "axios": "0.17.1",
     "axios-retry": "^3.1.1",
     "classnames": "^2.2.5",
