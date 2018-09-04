@@ -35,7 +35,7 @@ export const Error404: React.SFC = () => {
               color="blue"
               size="large"
               component="a"
-              // href="/"
+              href="/"
             >
               리디페이 설정 보기
             </Button>
