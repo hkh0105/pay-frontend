@@ -1,4 +1,6 @@
 import { Header } from 'app/components/Header';
+import { RIDIPayIcon } from 'app/components/RIDIPayIcon';
+import { colors } from 'app/constants/colors';
 import { breakpoints, full, half } from 'app/styles';
 import { css } from 'emotion';
 import * as React from 'react';
@@ -8,7 +10,7 @@ export const SceneWrapper: React.SFC = ({ children }) => (
     <div className={sceneBg} />
     <main className={sceneMain}>
       <Header>
-        리디페이 아이콘
+        <RIDIPayIcon className={ridiPayIcon} />
       </Header>
       {children}
     </main>
@@ -45,3 +47,9 @@ const sceneMain =  css({
 export const sceneContents = css({
   padding: '16px 15px 15px'
 });
+
+export const ridiPayIcon = css({
+  width: '58px',
+  fill: colors.dodgerblue_50,
+  marginTop: '4px',
+})
