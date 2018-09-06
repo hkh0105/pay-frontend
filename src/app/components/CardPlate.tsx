@@ -19,8 +19,8 @@ export const wrapper = css({
   borderRadius: '6px',
   width: '240px',
   height: '140px',
-  margin: '0 auto'
-  // padding: '14px 18px',
+  margin: '0 auto',
+  padding: '10px',
 });
 
 export const cardNumber = css({
@@ -32,10 +32,25 @@ export const cardNumber = css({
   fontSize: '16px'
 });
 
+export const cardLogoImageWrapper = css({
+  display: 'inline-block',
+});
+
+export const cardLogoImage = css({
+  width: '50%',
+})
+
 export const CardPlate: React.SFC<CardPlateProps> = (props) => {
   const styleSet = cardIssuerStyleSets[props.cardIssuerCode];
   return (
     <div className={classNames(wrapper, props.className)} style={{ backgroundColor: styleSet.backgroundColor }}>
+      <span className={cardLogoImageWrapper}>
+        <img
+          className={cardLogoImage}
+          src={`/images/card_logo/logo_${props.cardIssuerCode.toLowerCase()}.png`}
+          alt="카드 이미지"
+        />
+      </span>
       <p className={cardNumber}>{props.cardNumber}</p>
     </div>
   );
