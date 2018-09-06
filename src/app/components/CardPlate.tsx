@@ -1,12 +1,8 @@
 import * as classNames from 'classnames';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import * as React from 'react';
-import { Helmet } from 'react-helmet';
 
-import { Button } from '@ridi/rsg';
-import { sceneContents, SceneWrapper } from 'app/components';
-import { CardIssuerCode, cardIssuerStyleSets, CardPlateStyleSet } from 'app/constants/cards';
-import { colors } from 'app/constants/colors';
+import { CardIssuerCode, cardIssuerStyleSets } from 'app/constants/cards';
 
 export interface CardPlateProps {
   cardNumber: string;

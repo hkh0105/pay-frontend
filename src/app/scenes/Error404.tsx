@@ -1,4 +1,3 @@
-import { css } from 'emotion';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
@@ -34,8 +33,8 @@ export const Error404: React.SFC = () => {
               className="ErrorPage_Button"
               color="blue"
               size="large"
-              component="a"
-              href="/"
+              wrapperElement="a"
+              wrapperProps={{ href: '/' }}
             >
               리디페이 설정 보기
             </Button>

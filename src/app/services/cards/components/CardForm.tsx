@@ -18,14 +18,13 @@ import {
   initialCardFormState,
   initialCardInputRefs,
 } from 'app/services/cards/components';
-import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
 import { a11y } from 'app/styles';
 import {
   cleanUpCardNumber,
   getCardTypeByNumber,
   prettifyCardNumber,
 } from 'app/utils';
-import { cx } from 'emotion';
 
 const isTouchDevice = detectIt.hasTouch;
 
