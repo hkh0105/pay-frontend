@@ -10,11 +10,11 @@ import { colors } from 'app/constants/colors';
 
 export interface CardPlateProps {
   cardNumber: string;
-  cardIssuerCode: CardIssuerCode;
+  cardIssuerCode: CardIssuerCode | null;
   className?: string;
 }
 
-export const wrapper = css({
+const wrapper = css({
   position: 'relative',
   borderRadius: '6px',
   width: '240px',
@@ -23,7 +23,7 @@ export const wrapper = css({
   padding: '10px',
 });
 
-export const cardNumber = css({
+const cardNumberText = css({
   position: 'absolute',
   left: '18px',
   bottom: '14px',
@@ -32,26 +32,50 @@ export const cardNumber = css({
   fontSize: '16px'
 });
 
-export const cardLogoImageWrapper = css({
+const cardLogoImageWrapper = css({
   display: 'inline-block',
 });
 
-export const cardLogoImage = css({
+const cardLogoImage = css({
   width: '50%',
 })
 
-export const CardPlate: React.SFC<CardPlateProps> = (props) => {
-  const styleSet = cardIssuerStyleSets[props.cardIssuerCode];
+const emptyCardPlaceholderText = css({
+  position: 'absolute',
+  color: colors.bluegray_20,
+  fontSize: '13px',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+})
+
+const emptyCardPlate = css({
+  border: `2px solid ${colors.bluegray_5}`,
+  borderRadius: '6px',
+})
+
+export const CardPlate: React.SFC<CardPlateProps> = ({ cardIssuerCode, cardNumber, className }) => {
+  const backgroundColor = cardIssuerCode
+    ? cardIssuerStyleSets[cardIssuerCode].backgroundColor
+    : '#fff';
   return (
-    <div className={classNames(wrapper, props.className)} style={{ backgroundColor: styleSet.backgroundColor }}>
-      <span className={cardLogoImageWrapper}>
-        <img
-          className={cardLogoImage}
-          src={`/public/images/card_logo/logo_${props.cardIssuerCode.toLowerCase()}.png`}
-          alt="카드 이미지"
-        />
-      </span>
-      <p className={cardNumber}>{props.cardNumber}</p>
+    <div
+      className={classNames(wrapper, className, { [emptyCardPlate]: !cardIssuerCode })}
+      style={{ backgroundColor }}
+    >
+      {cardIssuerCode
+        ? <>
+          <span className={cardLogoImageWrapper}>
+            <img
+              className={cardLogoImage}
+              src={`/public/images/card_logo/logo_${cardIssuerCode.toLowerCase()}.png`}
+              alt="카드 이미지"
+            />
+          </span>
+          <p className={cardNumberText}>{cardNumber}</p>
+        </>
+        : <span className={emptyCardPlaceholderText}>등록된 카드가 없습니다.</span>
+      }
     </div>
   );
 };
