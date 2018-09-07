@@ -2,53 +2,52 @@
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 400;
-  src: url('fonts/NotoSans-Regular.woff2') format('woff2'),
-    url('fonts/NotoSans-Regular.woff') format('woff'),
-    url('fonts/NotoSans-Regular.otf') format('opentype');
+  src: url('/public/fonts/NotoSans-Regular.woff2') format('woff2'),
+    url('/public/fonts/NotoSans-Regular.woff') format('woff'),
+    url('/public/fonts/NotoSans-Regular.otf') format('opentype');
 }
 
 @font-face {
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 700;
-  src: url('fonts/NotoSans-Bold.woff2') format('woff2'),
-    url('fonts/NotoSans-Bold.woff') format('woff'),
-    url('fonts/NotoSans-Bold.otf') format('opentype');
+  src: url('/public/fonts/NotoSans-Bold.woff2') format('woff2'),
+    url('/public/fonts/NotoSans-Bold.woff') format('woff'),
+    url('/public/fonts/NotoSans-Bold.otf') format('opentype');
 }
 
 @font-face {
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 900;
-  src: url('fonts/NotoSans-Black.woff2') format('woff2'),
-    url('fonts/NotoSans-Black.woff') format('woff'),
-    url('fonts/NotoSans-Black.otf') format('opentype');
+  src: url('/public/fonts/NotoSans-Black.woff2') format('woff2'),
+    url('/public/fonts/NotoSans-Black.woff') format('woff'),
+    url('/public/fonts/NotoSans-Black.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'museo_sans';
   font-style: normal;
   font-weight: normal;
-  src: url('fonts/museo_sans_500.woff2') format('woff2'),
-    url('fonts/museo_sans_500.woff') format('woff'),
-    url('fonts/museo_sans_500.ttf') format('truetype');
+  src: url('/public/fonts/museo_sans_500.woff2') format('woff2'),
+    url('/public/fonts/museo_sans_500.woff') format('woff'),
+    url('/public/fonts/museo_sans_500.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'museo_sans';
   font-style: normal;
   font-weight: bold;
-  src: url('fonts/museo_sans_700.woff2') format('woff2'),
-    url('fonts/museo_sans_700.woff') format('woff'),
-    url('fonts/museo_sans_700.ttf') format('truetype');
+  src: url('/public/fonts/museo_sans_700.woff2') format('woff2'),
+    url('/public/fonts/museo_sans_700.woff') format('woff'),
+    url('/public/fonts/museo_sans_700.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'text-security-disc';
   font-style: normal;
   font-weight: bold;
-  src: url('fonts/text-security-disc.woff') format('woff'),
-    url('fonts/text-security-disc.ttf') format('truetype'),
-    url('fonts/text-security-disc.eot') format('eot');
+  src: url('/public/fonts/text-security-disc.woff') format('woff'),
+    url('/public/fonts/text-security-disc.ttf') format('truetype'),
+    url('/public/fonts/text-security-disc.eot') format('eot');
 }
- 

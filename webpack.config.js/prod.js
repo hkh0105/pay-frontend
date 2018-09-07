@@ -1,9 +1,15 @@
 /* eslint-disable */
 
+const {
+  baseDir,
+} = require('./paths');
+const path = require('path');
+
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -47,10 +53,13 @@ module.exports = {
     }),
     new OptimizeCssAssetsPlugin({
       cssProcessor: require('cssnano'),
-      cssProcessorOptions: { 
+      cssProcessorOptions: {
         autoprefixer: false,
-        discardComments: { removeAll: true } 
+        discardComments: { removeAll: true }
       },
     }),
+    new CopyWebpackPlugin([
+      { from: path.join(baseDir, 'public'), to: 'public', force: true }
+    ])
   ],
 };

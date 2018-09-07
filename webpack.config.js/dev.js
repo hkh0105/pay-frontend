@@ -36,7 +36,8 @@ module.exports = {
     port: process.env.port || 9000,
     contentBase: [
       outputDir,
-      path.join(baseDir, 'public'),
+      baseDir,
+      // path.join(baseDir, 'public'),
       path.join(baseDir, 'src'), // to support sourcemap
     ],
     proxy: {

@@ -47,7 +47,7 @@ export const CardPlate: React.SFC<CardPlateProps> = (props) => {
       <span className={cardLogoImageWrapper}>
         <img
           className={cardLogoImage}
-          src={`/images/card_logo/logo_${props.cardIssuerCode.toLowerCase()}.png`}
+          src={`/public/images/card_logo/logo_${props.cardIssuerCode.toLowerCase()}.png`}
           alt="카드 이미지"
         />
       </span>
