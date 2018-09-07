@@ -25,6 +25,7 @@ const inputToggle = css`
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 
   // &:before {
   //   content: "ON";
