@@ -3,12 +3,13 @@ import { css, cx } from 'emotion';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { Button } from '@ridi/rsg';
+import { Button, Icon } from '@ridi/rsg';
 import { sceneContents, SceneWrapper } from 'app/components';
 import { CardPlate } from 'app/components/CardPlate';
 import { SwtichButton } from 'app/components/SwitchButton';
 import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
+import { Link } from 'react-router-dom';
 
 const settingHorizontalPadding = css({
   paddingLeft: '15px',
@@ -73,14 +74,35 @@ const deleteCardButton = css({
   fontSize: '11px',
 })
 
+const addCardButton = css({
+  width: '78px',
+  fontSize: '11px',
+})
+
+const addCardIcon = css({
+  width: '9px',
+  marginRight: '5px',
+  fill: '#fff',
+})
+
 interface State {
   isOneTouchEnabled: boolean;
+  cardIssuerCode: CardIssuerCode | null;
 }
 
 export class Settings extends React.Component<{}, State> {
   public state: State = {
     isOneTouchEnabled: false,
+    cardIssuerCode: 'CCCT',
   };
+
+  private handleDeleteCardButtonClick = () => {
+    // TODO: Should use <Popup />
+    if (!confirm('카드를 삭제하시겠습니까?')) {
+      return;
+    }
+    this.setState({ cardIssuerCode: null });
+  }
 
   public render() {
     return (
@@ -97,12 +119,35 @@ export class Settings extends React.Component<{}, State> {
                   <p className={settingItemDescription}>카드는 1개만 등록 가능합니다.</p>
                 </div>
                 <div>
-                  <Button outline={true} color="gray" size="medium" className={deleteCardButton}>카드 삭제</Button>
+                  {this.state.cardIssuerCode
+                    ? (
+                      <Button
+                        outline={true}
+                        color="gray"
+                        size="medium"
+                        className={deleteCardButton}
+                        onClick={this.handleDeleteCardButtonClick}
+                      >카드 삭제</Button>
+                    )
+                    : (
+                      <Button
+                        color="blue"
+                        size="medium"
+                        className={addCardButton}
+                        // TODO: Should fix Button interface...
+                        component={Link as any}
+                        to="/settings/cards/add"
+                      >
+                        <Icon name="plus_1" className={addCardIcon} />
+                        카드 등록
+                      </Button>
+                    )
+                  }
                 </div>
               </div>
               <div className={cardPlateWrapper}>
                 <CardPlate
-                  cardIssuerCode="CCCT"
+                  cardIssuerCode={this.state.cardIssuerCode}
                   cardNumber="1093 04** **** ****"
                 />
               </div>
