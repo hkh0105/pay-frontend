@@ -258,7 +258,7 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
               이용약관 동의
             </CheckBox>
             <div className={cardInputBoxBorder} />
-            <Link className={agreementLinkClass} to="/register/terms">
+            <Link className={agreementLinkClass} to="/legal/terms">
               약관 보기
             </Link>
           </div>

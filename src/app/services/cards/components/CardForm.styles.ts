@@ -205,7 +205,8 @@ export const agreementLinkClass = css({
   color: colors.slategray_40,
   fontSize: '13px',
   textDecoration: 'none',
-  marginTop: '1px'
+  marginTop: '1px',
+  marginRight: '8px',
 });
 
 export const cardFormSubmitButtonClass = css({
