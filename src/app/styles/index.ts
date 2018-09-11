@@ -11,6 +11,9 @@ export const securityFontFamily = 'text-security-disc';
 export const full = '100%';
 export const half = '50%';
 
+export const paperStylesClassName = 'paper';
+export const paperProStylesClassName = 'paperPro';
+
 export const breakpoints = {
   desktopView: '@media (min-width: 481px)',
   mouseDevice: '@media (hover: hover)'
@@ -91,8 +94,29 @@ export const a11y = css({
   clip: 'rect(0, 0, 0, 0)'
 });
 
-injectGlobal({
-  html: {
-    ...resetFont
+export const centralHeading2 = css({
+  ...resetHeading,
+  marginTop: '64px',
+  fontSize: '18px',
+  fontWeight: 700,
+  textAlign: 'center',
+  [`.${paperStylesClassName} &`]: {
+    marginTop: '54px',
+    fontSize: '24px',
+    lineHeight: '36px'
+  },
+  [`.${paperProStylesClassName} &`]: {
+    marginTop: '94px',
+    fontSize: '32px',
+    lineHeight: '47px',
+    fontWeight: 900
   }
+});
+
+injectGlobal({
+  html: resetFont,
+  input: resetFont,
+  textarea: resetFont,
+  select: resetFont,
+  button: resetFont
 });

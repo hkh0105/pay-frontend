@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
 import { Button, Icon } from '@ridi/rsg';
-import { sceneContents, SceneWrapper } from 'app/components';
+import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { CardPlate } from 'app/components/CardPlate';
 import { SwtichButton } from 'app/components/SwitchButton';
 import { CardIssuerCode } from 'app/constants/cards';
@@ -107,7 +107,7 @@ export class Settings extends React.Component<{}, State> {
   public render() {
     return (
       <>
-        <SceneWrapper>
+        <ConnectedSceneWrapper>
           <Helmet>
             <title>설정 - 리디페이</title>
           </Helmet>
@@ -168,7 +168,7 @@ export class Settings extends React.Component<{}, State> {
             </div>
             <p className={settingBackgroundDescriptionStyle}>비밀번호를 분실하신 경우 카드를 삭제하신 후 다시 등록해주세요.</p>
           </div>
-        </SceneWrapper>
+        </ConnectedSceneWrapper>
       </>
     );
   }

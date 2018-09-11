@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { sceneContents, SceneWrapper } from 'app/components';
+import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { CardForm } from 'app/services/cards/components';
 
 export const AddCard: React.SFC = () => {
   return (
     <>
-      <SceneWrapper>
+      <ConnectedSceneWrapper>
         <Helmet>
           <title>카드 등록 - 리디페이</title>
         </Helmet>
         <div className={sceneContents}>
           <CardForm />
         </div>
-      </SceneWrapper>
+      </ConnectedSceneWrapper>
     </>
   );
 };

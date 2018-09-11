@@ -1,7 +1,8 @@
 import * as classNames from 'classnames';
 import { css } from 'emotion';
-import * as React from 'react';
+import * as React from 'react'
 
+import { colors } from 'app/constants/colors';;
 import { CardIssuerCode, cardIssuerStyleSets } from 'app/constants/cards';
 
 export interface CardPlateProps {

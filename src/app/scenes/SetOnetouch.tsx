@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
 import { Button } from '@ridi/rsg';
-import { SceneWrapper } from 'app/components';
+import { ConnectedSceneWrapper } from 'app/components';
 import { colors } from 'app/constants/colors';
 import { cardInputBox, cardInputBoxBorderInteractive, innerInput } from 'app/services/cards/components/CardForm.styles';
 import { postConfirmPassword } from 'app/services/settings/requests';
@@ -73,7 +73,7 @@ export class SetOnetouch extends React.PureComponent<{}, State> {
 
   public render() {
     return (
-      <SceneWrapper>
+      <ConnectedSceneWrapper>
         <Helmet>
           <title>원터치 결제 설정 - 리디페이</title>
         </Helmet>
@@ -100,7 +100,7 @@ export class SetOnetouch extends React.PureComponent<{}, State> {
 
           </div>
         </div>
-      </SceneWrapper>
+      </ConnectedSceneWrapper>
     );
   }
 };

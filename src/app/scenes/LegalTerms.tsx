@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
 import { Button, Icon } from '@ridi/rsg';
-import { SceneWrapper } from 'app/components';
+import { ConnectedSceneWrapper } from 'app/components';
 import { colors } from 'app/constants/colors';
 import { css, cx } from 'emotion';
 import { Link } from 'react-router-dom';
@@ -22,7 +22,7 @@ export class LegalTerms extends React.PureComponent {
 
   public render() {
     return (
-      <SceneWrapper>
+      <ConnectedSceneWrapper>
         <Helmet>
           <title>이용약관 - 리디페이</title>
         </Helmet>
@@ -32,7 +32,7 @@ export class LegalTerms extends React.PureComponent {
           {this.renderItem('개인정보 수집 및 이용 동의', 'https://ridibooks.com/legal/terms')}
           {this.renderItem('개인정보 동의', 'https://ridibooks.com/legal/terms')}
         </ul>
-      </SceneWrapper>
+      </ConnectedSceneWrapper>
     );
   }
 };
