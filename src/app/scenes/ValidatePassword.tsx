@@ -28,6 +28,14 @@ const formStyle = css({
 
 const formInputStyle = css({
   flex: '1',
+  padding: '8px 10px 10px',
+  '::-ms-clear, input::-ms-reveal': {
+    display: 'none',
+  }
+});
+
+const formInputInteractiveStyle = css({
+  borderRadius: '2px',
 });
 
 const formSubmitButtonstyle = css({
@@ -87,13 +95,13 @@ export class ValidatePassword extends React.PureComponent<{}, State> {
     return (
       <ConnectedSceneWrapper>
         <Helmet>
-          <title>원터치 결제 설정 - 리디페이</title>
+          <title>리디북스 비밀번호 입력 - 리디페이</title>
         </Helmet>
         <div>
           <h2 className={titleStyle}>리디북스 비밀번호 입력</h2>
           <p className={descriptionStyle}>10만원 초과 결제 시 비밀번호를 입력해주셔야 합니다.</p>
           <div className={formStyle}>
-            <div className={cx(formInputStyle, cardInputBox)}>
+            <div className={cx(cardInputBox, formInputStyle)}>
               <input
                 className={innerInput}
                 type="password"
@@ -102,7 +110,7 @@ export class ValidatePassword extends React.PureComponent<{}, State> {
                 onKeyPress={this.handlePasswordInputKeyPress}
                 disabled={this.state.isSubmitting}
               />
-              <div className={cardInputBoxBorderInteractive} />
+              <div className={cx(cardInputBoxBorderInteractive, formInputInteractiveStyle)} />
             </div>
             <Button
               className={formSubmitButtonstyle}

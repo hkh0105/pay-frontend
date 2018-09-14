@@ -254,7 +254,7 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
               checked={!!checkboxInputs[cardCheckboxInputKey.agreeToTerms].checked}
               onChange={this.getHandleChangeCheckbox(cardCheckboxInputKey.agreeToTerms)}
             >
-              이용약관 동의
+              리디페이 이용약관 동의
             </CheckBox>
             <div className={cardInputBoxBorder} />
             <Link className={agreementLinkClass} to="/legal/terms">

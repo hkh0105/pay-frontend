@@ -177,6 +177,7 @@ export const agreeToTermsCheckbox = css({
     fontSize: '14px',
     lineHeight: '14px',
     zIndex: '3',
+    fontFamily: defaultFontFamily,
     '&::before': {
       top: '50%',
       marginTop: '-9px'
@@ -207,6 +208,9 @@ export const agreementLinkClass = css({
   textDecoration: 'none',
   marginTop: '1px',
   marginRight: '8px',
+  '&:hover': {
+    color: colors.slategray_50
+  }
 });
 
 export const cardFormSubmitButtonClass = css({
@@ -227,5 +231,8 @@ export const cardFormSubmitButtonClass = css({
 export const cardFormSubmitDisabledButtonClass = css({
   backgroundColor: colors.lightsteelblue_50,
   border: 0,
-  opacity: 1
+  opacity: 1,
+  '&:hover': {
+    backgroundColor: colors.lightsteelblue_60
+  }
 });

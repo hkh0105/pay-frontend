@@ -18,18 +18,24 @@ const settingHorizontalPadding = css({
 
 const settingItem = css(settingHorizontalPadding, {
   backgroundColor: '#fff',
-  border: `1px solid ${colors.lightsteelblue_20}`,
-  borderLeft: 0,
-  borderRight: 0,
+  border: 0,
   '& + &': {
     marginTop: '10px',
+    borderTop: `1px solid ${colors.lightsteelblue_20}`,
   }
 })
 
-const settingBackgroundDescriptionStyle = css(settingHorizontalPadding, {
+const settingDescriptionWrapper = css(settingHorizontalPadding, {
   color: colors.bluegray_40,
   fontSize: '13px',
   lineHeight: '18px',
+  margin: '10px 0',
+  'p': {
+    margin: 0,
+  },
+  'p + p': {
+    marginTop: '4px',
+  },
 })
 
 const settingCardItem = css({
@@ -55,6 +61,10 @@ const settingItemDescription = css({
   lineHeight: '19px',
   margin: '4px 0 0 0',
   color: colors.bluegray_40,
+})
+
+const settingSwitchButtonWrapper = css({
+  lineHeight: '48px',
 })
 
 const settingCardItemBody = css({
@@ -154,7 +164,7 @@ export class Settings extends React.Component<{}, State> {
             </div>
             <div className={classNames(settingItem, settingDefaultItem)}>
               <h3 className={settingItemName}>원터치 결제 사용</h3>
-              <div>
+              <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
                   isChecked={this.state.isOneTouchEnabled}
                   onChange={() => this.setState({ isOneTouchEnabled: !this.state.isOneTouchEnabled })}
@@ -162,11 +172,14 @@ export class Settings extends React.Component<{}, State> {
                 />
               </div>
             </div>
-            <p className={settingBackgroundDescriptionStyle}>비밀번호 입력 없이 바로 결제하는 기능입니다. <br/> 안전한 결제를 위해 10만원 초과 결제 시에는 비밀번호를 입력해주셔야 합니다.</p>
+            <div className={settingDescriptionWrapper}>
+              <p>비밀번호 입력 없이 바로 결제하는 기능입니다.</p>
+              <p>안전한 결제를 위해 10만원 초과 결제 시에는 비밀번호를 입력해주셔야 합니다.</p>
+            </div>
             <div className={classNames(settingItem, settingDefaultItem)}>
               <h3 className={settingItemName}>결제 비밀번호 변경</h3>
             </div>
-            <p className={settingBackgroundDescriptionStyle}>비밀번호를 분실하신 경우 카드를 삭제하신 후 다시 등록해주세요.</p>
+            <div className={settingDescriptionWrapper}>비밀번호를 분실하신 경우 카드를 삭제하신 후 다시 등록해주세요.</div>
           </div>
         </ConnectedSceneWrapper>
       </>

@@ -16,6 +16,7 @@ const wrapper = css({
   borderRadius: '6px',
   width: '240px',
   height: '140px',
+  boxSizing: 'border-box',
   margin: '0 auto',
   padding: '10px',
 });
@@ -42,8 +43,10 @@ const emptyCardPlaceholderText = css({
   color: colors.bluegray_20,
   fontSize: '13px',
   top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  left: '0',
+  width: '100%',
+  transform: 'translateY(-50%)',
+  textAlign: 'center',
 })
 
 const emptyCardPlate = css({

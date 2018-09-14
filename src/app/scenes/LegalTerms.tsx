@@ -12,10 +12,10 @@ export class LegalTerms extends React.PureComponent {
     return (
       <li className={s.item}>
         <div className={s.itemName}>{name}</div>
-        <Link className={s.itemLink} to={href}>
+        <a className={s.itemLink} href={href} target="_blank">
           내용 보기
           <Icon name="arrow_5_right" className={s.itemArrowIcon} />
-        </Link>
+        </a>
       </li>
     )
   }
@@ -27,10 +27,10 @@ export class LegalTerms extends React.PureComponent {
           <title>이용약관 - 리디페이</title>
         </Helmet>
         <ul className={s.wrapper}>
-          {this.renderItem('서비스 이용약관', 'https://ridibooks.com/legal/terms')}
+          {this.renderItem('서비스 이용약관', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/terms-of-use')}
           {this.renderItem('전자금융거래 이용약관', 'http://www.kcp.co.kr/etc.terms.do')}
-          {this.renderItem('개인정보 수집 및 이용 동의', 'https://ridibooks.com/legal/terms')}
-          {this.renderItem('개인정보 동의', 'https://ridibooks.com/legal/terms')}
+          {this.renderItem('개인정보 수집 및 이용 동의', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/privacy-policy-collect-and-use')}
+          {this.renderItem('개인정보 동의', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/privacy-policy-sharing')}
         </ul>
       </ConnectedSceneWrapper>
     );
