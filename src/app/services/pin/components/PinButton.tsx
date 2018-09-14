@@ -8,7 +8,7 @@ export interface PinButtonProps {
 
 export const PinButton: React.SFC<PinButtonProps> = ({ onClick, children }) => (
   <button onClick={onClick} className={styles.pinButton}>
-    <span>{children}</span>
+    {children}
   </button>
 )
 
@@ -16,6 +16,7 @@ const styles = {
   pinButton: css({
     ...resetButton,
     ...flexCenter,
+    // textAlign: 'center',
     backgroundColor: '#59667a',
     width: '100%',
     height: '100%',

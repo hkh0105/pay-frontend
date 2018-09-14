@@ -5,6 +5,9 @@ import 'normalize.css/normalize.css';
 import '@ridi/rsg/components/dist/components.css';
 import '@ridi/rsg/stylesheets/dist/rui-no-reset.css';
 
+import { spinners } from './base64';
+import { spinnerRotation } from './keyFrames';
+
 export const defaultFontFamily = 'Noto Sans KR, NotoSansKR, Sans-serif';
 export const museoSansFontFamily = 'museo_sans, Noto Sans KR, NotoSansKR, Sans-serif';
 export const securityFontFamily = 'text-security-disc';
@@ -92,6 +95,29 @@ export const a11y = css({
   overflow: 'hidden',
   border: '0',
   clip: 'rect(0, 0, 0, 0)'
+});
+
+export const applyGraySpinner = (size: string) => ({
+  position: 'relative',
+  color: 'rgb(255, 255, 255, 0)',
+  zIndex: 30,
+  '&::after': {
+    display: 'block',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: `${size}`,
+    height: `${size}`,
+    transform: 'translate3d(-50%, -50%, 0)',
+    transformOrigin: 'center',
+    backgroundImage: `url(${spinners.gray})`,
+    backgroundPosition: 'left top',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    animation: `${spinnerRotation} 1s step-start forwards infinite`,
+    content: `''`,
+    zIndex: 31
+  }
 });
 
 export const centralHeading2 = css({

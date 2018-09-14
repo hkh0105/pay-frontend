@@ -4,7 +4,7 @@ import * as React from 'react';
 import { FindPin } from 'app/services/pin/components/FindPin';
 import { PinInputGroup } from 'app/services/pin/components/PinInputGroup';
 import { PinButtonFunctionKey, PinButtonValue, PinPad } from 'app/services/pin/components/PinPad';
-import { centralHeading2, resetLayout } from 'app/styles';
+import { applyGraySpinner, centralHeading2, resetLayout } from 'app/styles';
 
 export interface PinFormProps {
   title: string;
@@ -70,13 +70,11 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
       <>
         <h2 className={centralHeading2}>{this.props.title}</h2>
         {!!this.props.description && <p className={styles.description}>{this.props.description}</p>}
-        {/* TODO: Show spinner if this.props.isSubmitting is true */}
         {
-          this.props.isSubmitting && (
-            <div>로딩 중... </div>
-          )
+          this.props.isSubmitting ? 
+            <div className={styles.spinner} /> :
+            <PinInputGroup pinList={this.state.pinList}/>
         }
-        <PinInputGroup pinList={this.state.pinList}/>
         {this.props.showFindPin && <FindPin />}
         <PinPad clickKey={this.handleClickKey} />
       </>
@@ -85,6 +83,11 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
 }
 
 const styles = {
+  spinner: css({
+    height: '40px',
+    margin: '35px 0 55px',
+    ...applyGraySpinner('40px'),
+  } as {}),
   description: css({
     ...resetLayout,
     marginTop: '13px',
