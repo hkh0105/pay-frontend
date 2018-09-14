@@ -51,6 +51,7 @@ const backButton = css({
 });
 
 const backButtonIcon = css({
+  flex: 1,
   width: '8px',
   height: '14px',
   fill: '#1f8ce6',

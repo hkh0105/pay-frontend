@@ -108,6 +108,7 @@ const styles = {
     },
   }),
   pinButtonNumber: css({
+    flex: 1, // You need this for flex childs for old iOS Safari T^T (iPhone5) 
     fontFamily: museoSansFontFamily,
     fontSize: '24px',
     color: 'inherit',
@@ -121,6 +122,7 @@ const styles = {
     },
   }),
   pinButtonKor: css({
+    flex: 1,
     fontSize: '15px',
     fontWeight: 700,
     color: 'inherit',
@@ -133,6 +135,7 @@ const styles = {
     },
   }),
   pinButtonDeleteIcon: css({
+    flex: 1,
     width: '27px',
     height: '18px',
     fill: 'white',
