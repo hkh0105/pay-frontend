@@ -34,19 +34,19 @@ const styles = {
     justifyContent: 'center',
     background: '#fefefe',
     borderRadius: '2px',
-    width: '30px',
-    height: '30px',
+    width: '28px',
+    height: '28px',
     border: 'solid 1px #d6e3f0',
     margin: '0 3px',
     [`.${paperStylesClassName} &`]: {
-      width: '40px',
-      height: '40px',
+      width: '36px',
+      height: '36px',
       borderRadius: '3px',
       border: 'solid 2px black',
     },
     [`.${paperProStylesClassName} &`]: {
-      width: '46px',
-      height: '46px',
+      width: '42px',
+      height: '42px',
     }
   }),
   pinInputFocused: css({
