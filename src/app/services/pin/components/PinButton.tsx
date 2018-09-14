@@ -21,6 +21,7 @@ const styles = {
     width: '100%',
     height: '100%',
     color: 'white',
+    touchAction: 'manipulation',
     '&:active': {
       backgroundColor: '#505b6d',
     },
