@@ -34,7 +34,6 @@ export class ValidatePin extends React.Component<ValidatePinProps, ValidatePinSt
       userId: this.props.userId || 'qjincho',
       pin: pinList.join(),
     }).then(() => {
-      this.toggleIsSubmitting(false);
       location.assign('/');
     })
   }

@@ -128,7 +128,6 @@ export class SetPin extends React.Component<SetPinProps, SetPinState> {
         userId: this.props.userId || 'qjincho',
         pin: newPin,
       }).then(() => {
-        this.toggleIsSubmitting(false);
         // UX from here isn't clear TODO: check
         window.alert('결제 비밀번호 설정이 완료되었습니다.');
         location.assign('/');
