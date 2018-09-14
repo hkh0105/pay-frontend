@@ -35,7 +35,10 @@ const cardLogoImageWrapper = css({
 });
 
 const cardLogoImage = css({
-  width: '50%',
+  position: 'absolute',
+  top: '10px',
+  left: '10px',
+  width: '220px',
 })
 
 const emptyCardPlaceholderText = css({
@@ -65,13 +68,11 @@ export const CardPlate: React.SFC<CardPlateProps> = ({ cardIssuerCode, cardNumbe
     >
       {cardIssuerCode
         ? <>
-          <span className={cardLogoImageWrapper}>
-            <img
-              className={cardLogoImage}
-              src={`/public/images/card_logo/logo_${cardIssuerCode.toLowerCase()}.png`}
-              alt="카드 이미지"
-            />
-          </span>
+          <img
+            className={cardLogoImage}
+            src={`/public/images/card_logo/logo_${cardIssuerCode.toLowerCase()}.png`}
+            alt="카드 이미지"
+          />
           <p className={cardNumberText}>{cardNumber}</p>
         </>
         : <span className={emptyCardPlaceholderText}>등록된 카드가 없습니다.</span>
