@@ -16,14 +16,14 @@ export interface SceneWrapperProps {
 
 export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, isPaperPro }) => (
   <>
-    <div 
+    <div
       className={classNames(
         sceneBg,
         {
           [paperStylesClassName]: isPaper,
           [paperProStylesClassName]: isPaperPro,
         },
-      )} 
+      )}
     />
     <main className={classNames(
       sceneMain,
@@ -68,6 +68,7 @@ const sceneMain =  css({
   width: full,
   height: full,
   minHeight: '380px',
+  minWidth: '320px',
   backgroundColor: '#f2f6fc',
   [breakpoints.desktopView]: {
     top: half,
@@ -83,7 +84,7 @@ const sceneMain =  css({
     left: 0,
     width: full,
     height: full,
-    backgroundColor: 'white',  
+    backgroundColor: 'white',
   }
 });
 

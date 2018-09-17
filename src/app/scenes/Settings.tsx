@@ -80,11 +80,13 @@ const cardPlateWrapper = css({
 })
 
 const deleteCardButton = css({
+  display: 'inline-block',
   width: '64px',
   fontSize: '11px',
 })
 
 const addCardButton = css({
+  display: 'inline-block',
   width: '78px',
   fontSize: '11px',
 })
