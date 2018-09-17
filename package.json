@@ -84,7 +84,7 @@
     "dev": "webpack",
     "dev:mock": "webpack --env.mock --env.delayResponse=1000 -w",
     "dev:watch": "webpack-dev-server",
-    "watch": "webpack-dev-server",
+    "watch": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack --env.production",
     "lint": "tslint 'src/app/**/*.{ts,tsx} -c ./tslint.js --fix'",
     "test": "jest --collectCoverage --no-cache",
