@@ -220,9 +220,8 @@ export const cardFormSubmitButtonClass = css({
   height: '50px',
   marginTop: '20px',
   backgroundColor: colors.dodgerblue_50,
-  borderColor: colors.dodgerblue_60,
-  borderWidth: '1px',
   borderRadius: '3px',
+  border: `1px solid ${colors.dodgerblue_60}`,
   color: '#fff',
   letterSpacing: '-0.4px',
   fontWeight: 'bold'

@@ -93,6 +93,7 @@ const addCardButton = css({
 
 const addCardIcon = css({
   width: '9px',
+  height: '9px',
   marginRight: '5px',
   fill: '#fff',
 })

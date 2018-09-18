@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
@@ -6,6 +7,7 @@ import { ConnectedSceneWrapper } from 'app/components';
 import { colors } from 'app/constants/colors';
 import { cardInputBox, cardInputBoxBorderInteractive, innerInput } from 'app/services/cards/components/CardForm.styles';
 import { postConfirmPassword } from 'app/services/settings/requests';
+import { mediaQueryForIE, mediaQueryForIOS } from 'app/styles/mediaQueries';
 import { css, cx } from 'emotion';
 
 const titleStyle = css({
@@ -41,6 +43,15 @@ const formInputInteractiveStyle = css({
 const formSubmitButtonstyle = css({
   width: '60px',
   marginLeft: '6px',
+})
+
+const inputStyle = css({
+  [mediaQueryForIE]: {
+    fontSize: '11px',
+  },
+  [mediaQueryForIOS]: {
+    fontSize: '13px',
+  },
 })
 
 interface State {
@@ -103,7 +114,7 @@ export class ValidatePassword extends React.PureComponent<{}, State> {
           <div className={formStyle}>
             <div className={cx(cardInputBox, formInputStyle)}>
               <input
-                className={innerInput}
+                className={classNames(innerInput, inputStyle)}
                 type="password"
                 value={this.state.password}
                 onChange={this.handlePasswordInputChange}

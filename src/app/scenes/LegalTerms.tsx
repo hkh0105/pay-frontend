@@ -30,7 +30,7 @@ export class LegalTerms extends React.PureComponent {
           {this.renderItem('서비스 이용약관', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/terms-of-use')}
           {this.renderItem('전자금융거래 이용약관', 'http://www.kcp.co.kr/etc.terms.do')}
           {this.renderItem('개인정보 수집 및 이용 동의', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/privacy-policy-collect-and-use')}
-          {this.renderItem('개인정보 동의', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/privacy-policy-sharing')}
+          {this.renderItem('개인정보 제공 동의', 'http://ridi-terms.s3-website.ap-northeast-2.amazonaws.com/ridi-pay/privacy-policy-sharing')}
         </ul>
       </ConnectedSceneWrapper>
     );
