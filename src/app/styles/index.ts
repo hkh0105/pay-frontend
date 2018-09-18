@@ -140,6 +140,9 @@ export const centralHeading2 = css({
 });
 
 injectGlobal({
+  '*': {
+    touchAction: 'manipulation'
+  },
   html: resetFont,
   input: resetFont,
   textarea: resetFont,

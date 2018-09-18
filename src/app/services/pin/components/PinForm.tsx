@@ -4,7 +4,7 @@ import * as React from 'react';
 import { FindPin } from 'app/services/pin/components/FindPin';
 import { PinInputGroup } from 'app/services/pin/components/PinInputGroup';
 import { PinButtonFunctionKey, PinButtonValue, PinPad } from 'app/services/pin/components/PinPad';
-import { applyGraySpinner, centralHeading2, resetLayout } from 'app/styles';
+import { applyGraySpinner, centralHeading2, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
 
 export interface PinFormProps {
   title: string;
@@ -71,7 +71,7 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
         <h2 className={centralHeading2}>{this.props.title}</h2>
         {!!this.props.description && <p className={styles.description}>{this.props.description}</p>}
         {
-          this.props.isSubmitting ? 
+          this.props.isSubmitting ?
             <div className={styles.spinner} /> :
             <PinInputGroup pinList={this.state.pinList}/>
         }
@@ -87,6 +87,19 @@ const styles = {
     height: '40px',
     margin: '35px 0 55px',
     ...applyGraySpinner('40px'),
+    [`.${paperStylesClassName} &`]: {
+      background: 'url(/public/images/spinner/gray_line.e.gif) no-repeat center center',
+      height: '20px',
+      width: 'auto',
+      margin: '30px 0 60px',
+      '&::after': {
+        content: 'none',
+      }
+    },
+    [`.${paperProStylesClassName} &`]: {
+      height: '30px',
+      margin: '46px 0 90px',
+    }
   } as {}),
   description: css({
     ...resetLayout,

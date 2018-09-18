@@ -43,6 +43,7 @@ const styles = {
       height: '36px',
       borderRadius: '3px',
       border: 'solid 2px black',
+      margin: '0 4px',
     },
     [`.${paperProStylesClassName} &`]: {
       width: '42px',
