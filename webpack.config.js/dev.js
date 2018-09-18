@@ -48,7 +48,7 @@ module.exports = {
     historyApiFallback: true,
     compress: true,
     hot: true,
-    open: true,
+    open: false,
   },
   watchOptions: {
     poll: true,
