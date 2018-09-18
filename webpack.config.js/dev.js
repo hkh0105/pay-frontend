@@ -44,6 +44,7 @@ module.exports = {
       '/api': 'http://localhost:3030', // TODO: change to backend local host
       secure: false,
     },
+    disableHostCheck: true,
     historyApiFallback: true,
     compress: true,
     hot: true,

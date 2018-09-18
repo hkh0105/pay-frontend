@@ -5,3 +5,4 @@ dist
 coverage
 .yarnclean
 stats.json
+.ssl
