@@ -1,10 +1,11 @@
+import * as classNames from 'classnames';
 import { css } from 'emotion';
 import * as React from 'react';
 
 import { FindPin } from 'app/services/pin/components/FindPin';
 import { PinInputGroup } from 'app/services/pin/components/PinInputGroup';
 import { PinButtonFunctionKey, PinButtonValue, PinPad } from 'app/services/pin/components/PinPad';
-import { applyGraySpinner, centralHeading2, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
+import { applyGraySpinner, breakpoints, centralHeading2, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
 
 export interface PinFormProps {
   title: string;
@@ -68,7 +69,7 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
   public render() {
     return (
       <>
-        <h2 className={centralHeading2}>{this.props.title}</h2>
+        <h2 className={classNames(centralHeading2, styles.title)}>{this.props.title}</h2>
         {!!this.props.description && <p className={styles.description}>{this.props.description}</p>}
         {
           this.props.isSubmitting ?
@@ -83,6 +84,11 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
 }
 
 const styles = {
+  title: css({
+    [breakpoints.pinPageSmallHeight]: {
+      marginTop: '6vh'
+    },
+  }),
   spinner: css({
     height: '40px',
     margin: '35px 0 55px',

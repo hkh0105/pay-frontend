@@ -19,7 +19,8 @@ export const paperProStylesClassName = 'paperPro';
 
 export const breakpoints = {
   desktopView: '@media (min-width: 481px)',
-  mouseDevice: '@media (hover: hover)'
+  mouseDevice: '@media (hover: hover)',
+  pinPageSmallHeight: '@media (max-height: 561px)'
 };
 
 export const defaultFontStyle = {

@@ -2,7 +2,7 @@ import { css } from 'emotion';
 import * as React from 'react';
 
 import { PinInput } from 'app/services/pin/components/PinInput';
-import { flexCenter, paperProStylesClassName, paperStylesClassName } from 'app/styles';
+import { breakpoints, flexCenter, paperProStylesClassName, paperStylesClassName } from 'app/styles';
 
 export interface PinInputGroupProps {
   pinList: number[];
@@ -29,11 +29,14 @@ const styles = {
   pinInputGroup: css({
     ...flexCenter,
     margin: '40px 0 60px',
+    [breakpoints.pinPageSmallHeight]: {
+      margin: '6vh 0'
+    },
     [`.${paperStylesClassName} &`]: {
       margin: '20px 0 50px',
     },
     [`.${paperProStylesClassName} &`]: {
       margin: '40px 0 80px',      
-    }
+    },
   }),
 };
