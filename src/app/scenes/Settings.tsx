@@ -11,6 +11,10 @@ import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
 import { Link } from 'react-router-dom';
 
+const settingWrapper = css({
+  backgroundColor: '#f2f6fc',
+});
+
 const settingHorizontalPadding = css({
   paddingLeft: '15px',
   paddingRight: '15px',
@@ -19,9 +23,9 @@ const settingHorizontalPadding = css({
 const settingItem = css(settingHorizontalPadding, {
   backgroundColor: '#fff',
   border: 0,
+  borderBottom: `1px solid ${colors.lightsteelblue_20}`,
   '& + &': {
     marginTop: '10px',
-    borderTop: `1px solid ${colors.lightsteelblue_20}`,
   }
 })
 
@@ -29,7 +33,7 @@ const settingDescriptionWrapper = css(settingHorizontalPadding, {
   color: colors.bluegray_40,
   fontSize: '13px',
   lineHeight: '18px',
-  margin: '10px 0',
+  padding: '10px 15px',
   'p': {
     margin: 0,
   },
@@ -47,6 +51,7 @@ const settingDefaultItem = css({
   display: 'flex',
   height: '52px',
   lineHeight: '52px',
+  borderTop: `1px solid ${colors.lightsteelblue_20}`,
 })
 
 const settingItemName = css({
@@ -64,7 +69,7 @@ const settingItemDescription = css({
 })
 
 const settingSwitchButtonWrapper = css({
-  lineHeight: '47px',
+  lineHeight: '48px',
 })
 
 const settingCardItemBody = css({
@@ -124,7 +129,7 @@ export class Settings extends React.Component<{}, State> {
           <Helmet>
             <title>설정 - 리디페이</title>
           </Helmet>
-          <div>
+          <div className={settingWrapper}>
             <div className={classNames(settingItem, settingCardItem)}>
               <div className={settingCardItemBody}>
                 <div className={settingCardItemBodyLeft}>

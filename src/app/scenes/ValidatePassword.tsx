@@ -46,10 +46,12 @@ const formSubmitButtonstyle = css({
 
 const inputStyle = css({
   [mediaQueryForIE]: {
-    fontSize: '11px',
+    fontSize: '10px',
+    letterSpacing: 1,
   },
   [mediaQueryForIOS]: {
-    fontSize: '13px',
+    fontSize: '10px',
+    letterSpacing: 1,
   },
 })
 

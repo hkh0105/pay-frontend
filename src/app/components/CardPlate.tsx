@@ -69,9 +69,10 @@ const cardIssuerNameText = css({
 });
 
 export const CardPlate: React.SFC<CardPlateProps> = ({ cardIssuerCode, cardIssuerName, cardNumber, className }) => {
-  const backgroundColor = cardIssuerCode
-    ? cardIssuerStyleSets[cardIssuerCode].backgroundColor
-    : '#005499';
+  let backgroundColor = cardIssuerCode && cardIssuerStyleSets[cardIssuerCode].backgroundColor
+  if (!backgroundColor) {
+    backgroundColor = cardIssuerName ? '#005499' : '#fff'
+  }
   return (
     <div
       className={classNames(wrapper, className, { [emptyCardPlate]: !cardIssuerCode })}
