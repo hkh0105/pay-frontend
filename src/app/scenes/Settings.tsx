@@ -64,7 +64,7 @@ const settingItemDescription = css({
 })
 
 const settingSwitchButtonWrapper = css({
-  lineHeight: '48px',
+  lineHeight: '47px',
 })
 
 const settingCardItemBody = css({

@@ -224,14 +224,15 @@ export const cardFormSubmitButtonClass = css({
   border: `1px solid ${colors.dodgerblue_60}`,
   color: '#fff',
   letterSpacing: '-0.4px',
-  fontWeight: 'bold'
+  fontWeight: 'bold',
+  '&:hover:enabled': {
+    backgroundColor: colors.dodgerblue_60
+  },
+  cursor: 'pointer'
 });
 
 export const cardFormSubmitDisabledButtonClass = css({
   backgroundColor: colors.lightsteelblue_50,
   border: 0,
-  opacity: 1,
-  '&:hover': {
-    backgroundColor: colors.lightsteelblue_60
-  }
+  opacity: 1
 });

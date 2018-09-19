@@ -31,9 +31,7 @@ const formStyle = css({
 const formInputStyle = css({
   flex: '1',
   padding: '8px 10px 10px',
-  '::-ms-clear, input::-ms-reveal': {
-    display: 'none',
-  }
+  height: '40px',
 });
 
 const formInputInteractiveStyle = css({
@@ -41,6 +39,7 @@ const formInputInteractiveStyle = css({
 });
 
 const formSubmitButtonstyle = css({
+  display: 'inline-block',
   width: '60px',
   marginLeft: '6px',
 })

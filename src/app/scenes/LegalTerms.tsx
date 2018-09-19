@@ -65,6 +65,9 @@ const s = {
     fontSize: '13px',
     lineHeight: '46px',
     textDecoration: 'none',
+    '&:hover': {
+      color: colors.slategray_50
+    }
   }),
   itemArrowIcon: css({
     fill: colors.slategray_40,

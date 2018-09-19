@@ -8,6 +8,7 @@ import { CardIssuerCode, cardIssuerStyleSets } from 'app/constants/cards';
 export interface CardPlateProps {
   cardNumber: string;
   cardIssuerCode: CardIssuerCode | null;
+  cardIssuerName?: string;
   className?: string;
 }
 
@@ -57,22 +58,38 @@ const emptyCardPlate = css({
   borderRadius: '6px',
 })
 
-export const CardPlate: React.SFC<CardPlateProps> = ({ cardIssuerCode, cardNumber, className }) => {
+const cardIssuerNameText = css({
+  position: 'absolute',
+  top: '10px',
+  left: '10px',
+  width: '220px',
+  fontSize: '16px',
+  color: '#fff',
+  fontWeight: 'bold',
+});
+
+export const CardPlate: React.SFC<CardPlateProps> = ({ cardIssuerCode, cardIssuerName, cardNumber, className }) => {
   const backgroundColor = cardIssuerCode
     ? cardIssuerStyleSets[cardIssuerCode].backgroundColor
-    : '#fff';
+    : '#005499';
   return (
     <div
       className={classNames(wrapper, className, { [emptyCardPlate]: !cardIssuerCode })}
       style={{ backgroundColor }}
     >
-      {cardIssuerCode
+      {cardIssuerCode || cardIssuerName
         ? <>
-          <img
-            className={cardLogoImage}
-            src={`/public/images/card_logo/logo_${cardIssuerCode.toLowerCase()}.png`}
-            alt="카드 이미지"
-          />
+          {cardIssuerCode
+              ? (
+              <img
+                className={cardLogoImage}
+                src={`/public/images/card_logo/logo_${cardIssuerCode.toLowerCase()}.png`}
+                alt="카드 이미지"
+              />)
+              : (
+                <span className={cardIssuerNameText}>{cardIssuerName}</span>
+              )
+          }
           <p className={cardNumberText}>{cardNumber}</p>
         </>
         : <span className={emptyCardPlaceholderText}>등록된 카드가 없습니다.</span>
@@ -117,6 +134,18 @@ export const TestCardPlates: React.SFC = () => {
           />
         )
       })}
+      <CardPlate
+        cardIssuerCode={null}
+        cardIssuerName="케이뱅크"
+        cardNumber="1093 04** **** ****"
+        className={css({ margin: '10px', display: 'inline-block' })}
+      />
+      <CardPlate
+        cardIssuerCode={null}
+        cardIssuerName="K Bank"
+        cardNumber="1093 04** **** ****"
+        className={css({ margin: '10px', display: 'inline-block' })}
+      />
     </div>
   )
 };
