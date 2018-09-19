@@ -16,7 +16,6 @@ const styles = {
   pinButton: css({
     ...resetButton,
     ...flexCenter,
-    // textAlign: 'center',
     backgroundColor: '#59667a',
     width: '100%',
     height: '100%',

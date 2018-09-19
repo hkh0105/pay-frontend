@@ -2,7 +2,7 @@ import { css } from 'emotion';
 import * as React from 'react';
 
 import { Icon } from '@ridi/rsg';
-import { a11y, museoSansFontFamily, paperProStylesClassName, paperStylesClassName, resetFont, resetLayout } from 'app/styles';
+import { a11y, breakpoints, museoSansFontFamily, paperProStylesClassName, paperStylesClassName, resetFont, resetLayout } from 'app/styles';
 import { PinButton } from './PinButton';
 
 export enum PinButtonFunctionKey {
@@ -94,6 +94,9 @@ const styles = {
     },
     'tr + tr &': {
       borderTop: borderStyle,
+    },
+    [breakpoints.pinPageXSmallHeight]: {
+      height: '53px',
     },
     [`.${paperStylesClassName} tr:last-child &`]: {
       borderBottom: paperBorderStyle,
