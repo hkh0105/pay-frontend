@@ -7,12 +7,14 @@ import { history } from 'app/config';
 import { AddCard, Error404, Payment, SetOnetouch, SetPin, Settings, ValidatePassword, ValidatePin } from 'app/scenes';
 
 import { TestCardPlates } from 'app/components/CardPlate';
+import { ConnectedEnsureUserProfile } from 'app/components/EnsureUserProfile';
 import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
 import { LegalTerms } from 'app/scenes/LegalTerms';
 
 export const Routes: React.SFC = () => {
   return (
     <ConnectedRouter history={history}>
+      <ConnectedEnsureUserProfile>
       <ConnectedScrollToTop>
         <Switch>
           <Route exact={true} path="/" render={() => <ConnectedPrivateRoute component={Settings} />} />
@@ -28,6 +30,7 @@ export const Routes: React.SFC = () => {
           <Route render={() => <Error404 />} />
         </Switch>
       </ConnectedScrollToTop>
+      </ConnectedEnsureUserProfile>
     </ConnectedRouter>
   );
 };
