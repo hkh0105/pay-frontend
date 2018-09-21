@@ -39,8 +39,9 @@ export function request(config: RequestConfig): AxiosPromise {
   return axios(config);
 }
 
+const mockAxiosInstance = axios.create();
 export function getMockRequest(mockHandler: (mock: MockAdapter) => void) {
-  const mock = new MockAdapter(axios, { delayResponse: 2000 });
+  const mock = new MockAdapter(mockAxiosInstance, { delayResponse: 2000 });
   mockHandler(mock);
   return function mockRequest(config: RequestConfig): AxiosPromise {
     return axios(config);
