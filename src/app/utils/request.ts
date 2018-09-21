@@ -36,6 +36,7 @@ export interface RequestConfig extends AxiosRequestConfig {
 }
 
 export function request(config: RequestConfig): AxiosPromise {
+  config.baseURL = process.env.API_BASE_URL;
   return axios(config);
 }
 

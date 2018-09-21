@@ -6,3 +6,4 @@ coverage
 .yarnclean
 stats.json
 .ssl
+.env

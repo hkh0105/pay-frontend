@@ -1,13 +1,14 @@
 // shared config (dev and prod)
+const webpack = require('webpack');
 const path = require('path');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ChunkRenamePlugin = require('webpack-chunk-rename-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const {  
-  baseDir, 
+const {
+  baseDir,
   srcDir,
-  outputDir, 
+  outputDir,
 } = require('./paths');
 
 module.exports = {
@@ -59,7 +60,7 @@ module.exports = {
       srcDir,
       'node_modules',
     ],
-    symlinks: false, // for performance 
+    symlinks: false, // for performance
   },
   optimization: {
     namedModules: true,
@@ -82,6 +83,7 @@ module.exports = {
     },
   },
   plugins: [
+    new webpack.EnvironmentPlugin(['API_BASE_URL']),
     new CheckerPlugin(),
     new ChunkRenamePlugin({
       initialChunksWithEntry: true,
