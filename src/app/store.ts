@@ -6,6 +6,8 @@ import { all } from 'redux-saga/effects';
 
 import { env, history } from 'app/config';
 import { environmentReducer, environmentSaga, EnvironmentState } from 'app/services/environment';
+import { userReducer } from 'app/services/user/userReducer';
+import { userSaga } from 'app/services/user/userSaga';
 
 declare global {
   interface Window {
@@ -15,16 +17,10 @@ declare global {
 
 function* rootSaga(dispatch: Dispatch<RootState>) {
   yield all([
-    // userRootSaga(),
+    userSaga(),
     // trackingSaga(),
     environmentSaga()
   ]);
-}
-
-export interface RootState {
-  router: RouterState;
-  // user: UserState;
-  environment: EnvironmentState;
 }
 
 const composeEnhancers = env.isDevelopment
@@ -34,9 +30,11 @@ const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
   router: routerReducer,
-  // user: userReducer,
+  user: userReducer,
   environment: environmentReducer
 });
+
+export type RootState = ReturnType<typeof reducers>;
 
 const enhancers = composeEnhancers(applyMiddleware(routerMiddleware(history), sagaMiddleware));
 

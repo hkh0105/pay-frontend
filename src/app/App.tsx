@@ -1,9 +1,14 @@
 import * as React from 'react';
-import { Provider, Store } from 'react-redux';
+import { Provider } from 'react-redux';
+import { Store } from 'redux'
 
 import { Routes } from 'app/routes';
 
-export const App: React.SFC<{ store: Store<{}> }> = ({ store }) => (
+interface Props {
+  store: Store;
+}
+
+export const App: React.SFC<Props> = ({ store }) => (
   <Provider store={store}>
     <Routes />
   </Provider>
