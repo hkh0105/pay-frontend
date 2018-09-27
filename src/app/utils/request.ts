@@ -8,7 +8,7 @@ import { env } from 'app/config';
 // Retry on a network error or a 5xx error on an idempotent request https://github.com/softonic/axios-retry
 // You can disable retry by request adding {'axios-retry': { retries: 0 }} to axios config
 axiosRetry(axios, {
-  retries: 2,
+  retries: 0,
   retryCondition: (err: AxiosError) => err.config.method === 'get'
 });
 
@@ -21,7 +21,7 @@ axios.interceptors.response.use(
     if (error && error.response && error.response.status === 404) {
       // handle 404 error
     } else if (error && error.response && error.response.status === 401) {
-      window.location.replace(`${window.location.protocol}//${window.location.host}`);
+      // window.location.replace(`${window.location.protocol}//${window.location.host}`);
     }
     return Promise.reject(error.response);
   }
@@ -37,6 +37,7 @@ export interface RequestConfig extends AxiosRequestConfig {
 
 export function request(config: RequestConfig): AxiosPromise {
   config.baseURL = process.env.API_BASE_URL;
+  config.withCredentials = true;
   return axios(config);
 }
 

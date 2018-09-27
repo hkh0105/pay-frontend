@@ -81,7 +81,7 @@
     "vex-js": "3.0.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --https --cert=.ssl/pay.local.ridi.io.pem --key=.ssl/pay.local.ridi.io-key.pem",
+    "start": "webpack-dev-server --host 0.0.0.0 --https --cert=.ssl/pay.ridi.io.pem --key=.ssl/pay.ridi.io-key.pem",
     "clean": "rm -rf dist",
     "dev": "webpack",
     "dev:mock": "webpack --env.mock --env.delayResponse=1000 -w",

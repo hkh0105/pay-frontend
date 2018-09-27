@@ -4,4 +4,4 @@ deploy:
 	--recursive
 
 cert:
-	mkdir -p .ssl && cd .ssl && mkcert pay.local.ridi.io
+	mkdir -p .ssl && cd .ssl && mkcert pay.ridi.io
