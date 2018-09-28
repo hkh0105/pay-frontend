@@ -14,6 +14,7 @@ function* watchLoadUserProfileRequest() {
     const response = yield call(requestProfile);
     yield put(UserActions.fetchUserProfileSuccess(response.data));
   } catch (e) {
-    yield put(UserActions.fetchUserProfileFailure());
+    const isUserLoggedIn = e && e.data && e.data.code === 'NOT_FOUND_USER';
+    yield put(UserActions.fetchUserProfileFailure({ isUserLoggedIn }));
   }
 }

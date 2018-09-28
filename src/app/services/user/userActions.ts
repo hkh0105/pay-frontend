@@ -1,4 +1,4 @@
-import { UserProfileResponse } from 'app/services/user/userTypes';
+import { FetchUserProfileFailurePayload, UserProfileResponse } from 'app/services/user/userTypes';
 import { ActionsUnion, createAction } from 'app/types/redux';
 
 export enum UserActionTypes {
@@ -11,7 +11,8 @@ export const UserActions = {
   fetchUserProfileRequest: () => createAction(UserActionTypes.FETCH_USER_PROFILE_REQUEST),
   fetchUserProfileSuccess: (payload: UserProfileResponse) =>
     createAction(UserActionTypes.FETCH_USER_PROFILE_SUCCESS, payload),
-  fetchUserProfileFailure: () => createAction(UserActionTypes.FETCH_USER_PROFILE_FAILURE)
+  fetchUserProfileFailure: (payload: FetchUserProfileFailurePayload) =>
+    createAction(UserActionTypes.FETCH_USER_PROFILE_FAILURE, payload)
 };
 
 export type UserActions = ActionsUnion<typeof UserActions>;

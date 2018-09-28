@@ -6,19 +6,15 @@ import { Dispatch } from 'redux';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 
-class EnsureUserProfile extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-  }
-
+class EnsureLogin extends React.Component<Props> {
   public componentDidMount() {
-    if (!this.props.isInitialized) {
+    if (!this.props.isUserLoggedIn) {
       this.props.requestUserProfile();
     }
   }
 
   public render() {
-    if (this.props.isInitialized) {
+    if (this.props.isUserLoggedIn) {
       return this.props.children;
     }
     return null;
@@ -27,8 +23,7 @@ class EnsureUserProfile extends React.Component<Props> {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isFetching: state.user.isProfileFetching,
-    isInitialized: !!state.user.isProfileInitialized,
+    isUserLoggedIn: !!state.user.isUserLoggedIn,
   }
 }
 
@@ -38,6 +33,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   }
 }
 
-export const ConnectedEnsureUserProfile = connect(mapStateToProps, mapDispatchToProps, null, {
+export const ConnectedEnsureLogin = connect(mapStateToProps, mapDispatchToProps, null, {
   pure: false, // Make sure re-render for its children
-})(EnsureUserProfile);
+})(EnsureLogin);

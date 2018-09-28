@@ -9,7 +9,7 @@ export interface UserProfileResponse {
 }
 
 export interface UserState {
-  isProfileInitialized: boolean;
+  isUserLoggedIn: boolean;
   isProfileFetching: boolean;
   profile?: {
     paymentMethods: {
@@ -18,4 +18,8 @@ export interface UserState {
     hasPin: boolean;
     isUsingOnetouchPay: boolean;
   };
+}
+
+export interface FetchUserProfileFailurePayload {
+  isUserLoggedIn: boolean;
 }

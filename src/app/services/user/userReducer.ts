@@ -4,7 +4,7 @@ import { Reducer } from 'redux';
 
 const initailState: UserState = {
   isProfileFetching: false,
-  isProfileInitialized: false
+  isUserLoggedIn: false
 };
 
 export const userReducer: Reducer<UserState, UserActions> = (state = initailState, action) => {
@@ -19,7 +19,7 @@ export const userReducer: Reducer<UserState, UserActions> = (state = initailStat
       return {
         ...state,
         isProfileFetching: false,
-        isProfileInitialized: true,
+        isUserLoggedIn: true,
         profile: {
           hasPin: action.payload.has_pin,
           isUsingOnetouchPay: action.payload.is_using_onetouch_pay,
@@ -28,7 +28,11 @@ export const userReducer: Reducer<UserState, UserActions> = (state = initailStat
       };
     }
     case UserActionTypes.FETCH_USER_PROFILE_FAILURE: {
-      return { ...state, isProfileFetching: false, isProfileInitialized: true };
+      return {
+        ...state,
+        isProfileFetching: false,
+        isUserLoggedIn: action.payload.isUserLoggedIn
+      };
     }
   }
   return state;
