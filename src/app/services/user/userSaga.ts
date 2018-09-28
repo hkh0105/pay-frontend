@@ -2,7 +2,7 @@ import { UserActions, UserActionTypes } from 'app/services/user/userActions';
 import { requestProfile } from 'app/services/user/userRequests';
 import { UserProfileResponse } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 export function* userSaga() {

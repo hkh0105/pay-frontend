@@ -12,13 +12,13 @@ class EnsureUserProfile extends React.Component<Props> {
   }
 
   public componentDidMount() {
-    if (!this.props.isProfileFetched) {
+    if (!this.props.isInitialized) {
       this.props.requestUserProfile();
     }
   }
 
   public render() {
-    if (this.props.isProfileFetched) {
+    if (this.props.isInitialized) {
       return this.props.children;
     }
     return null;
@@ -28,7 +28,7 @@ class EnsureUserProfile extends React.Component<Props> {
 const mapStateToProps = (state: RootState) => {
   return {
     isFetching: state.user.isProfileFetching,
-    isProfileFetched: !!state.user.profile,
+    isInitialized: !!state.user.isProfileInitialized,
   }
 }
 
@@ -38,4 +38,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   }
 }
 
-export const ConnectedEnsureUserProfile = connect(mapStateToProps, mapDispatchToProps)(EnsureUserProfile);
+export const ConnectedEnsureUserProfile = connect(mapStateToProps, mapDispatchToProps, null, {
+  pure: false, // Make sure re-render for its children
+})(EnsureUserProfile);

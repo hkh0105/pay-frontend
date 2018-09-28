@@ -9,6 +9,7 @@ export interface UserProfileResponse {
 }
 
 export interface UserState {
+  isProfileInitialized: boolean;
   isProfileFetching: boolean;
   profile?: {
     paymentMethods: {
