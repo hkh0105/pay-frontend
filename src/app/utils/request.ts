@@ -3,7 +3,8 @@ import MockAdapter from 'axios-mock-adapter';
 /* tslint:disable-next-line */
 const axiosRetry = require('axios-retry'); // https://github.com/softonic/axios-retry/issues/53
 
-import { env } from 'app/config';
+import { env, history } from 'app/config';
+import { urls } from 'app/routes';
 
 // Retry on a network error or a 5xx error on an idempotent request https://github.com/softonic/axios-retry
 // You can disable retry by request adding {'axios-retry': { retries: 0 }} to axios config
@@ -18,10 +19,14 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error && error.response && error.response.status === 404) {
-      // handle 404 error
-    } else if (error && error.response && error.response.status === 401) {
-      // window.location.replace(`${window.location.protocol}//${window.location.host}`);
+    const { code } = error.response.data;
+    const { pathname, href } = location;
+    if (code === 'UNAUTHORIZED') {
+      location.replace(`${urls.RIDIBOOKS_LOGIN}?return_url=${href}`);
+    } else if (code === 'NOT_FOUND_USER') {
+      if (pathname !== urls.ADD_CARD) {
+        history.replace(urls.ADD_CARD);
+      }
     }
     return Promise.reject(error.response);
   }
