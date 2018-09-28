@@ -83,7 +83,10 @@ module.exports = {
     },
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['API_BASE_URL']),
+    new webpack.EnvironmentPlugin([
+      'API_BASE_URL',
+      'RIDIBOOKS_URL',
+    ]),
     new CheckerPlugin(),
     new ChunkRenamePlugin({
       initialChunksWithEntry: true,
