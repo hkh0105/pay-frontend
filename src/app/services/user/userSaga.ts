@@ -27,7 +27,9 @@ function* watchAddCardRequest(action: ReturnType<typeof UserActions.addCardReque
   try {
     const response: AxiosResponse<AddCardResponse> = yield call(requestAddCard, action.payload);
     yield put(UserActions.addCardSuccess(response.data));
+    history.replace(urls.SETTINGS);
   } catch (e) {
+    alert(e.data.message);
     yield put(UserActions.addCardFailure());
   }
 }

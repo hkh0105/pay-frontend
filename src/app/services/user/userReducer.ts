@@ -50,7 +50,7 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isAddingCardFetching: false,
-        cards: action.payload.cards
+        cards: [...state.cards, action.payload.card]
       };
     }
     case UserActionTypes.ADD_CARD_FAILURE: {
@@ -68,6 +68,7 @@ export const userReducer: Reducer<UserState, UserActions> = (
     case UserActionTypes.DELETE_CARD_SUCCESS: {
       return {
         ...state,
+        isDeletingCardFetching: false,
         cards: state.cards.filter(
           (card) => card.payment_method_id !== action.payload.payment_method_id
         )

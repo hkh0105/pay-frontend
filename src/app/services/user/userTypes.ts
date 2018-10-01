@@ -30,7 +30,7 @@ export interface AddCardRequestPayload {
 }
 
 export interface AddCardResponse {
-  cards: Card[];
+  card: Card;
 }
 
 export interface DeleteCardRequestPayload {

@@ -306,7 +306,6 @@ export class CardForm extends React.Component<Props, CardFormState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-  debugger;
   return {
     isFetching: state.user.isAddingCardFetching,
     cardExists: state.user.cards.length > 0,
