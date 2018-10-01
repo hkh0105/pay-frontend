@@ -152,8 +152,7 @@ export class Settings extends React.Component<{}, State> {
                         color="blue"
                         size="medium"
                         className={addCardButton}
-                        // TODO: Should fix Button interface...
-                        component={Link as any}
+                        component={Link}
                         to="/settings/cards/add"
                       >
                         <Icon name="plus_1" className={addCardIcon} />
