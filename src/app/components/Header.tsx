@@ -28,10 +28,12 @@ export const Header: React.SFC<HeaderProps> = ({
   );
 };
 
+export const headerHeight = '42px';
 const header = css({
   ...resetLayout,
   ...flexSpaceBetween,
-  height: '42px',
+  boxSizing: 'border-box',
+  height: headerHeight,
   borderBottom: 'solid 1px #d6e3f0',
   [`.${paperStylesClassName} &`]: {
     height: '49px',
