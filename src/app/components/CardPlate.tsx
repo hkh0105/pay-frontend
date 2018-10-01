@@ -4,11 +4,10 @@ import * as React from 'react'
 
 import { colors } from 'app/constants/colors';;
 import { CardIssuerCode, cardIssuerStyleSets } from 'app/constants/cards';
+import { Card } from 'app/services/cards/cardTypes';
 
 export interface CardPlateProps {
-  cardNumber: string;
-  cardIssuerCode: CardIssuerCode | null;
-  cardIssuerName?: string;
+  card?: Card;
   className?: string;
 }
 
@@ -68,85 +67,26 @@ const cardIssuerNameText = css({
   fontWeight: 'bold',
 });
 
-export const CardPlate: React.SFC<CardPlateProps> = ({ cardIssuerCode, cardIssuerName, cardNumber, className }) => {
-  let backgroundColor = cardIssuerCode && cardIssuerStyleSets[cardIssuerCode].backgroundColor
-  if (!backgroundColor) {
-    backgroundColor = cardIssuerName ? '#005499' : '#fff'
+export const CardPlate: React.SFC<CardPlateProps> = ({ card, className }) => {
+  if (!card) {
+    return (
+      <div className={classNames([wrapper, className])} style={{ backgroundColor: '#fff' }}>
+        <span className={emptyCardPlaceholderText}>등록된 카드가 없습니다.</span>
+      </div>
+    )
   }
+  const { iin, color, logo_image_url } = card;
   return (
     <div
-      className={classNames(wrapper, className, { [emptyCardPlate]: !cardIssuerCode })}
-      style={{ backgroundColor }}
+      className={classNames(wrapper, className, { [emptyCardPlate]: !iin })}
+      style={{ backgroundColor: color }}
     >
-      {cardIssuerCode || cardIssuerName
-        ? <>
-          {cardIssuerCode
-              ? (
-              <img
-                className={cardLogoImage}
-                src={`/public/images/card_logo/logo_${cardIssuerCode.toLowerCase()}.png`}
-                alt="카드 이미지"
-              />)
-              : (
-                <span className={cardIssuerNameText}>{cardIssuerName}</span>
-              )
-          }
-          <p className={cardNumberText}>{cardNumber}</p>
-        </>
-        : <span className={emptyCardPlaceholderText}>등록된 카드가 없습니다.</span>
-      }
+      <img
+        className={cardLogoImage}
+        src={logo_image_url}
+        alt="카드 이미지"
+      />
+      <p className={cardNumberText}>{iin.replace(/(.{4})(.{2})/g, "$1 $2** **** ****")}</p>
     </div>
   );
-};
-
-export const TestCardPlates: React.SFC = () => {
-  const codes: CardIssuerCode[] = [
-    'CCKM',
-    'CCNH',
-    'CCSG',
-    'CCCT',
-    'CCHM',
-    'CVSF',
-    'CCAM',
-    'CCLO',
-    'CCHN',
-    'CCSS',
-    'CCKJ',
-    'CCSU',
-    'CCJB',
-    'CCCJ',
-    'CCLG',
-    'CMCF',
-    'CJCF',
-    'CCKE',
-    'CCDI',
-    'CCUF',
-    'CCBC'
-  ];
-  return (
-    <div>
-      {codes.map((code) => {
-        return (
-          <CardPlate
-            cardIssuerCode={code}
-            key={code}
-            cardNumber="1093 04** **** ****"
-            className={css({ margin: '10px', display: 'inline-block' })}
-          />
-        )
-      })}
-      <CardPlate
-        cardIssuerCode={null}
-        cardIssuerName="케이뱅크"
-        cardNumber="1093 04** **** ****"
-        className={css({ margin: '10px', display: 'inline-block' })}
-      />
-      <CardPlate
-        cardIssuerCode={null}
-        cardIssuerName="K Bank"
-        cardNumber="1093 04** **** ****"
-        className={css({ margin: '10px', display: 'inline-block' })}
-      />
-    </div>
-  )
 };
