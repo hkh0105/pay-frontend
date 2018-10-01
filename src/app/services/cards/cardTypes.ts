@@ -1,6 +1,6 @@
 export interface Card {
   payment_method_id: string;
-  iin: number;
+  iin: string;
   issuer_name: string;
   color: string;
   logo_image_url: string;

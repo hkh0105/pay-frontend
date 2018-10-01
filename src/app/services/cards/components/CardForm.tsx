@@ -6,6 +6,8 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import { SpaceKeyCode } from 'app/components';
+import { history } from 'app/config';
+import { urls } from 'app/routes';
 import {
   cardCheckboxInputKey,
   CardFormState,
@@ -41,7 +43,7 @@ function preventDefaultOnSpaceKeyEvent(e: React.KeyboardEvent<HTMLInputElement>)
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 
-export class CardForm extends React.PureComponent<Props, CardFormState> {
+export class CardForm extends React.Component<Props, CardFormState> {
   public state = initialCardFormState;
   public inputRefs = initialCardInputRefs;
 
@@ -169,6 +171,10 @@ export class CardForm extends React.PureComponent<Props, CardFormState> {
   }
 
   public componentDidMount() {
+    if (this.props.cardExists) {
+      history.replace(urls.SETTINGS);
+      return;
+    }
     if (!isTouchDevice) {
       // autofocus 속성을 사용하거나 requestAnimationFrame 사용 시
       // 포커스 outline 스타일이 보였다 사라지므로 setTimeout으로 처리
@@ -300,8 +306,10 @@ export class CardForm extends React.PureComponent<Props, CardFormState> {
 }
 
 const mapStateToProps = (state: RootState) => {
+  debugger;
   return {
     isFetching: state.user.isAddingCardFetching,
+    cardExists: state.user.cards.length > 0,
   }
 }
 

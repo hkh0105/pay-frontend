@@ -114,22 +114,17 @@ interface State {
   cardIssuerCode: CardIssuerCode | null;
 }
 
-export class Settings extends React.Component<Props, State> {
-  public state: State = {
-    isOneTouchEnabled: false,
-    cardIssuerCode: 'CCCT',
-  };
-
+export class Settings extends React.Component<Props> {
   private handleDeleteCardButtonClick = () => {
     // TODO: Should use <Popup />
     if (!confirm('카드를 삭제하시겠습니까?')) {
       return;
     }
-    // TODO: Should be a real payment method id
-    this.props.requestDeleteCard({ payment_method_id: 'TEST' });
+    this.props.requestDeleteCard({ payment_method_id: this.props.user.cards[0]!.payment_method_id });
   }
 
   public render() {
+    const { cards, isUsingOnetouchPay, isDeletingCardFetching } = this.props.user;
     return (
       <>
         <ConnectedSceneWrapper>
@@ -144,14 +139,14 @@ export class Settings extends React.Component<Props, State> {
                   <p className={settingItemDescription}>카드는 1개만 등록 가능합니다.</p>
                 </div>
                 <div>
-                  {this.state.cardIssuerCode
+                  {cards.length
                     ? (
                       <Button
                         outline={true}
                         color="gray"
                         size="medium"
                         className={deleteCardButton}
-                        spinner={this.props.user.isDeletingCardFetching}
+                        spinner={isDeletingCardFetching}
                         onClick={this.handleDeleteCardButtonClick}
                       >카드 삭제</Button>
                     )
@@ -172,8 +167,7 @@ export class Settings extends React.Component<Props, State> {
               </div>
               <div className={cardPlateWrapper}>
                 <CardPlate
-                  cardIssuerCode={this.state.cardIssuerCode}
-                  cardNumber="1093 04** **** ****"
+                  card={cards.length ? cards[0] : undefined}
                 />
               </div>
             </div>
@@ -181,8 +175,8 @@ export class Settings extends React.Component<Props, State> {
               <h3 className={settingItemName}>원터치 결제 사용</h3>
               <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
-                  isChecked={this.state.isOneTouchEnabled}
-                  onChange={() => this.setState({ isOneTouchEnabled: !this.state.isOneTouchEnabled })}
+                  isChecked={isUsingOnetouchPay}
+                  onChange={() => null /* TODO */}
                   id="oneTouchModeInput"
                 />
               </div>

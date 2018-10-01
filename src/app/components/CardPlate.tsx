@@ -70,7 +70,7 @@ const cardIssuerNameText = css({
 export const CardPlate: React.SFC<CardPlateProps> = ({ card, className }) => {
   if (!card) {
     return (
-      <div className={classNames([wrapper, className])} style={{ backgroundColor: '#fff' }}>
+      <div className={classNames([wrapper, className, emptyCardPlate])} style={{ backgroundColor: '#fff' }}>
         <span className={emptyCardPlaceholderText}>등록된 카드가 없습니다.</span>
       </div>
     )
@@ -78,7 +78,7 @@ export const CardPlate: React.SFC<CardPlateProps> = ({ card, className }) => {
   const { iin, color, logo_image_url } = card;
   return (
     <div
-      className={classNames(wrapper, className, { [emptyCardPlate]: !iin })}
+      className={classNames(wrapper, className)}
       style={{ backgroundColor: color }}
     >
       <img

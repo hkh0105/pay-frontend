@@ -11,6 +11,7 @@ import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
 import { LegalTerms } from 'app/scenes/LegalTerms';
 
 export const urls = {
+  SETTINGS: '/settngs',
   ADD_CARD: '/settings/cards/add',
   RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
 };
@@ -23,7 +24,7 @@ export const Routes: React.SFC = () => {
         <Switch>
           <Route exact={true} path="/" render={() => <ConnectedPrivateRoute component={Settings} />} />
           <Route exact={true} path="/payments/:reservation_id" render={() => <ConnectedPrivateRoute component={Payment} />} />
-          <Route exact={true} path="/settings" render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
+          <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.ADD_CARD} render={() => <ConnectedPrivateRoute component={AddCard} />} />
           <Route exact={true} path="/settings/pin/register" render={() => <ConnectedPrivateRoute component={SetPin} />} />
           <Route exact={true} path="/settings/onetouch" render={() => <ConnectedPrivateRoute component={SetOnetouch} />} />

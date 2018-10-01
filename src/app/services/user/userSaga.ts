@@ -1,3 +1,5 @@
+import { history } from 'app/config';
+import { urls } from 'app/routes';
 import { UserActions, UserActionTypes } from 'app/services/user/userActions';
 import { requestAddCard, requestDeleteCard, requestProfile } from 'app/services/user/userRequests';
 import { AddCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
@@ -34,6 +36,7 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
   try {
     yield call(requestDeleteCard, action.payload);
     yield put(UserActions.deleteCardSuccess(action.payload));
+    history.replace(urls.SETTINGS);
   } catch (e) {
     yield put(UserActions.deleteCardFailure());
   }

@@ -13,13 +13,9 @@ export interface UserState {
   isProfileFetching: boolean;
   isAddingCardFetching: boolean;
   isDeletingCardFetching: boolean;
-  profile?: {
-    paymentMethods: {
-      cards: Card[];
-    };
-    hasPin: boolean;
-    isUsingOnetouchPay: boolean;
-  };
+  hasPin: boolean;
+  isUsingOnetouchPay: boolean;
+  cards: Card[];
 }
 
 export interface FetchUserProfileFailurePayload {

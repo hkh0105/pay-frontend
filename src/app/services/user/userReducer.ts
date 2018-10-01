@@ -6,7 +6,10 @@ const initailState: UserState = {
   isProfileFetching: false,
   isUserLoggedIn: false,
   isAddingCardFetching: false,
-  isDeletingCardFetching: false
+  isDeletingCardFetching: false,
+  cards: [],
+  hasPin: false,
+  isUsingOnetouchPay: false
 };
 
 export const userReducer: Reducer<UserState, UserActions> = (
@@ -25,11 +28,9 @@ export const userReducer: Reducer<UserState, UserActions> = (
         ...state,
         isProfileFetching: false,
         isUserLoggedIn: true,
-        profile: {
-          hasPin: action.payload.has_pin,
-          isUsingOnetouchPay: action.payload.is_using_onetouch_pay,
-          paymentMethods: action.payload.payment_methods
-        }
+        hasPin: action.payload.has_pin,
+        isUsingOnetouchPay: action.payload.is_using_onetouch_pay,
+        cards: action.payload.payment_methods.cards
       };
     }
     case UserActionTypes.FETCH_USER_PROFILE_FAILURE: {
@@ -49,13 +50,7 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isAddingCardFetching: false,
-        profile: {
-          hasPin: state.profile!.hasPin,
-          isUsingOnetouchPay: state.profile!.isUsingOnetouchPay,
-          paymentMethods: {
-            cards: action.payload.cards
-          }
-        }
+        cards: action.payload.cards
       };
     }
     case UserActionTypes.ADD_CARD_FAILURE: {
@@ -73,14 +68,9 @@ export const userReducer: Reducer<UserState, UserActions> = (
     case UserActionTypes.DELETE_CARD_SUCCESS: {
       return {
         ...state,
-        profile: {
-          ...state.profile!,
-          paymentMethods: {
-            cards: state.profile!.paymentMethods.cards.filter(
-              (card) => card.payment_method_id !== action.payload.payment_method_id
-            )
-          }
-        }
+        cards: state.cards.filter(
+          (card) => card.payment_method_id !== action.payload.payment_method_id
+        )
       };
     }
     case UserActionTypes.DELETE_CARD_FAILURE: {
