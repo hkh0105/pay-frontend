@@ -5,7 +5,8 @@ import { Reducer } from 'redux';
 const initailState: UserState = {
   isProfileFetching: false,
   isUserLoggedIn: false,
-  isAddingCardFetching: false
+  isAddingCardFetching: false,
+  isDeletingCardFetching: false
 };
 
 export const userReducer: Reducer<UserState, UserActions> = (
@@ -61,6 +62,31 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isAddingCardFetching: false
+      };
+    }
+    case UserActionTypes.DELETE_CARD_REQUEST: {
+      return {
+        ...state,
+        isDeletingCardFetching: true
+      };
+    }
+    case UserActionTypes.DELETE_CARD_SUCCESS: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile!,
+          paymentMethods: {
+            cards: state.profile!.paymentMethods.cards.filter(
+              (card) => card.payment_method_id !== action.payload.payment_method_id
+            )
+          }
+        }
+      };
+    }
+    case UserActionTypes.DELETE_CARD_FAILURE: {
+      return {
+        ...state,
+        isDeletingCardFetching: false
       };
     }
   }

@@ -12,6 +12,7 @@ export interface UserState {
   isUserLoggedIn: boolean;
   isProfileFetching: boolean;
   isAddingCardFetching: boolean;
+  isDeletingCardFetching: boolean;
   profile?: {
     paymentMethods: {
       cards: Card[];
@@ -34,4 +35,8 @@ export interface AddCardRequestPayload {
 
 export interface AddCardResponse {
   cards: Card[];
+}
+
+export interface DeleteCardRequestPayload {
+  payment_method_id: string;
 }

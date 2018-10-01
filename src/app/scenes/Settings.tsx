@@ -9,7 +9,12 @@ import { CardPlate } from 'app/components/CardPlate';
 import { SwtichButton } from 'app/components/SwitchButton';
 import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
+import { UserActions } from 'app/services/user/userActions';
+import { DeleteCardRequestPayload } from 'app/services/user/userTypes';
+import { RootState } from 'app/store';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 const settingWrapper = css({
   backgroundColor: '#f2f6fc',
@@ -103,12 +108,13 @@ const addCardIcon = css({
   fill: '#fff',
 })
 
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 interface State {
   isOneTouchEnabled: boolean;
   cardIssuerCode: CardIssuerCode | null;
 }
 
-export class Settings extends React.Component<{}, State> {
+export class Settings extends React.Component<Props, State> {
   public state: State = {
     isOneTouchEnabled: false,
     cardIssuerCode: 'CCCT',
@@ -119,7 +125,8 @@ export class Settings extends React.Component<{}, State> {
     if (!confirm('카드를 삭제하시겠습니까?')) {
       return;
     }
-    this.setState({ cardIssuerCode: null });
+    // TODO: Should be a real payment method id
+    this.props.requestDeleteCard({ payment_method_id: 'TEST' });
   }
 
   public render() {
@@ -144,6 +151,7 @@ export class Settings extends React.Component<{}, State> {
                         color="gray"
                         size="medium"
                         className={deleteCardButton}
+                        spinner={this.props.user.isDeletingCardFetching}
                         onClick={this.handleDeleteCardButtonClick}
                       >카드 삭제</Button>
                     )
@@ -193,3 +201,17 @@ export class Settings extends React.Component<{}, State> {
     );
   }
 };
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    user: state.user,
+  }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    requestDeleteCard: (payload: DeleteCardRequestPayload) => dispatch(UserActions.deleteCardRequest(payload)),
+  }
+}
+
+export const ConnectedSettings = connect(mapStateToProps, mapDispatchToProps)(Settings);

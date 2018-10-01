@@ -1,5 +1,5 @@
 import { UserActions, UserActionTypes } from 'app/services/user/userActions';
-import { requestAddCard, requestProfile } from 'app/services/user/userRequests';
+import { requestAddCard, requestDeleteCard, requestProfile } from 'app/services/user/userRequests';
 import { AddCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -8,6 +8,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
   yield takeEvery(UserActionTypes.ADD_CARD_REQUEST, watchAddCardRequest);
+  yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
 }
 
 function* watchLoadUserProfileRequest() {
@@ -26,5 +27,14 @@ function* watchAddCardRequest(action: ReturnType<typeof UserActions.addCardReque
     yield put(UserActions.addCardSuccess(response.data));
   } catch (e) {
     yield put(UserActions.addCardFailure());
+  }
+}
+
+function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCardRequest>) {
+  try {
+    yield call(requestDeleteCard, action.payload);
+    yield put(UserActions.deleteCardSuccess(action.payload));
+  } catch (e) {
+    yield put(UserActions.deleteCardFailure());
   }
 }

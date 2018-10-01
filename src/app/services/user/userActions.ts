@@ -1,6 +1,7 @@
 import {
   AddCardRequestPayload,
   AddCardResponse,
+  DeleteCardRequestPayload,
   FetchUserProfileFailurePayload,
   UserProfileResponse
 } from 'app/services/user/userTypes';
@@ -12,7 +13,10 @@ export enum UserActionTypes {
   FETCH_USER_PROFILE_FAILURE = 'FETCH_USER_PROFILE_FAILURE',
   ADD_CARD_REQUEST = 'ADD_CARD_REQUEST',
   ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS',
-  ADD_CARD_FAILURE = 'ADD_CARD_FAILURE'
+  ADD_CARD_FAILURE = 'ADD_CARD_FAILURE',
+  DELETE_CARD_REQUEST = 'DELETE_CARD_REQUEST',
+  DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS',
+  DELETE_CARD_FAILURE = 'DELETE_CARD_FAILURE'
 }
 
 export const UserActions = {
@@ -25,7 +29,12 @@ export const UserActions = {
     createAction(UserActionTypes.ADD_CARD_REQUEST, payload),
   addCardSuccess: (payload: AddCardResponse) =>
     createAction(UserActionTypes.ADD_CARD_SUCCESS, payload),
-  addCardFailure: () => createAction(UserActionTypes.ADD_CARD_FAILURE)
+  addCardFailure: () => createAction(UserActionTypes.ADD_CARD_FAILURE),
+  deleteCardRequest: (payload: DeleteCardRequestPayload) =>
+    createAction(UserActionTypes.DELETE_CARD_REQUEST, payload),
+  deleteCardSuccess: (payload: DeleteCardRequestPayload) =>
+    createAction(UserActionTypes.DELETE_CARD_SUCCESS, payload),
+  deleteCardFailure: () => createAction(UserActionTypes.DELETE_CARD_FAILURE)
 };
 
 export type UserActions = ActionsUnion<typeof UserActions>;

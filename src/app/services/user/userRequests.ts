@@ -1,6 +1,9 @@
-import { AddCardRequestPayload, AddCardResponse } from 'app/services/user/userTypes';
+import {
+  AddCardRequestPayload,
+  AddCardResponse,
+  DeleteCardRequestPayload
+} from 'app/services/user/userTypes';
 import { request } from 'app/utils';
-import { AxiosPromise } from 'axios';
 
 export const requestProfile = () =>
   request({
@@ -14,3 +17,10 @@ export const requestAddCard = (payload: AddCardRequestPayload) =>
     url: '/me/cards',
     data: payload
   });
+
+export const requestDeleteCard = (payload: DeleteCardRequestPayload) => {
+  request({
+    method: 'DELETE',
+    url: `/me/cards/${payload.payment_method_id}`
+  });
+};
