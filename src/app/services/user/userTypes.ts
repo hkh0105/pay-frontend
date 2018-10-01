@@ -27,10 +27,10 @@ export interface FetchUserProfileFailurePayload {
 }
 
 export interface AddCardRequestPayload {
-  card_number: number;
-  card_password: number;
-  card_expiration_date: number;
-  tax_id: number;
+  card_number: string;
+  card_password: string;
+  card_expiration_date: string;
+  tax_id: string;
 }
 
 export interface AddCardResponse {
