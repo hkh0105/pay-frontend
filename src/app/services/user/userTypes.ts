@@ -27,9 +27,9 @@ export interface FetchUserProfileFailurePayload {
 }
 
 export interface AddCardRequestPayload {
-  number: number;
-  password: number;
-  expiration_date: number;
+  card_number: number;
+  card_password: number;
+  card_expiration_date: number;
   tax_id: number;
 }
 

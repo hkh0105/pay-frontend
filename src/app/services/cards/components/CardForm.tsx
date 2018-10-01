@@ -159,12 +159,12 @@ export class CardForm extends React.PureComponent<Props, CardFormState> {
     }
     const { numberInputs } = this.state;
     const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
-    const expirationDate = `${numberInputs[ccmonth]}${numberInputs[ccyear]}`
+    const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
     this.props.dispatchRequestAddCard({
-      expiration_date: Number(expirationDate),
-      number: Number(cardnumber),
-      password: Number(password),
-      tax_id: Number(birthdate),
+      card_expiration_date: Number(expirationDate),
+      card_number: Number(numberInputs[cardnumber].value.replace(/\s/g, '')),
+      card_password: Number(numberInputs[password].value),
+      tax_id: Number(numberInputs[birthdate].value),
     })
   }
 
