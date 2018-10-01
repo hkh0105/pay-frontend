@@ -13,6 +13,7 @@ export interface UserState {
   isProfileFetching: boolean;
   isAddingCardFetching: boolean;
   isDeletingCardFetching: boolean;
+  isOnetouchTogglingFetching: boolean;
   hasPin: boolean;
   isUsingOnetouchPay: boolean;
   cards: Card[];
@@ -35,4 +36,8 @@ export interface AddCardResponse {
 
 export interface DeleteCardRequestPayload {
   payment_method_id: string;
+}
+
+export interface OnetouchToggleRequestPaylaod {
+  enable_onetouch_pay: boolean;
 }

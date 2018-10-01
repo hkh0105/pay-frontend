@@ -7,6 +7,7 @@ const initailState: UserState = {
   isUserLoggedIn: false,
   isAddingCardFetching: false,
   isDeletingCardFetching: false,
+  isOnetouchTogglingFetching: false,
   cards: [],
   hasPin: false,
   isUsingOnetouchPay: false
@@ -78,6 +79,26 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isDeletingCardFetching: false
+      };
+    }
+    case UserActionTypes.TOGGLE_ONETOUCH_REQUEST: {
+      return {
+        ...state,
+        isOnetouchTogglingFetching: true,
+        isUsingOnetouchPay: action.payload.enable_onetouch_pay
+      };
+    }
+    case UserActionTypes.TOGGLE_ONETOUCH_SUCCESS: {
+      return {
+        ...state,
+        isOnetouchTogglingFetching: false
+      };
+    }
+    case UserActionTypes.TOGGLE_ONETOUCH_FAILURE: {
+      return {
+        ...state,
+        isOnetouchTogglingFetching: false,
+        isUsingOnetouchPay: !action.payload.enable_onetouch_pay
       };
     }
   }

@@ -3,6 +3,7 @@ import {
   AddCardResponse,
   DeleteCardRequestPayload,
   FetchUserProfileFailurePayload,
+  OnetouchToggleRequestPaylaod,
   UserProfileResponse
 } from 'app/services/user/userTypes';
 import { ActionsUnion, createAction } from 'app/types/redux';
@@ -16,7 +17,10 @@ export enum UserActionTypes {
   ADD_CARD_FAILURE = 'ADD_CARD_FAILURE',
   DELETE_CARD_REQUEST = 'DELETE_CARD_REQUEST',
   DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS',
-  DELETE_CARD_FAILURE = 'DELETE_CARD_FAILURE'
+  DELETE_CARD_FAILURE = 'DELETE_CARD_FAILURE',
+  TOGGLE_ONETOUCH_REQUEST = 'TOGGLE_ONETOUCH_REQUEST',
+  TOGGLE_ONETOUCH_SUCCESS = 'TOGGLE_ONETOUCH_SUCCESS',
+  TOGGLE_ONETOUCH_FAILURE = 'TOGGLE_ONETOUCH_FAILURE'
 }
 
 export const UserActions = {
@@ -34,7 +38,13 @@ export const UserActions = {
     createAction(UserActionTypes.DELETE_CARD_REQUEST, payload),
   deleteCardSuccess: (payload: DeleteCardRequestPayload) =>
     createAction(UserActionTypes.DELETE_CARD_SUCCESS, payload),
-  deleteCardFailure: () => createAction(UserActionTypes.DELETE_CARD_FAILURE)
+  deleteCardFailure: () => createAction(UserActionTypes.DELETE_CARD_FAILURE),
+  toggleOnetouchRequest: (payload: OnetouchToggleRequestPaylaod) =>
+    createAction(UserActionTypes.TOGGLE_ONETOUCH_REQUEST, payload),
+  toggleOnetouchSuccess: (payload: OnetouchToggleRequestPaylaod) =>
+    createAction(UserActionTypes.TOGGLE_ONETOUCH_SUCCESS, payload),
+  toggleOnetouchFailure: (payload: OnetouchToggleRequestPaylaod) =>
+    createAction(UserActionTypes.TOGGLE_ONETOUCH_FAILURE, payload)
 };
 
 export type UserActions = ActionsUnion<typeof UserActions>;

@@ -1,7 +1,12 @@
 import { history } from 'app/config';
 import { urls } from 'app/routes';
 import { UserActions, UserActionTypes } from 'app/services/user/userActions';
-import { requestAddCard, requestDeleteCard, requestProfile } from 'app/services/user/userRequests';
+import {
+  requestAddCard,
+  requestDeleteCard,
+  requestProfile,
+  requestToggleOnetouch
+} from 'app/services/user/userRequests';
 import { AddCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -11,6 +16,7 @@ export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
   yield takeEvery(UserActionTypes.ADD_CARD_REQUEST, watchAddCardRequest);
   yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
+  yield takeEvery(UserActionTypes.TOGGLE_ONETOUCH_REQUEST, watchToggleOnetouch);
 }
 
 function* watchLoadUserProfileRequest() {
@@ -41,5 +47,18 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
     history.replace(urls.SETTINGS);
   } catch (e) {
     yield put(UserActions.deleteCardFailure());
+  }
+}
+
+function* watchToggleOnetouch(action: ReturnType<typeof UserActions.toggleOnetouchRequest>) {
+  try {
+    const result: AxiosResponse = yield call(requestToggleOnetouch, action.payload);
+    if (result.status === 200) {
+      yield put(UserActions.toggleOnetouchSuccess(action.payload));
+    } else {
+      yield put(UserActions.toggleOnetouchFailure(action.payload));
+    }
+  } catch (e) {
+    yield put(UserActions.toggleOnetouchFailure(action.payload));
   }
 }

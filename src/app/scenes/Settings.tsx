@@ -10,7 +10,7 @@ import { SwtichButton } from 'app/components/SwitchButton';
 import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
 import { UserActions } from 'app/services/user/userActions';
-import { DeleteCardRequestPayload } from 'app/services/user/userTypes';
+import { DeleteCardRequestPayload, OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -176,7 +176,11 @@ export class Settings extends React.Component<Props> {
               <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
                   isChecked={isUsingOnetouchPay}
-                  onChange={() => null /* TODO */}
+                  onChange={(e) => {
+                    if (!this.props.user.isOnetouchTogglingFetching) {
+                      this.props.requestToggleOnetouch({ enable_onetouch_pay: e.target.checked });
+                    }
+                  }}
                   id="oneTouchModeInput"
                 />
               </div>
@@ -205,6 +209,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     requestDeleteCard: (payload: DeleteCardRequestPayload) => dispatch(UserActions.deleteCardRequest(payload)),
+    requestToggleOnetouch: (payload: OnetouchToggleRequestPaylaod) => dispatch(UserActions.toggleOnetouchRequest(payload))
   }
 }
 
