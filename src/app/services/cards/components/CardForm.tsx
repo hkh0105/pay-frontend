@@ -1,4 +1,4 @@
-import { CheckBox } from '@ridi/rsg';
+import { Button, CheckBox } from '@ridi/rsg';
 import * as classNames from 'classnames';
 import detectIt from 'detect-it';
 import { every } from 'lodash-es';
@@ -19,12 +19,17 @@ import {
   initialCardInputRefs,
 } from 'app/services/cards/components';
 import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { UserActions } from 'app/services/user/userActions';
+import { AddCardRequestPayload } from 'app/services/user/userTypes';
+import { RootState } from 'app/store';
 import { a11y } from 'app/styles';
 import {
   cleanUpCardNumber,
   getCardTypeByNumber,
   prettifyCardNumber,
 } from 'app/utils';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 const isTouchDevice = detectIt.hasTouch;
 
@@ -34,7 +39,9 @@ function preventDefaultOnSpaceKeyEvent(e: React.KeyboardEvent<HTMLInputElement>)
   }
 }
 
-export class CardForm extends React.PureComponent<{}, CardFormState> {
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+
+export class CardForm extends React.PureComponent<Props, CardFormState> {
   public state = initialCardFormState;
   public inputRefs = initialCardInputRefs;
 
@@ -143,6 +150,22 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
         {...extraProps}
       />
     );
+  }
+
+  private handleSubmitButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (this.props.isFetching || !this.isFormValid()) {
+      return;
+    }
+    const { numberInputs } = this.state;
+    const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
+    const expirationDate = `${numberInputs[ccmonth]}${numberInputs[ccyear]}`
+    this.props.dispatchRequestAddCard({
+      expiration_date: Number(expirationDate),
+      number: Number(cardnumber),
+      password: Number(password),
+      tax_id: Number(birthdate),
+    })
   }
 
   public componentDidMount() {
@@ -262,14 +285,30 @@ export class CardForm extends React.PureComponent<{}, CardFormState> {
             </Link>
           </div>
         </div>
-        <button
+        <Button
           className={classNames(cardFormSubmitButtonClass, { [cardFormSubmitDisabledButtonClass]: !this.isFormValid() })}
-          onClick={(e) => e.preventDefault()}
+          onClick={this.handleSubmitButtonClick}
           disabled={!this.isFormValid()}
+          spinner={this.props.isFetching}
+          color="blue"
         >
           카드 등록
-        </button>
+        </Button>
       </form>
     );
   }
 }
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    isFetching: state.user.isAddingCardFetching,
+  }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    dispatchRequestAddCard: (payload: AddCardRequestPayload) => dispatch(UserActions.addCardRequest(payload))
+  }
+}
+
+export const ConnectedCardForm = connect(mapStateToProps, mapDispatchToProps)(CardForm);

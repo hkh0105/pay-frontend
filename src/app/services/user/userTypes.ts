@@ -11,6 +11,7 @@ export interface UserProfileResponse {
 export interface UserState {
   isUserLoggedIn: boolean;
   isProfileFetching: boolean;
+  isAddingCardFetching: boolean;
   profile?: {
     paymentMethods: {
       cards: Card[];
@@ -22,4 +23,15 @@ export interface UserState {
 
 export interface FetchUserProfileFailurePayload {
   isUserLoggedIn: boolean;
+}
+
+export interface AddCardRequestPayload {
+  number: number;
+  password: number;
+  expiration_date: number;
+  tax_id: number;
+}
+
+export interface AddCardResponse {
+  cards: Card[];
 }

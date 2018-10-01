@@ -222,7 +222,6 @@ export const cardFormSubmitButtonClass = css({
   backgroundColor: colors.dodgerblue_50,
   borderRadius: '3px',
   border: `1px solid ${colors.dodgerblue_60}`,
-  color: '#fff',
   letterSpacing: '-0.4px',
   fontWeight: 'bold',
   '&:hover:enabled': {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
-import { CardForm } from 'app/services/cards/components';
+import { CardForm, ConnectedCardForm } from 'app/services/cards/components';
 
 export const AddCard: React.SFC = () => {
   return (
@@ -12,7 +12,7 @@ export const AddCard: React.SFC = () => {
           <title>카드 등록 - 리디페이</title>
         </Helmet>
         <div className={sceneContents}>
-          <CardForm />
+          <ConnectedCardForm />
         </div>
       </ConnectedSceneWrapper>
     </>

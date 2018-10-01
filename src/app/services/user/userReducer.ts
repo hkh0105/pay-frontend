@@ -4,10 +4,14 @@ import { Reducer } from 'redux';
 
 const initailState: UserState = {
   isProfileFetching: false,
-  isUserLoggedIn: false
+  isUserLoggedIn: false,
+  isAddingCardFetching: false
 };
 
-export const userReducer: Reducer<UserState, UserActions> = (state = initailState, action) => {
+export const userReducer: Reducer<UserState, UserActions> = (
+  state = initailState,
+  action
+): UserState => {
   switch (action.type) {
     case UserActionTypes.FETCH_USER_PROFILE_REQUEST: {
       return {
@@ -32,6 +36,31 @@ export const userReducer: Reducer<UserState, UserActions> = (state = initailStat
         ...state,
         isProfileFetching: false,
         isUserLoggedIn: action.payload.isUserLoggedIn
+      };
+    }
+    case UserActionTypes.ADD_CARD_REQUEST: {
+      return {
+        ...state,
+        isAddingCardFetching: true
+      };
+    }
+    case UserActionTypes.ADD_CARD_SUCCESS: {
+      return {
+        ...state,
+        isAddingCardFetching: false,
+        profile: {
+          hasPin: state.profile!.hasPin,
+          isUsingOnetouchPay: state.profile!.isUsingOnetouchPay,
+          paymentMethods: {
+            cards: action.payload.cards
+          }
+        }
+      };
+    }
+    case UserActionTypes.ADD_CARD_FAILURE: {
+      return {
+        ...state,
+        isAddingCardFetching: false
       };
     }
   }
