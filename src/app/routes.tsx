@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch } from 'react-router';
+import { Redirect, Switch } from 'react-router';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
@@ -22,7 +22,6 @@ export const Routes: React.SFC = () => {
       <ConnectedEnsureLogin>
       <ConnectedScrollToTop>
         <Switch>
-          <Route exact={true} path="/" render={() => <ConnectedPrivateRoute component={Settings} />} />
           <Route exact={true} path="/payments/:reservation_id" render={() => <ConnectedPrivateRoute component={Payment} />} />
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.ADD_CARD} render={() => <ConnectedPrivateRoute component={AddCard} />} />
@@ -31,7 +30,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
           <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
           <Route exact={true} path="/legal/terms" render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
-          <Route render={() => <Error404 />} />
+          <Redirect to={urls.ADD_CARD}/>
         </Switch>
       </ConnectedScrollToTop>
       </ConnectedEnsureLogin>
