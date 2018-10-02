@@ -11,7 +11,7 @@ import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
 import { LegalTerms } from 'app/scenes/LegalTerms';
 
 export const urls = {
-  SETTINGS: '/settngs',
+  SETTINGS: '/settings',
   ADD_CARD: '/settings/cards/add',
   RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
 };
