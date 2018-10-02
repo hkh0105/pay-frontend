@@ -9,6 +9,7 @@ export interface UserProfileResponse {
 }
 
 export interface UserState {
+  isNewUser: boolean;
   isUserLoggedIn: boolean;
   isProfileFetching: boolean;
   isAddingCardFetching: boolean;

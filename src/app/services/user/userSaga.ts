@@ -8,9 +8,10 @@ import {
   requestToggleOnetouch
 } from 'app/services/user/userRequests';
 import { RegisterCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
+import { RootState } from 'app/store';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
@@ -35,8 +36,11 @@ function* watchAddCardRequest(action: ReturnType<typeof UserActions.registerCard
       requestRegisterCard,
       action.payload
     );
+    const state: RootState = yield select((s) => s);
+    // Ask whther user wants to use one touch payment when they don't have cards registered
+    const nextUrl = state.user.cards.length ? urls.SETTINGS : urls.ONETOUCH;
     yield put(UserActions.registerCardSuccess(response.data));
-    history.replace(urls.SETTINGS);
+    history.replace(nextUrl);
   } catch (e) {
     alert(e.data.message);
     yield put(UserActions.registerCardFailure());
