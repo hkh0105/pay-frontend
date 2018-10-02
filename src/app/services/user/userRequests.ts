@@ -1,8 +1,8 @@
 import {
-  AddCardRequestPayload,
-  AddCardResponse,
   DeleteCardRequestPayload,
-  OnetouchToggleRequestPaylaod
+  OnetouchToggleRequestPaylaod,
+  RegisterCardRequestPayload,
+  RegisterCardResponse
 } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
 
@@ -12,7 +12,7 @@ export const requestProfile = () =>
     url: '/me'
   });
 
-export const requestAddCard = (payload: AddCardRequestPayload) =>
+export const requestRegisterCard = (payload: RegisterCardRequestPayload) =>
   request({
     method: 'POST',
     url: '/me/cards',

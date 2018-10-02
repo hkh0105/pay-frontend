@@ -23,14 +23,14 @@ export interface FetchUserProfileFailurePayload {
   isUserLoggedIn: boolean;
 }
 
-export interface AddCardRequestPayload {
+export interface RegisterCardRequestPayload {
   card_number: string;
   card_password: string;
   card_expiration_date: string;
   tax_id: string;
 }
 
-export interface AddCardResponse {
+export interface RegisterCardResponse {
   card: Card;
 }
 

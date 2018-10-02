@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { CardForm, ConnectedCardForm } from 'app/services/cards/components';
 
-export const AddCard: React.SFC = () => {
+export const RegisterCard: React.SFC = () => {
   return (
     <>
       <ConnectedSceneWrapper>

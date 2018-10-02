@@ -1,4 +1,4 @@
-export * from './AddCard';
+export * from 'app/scenes/RegisterCard';
 export * from './Error404';
 export * from './Payment';
 export * from './SetOnetouch';

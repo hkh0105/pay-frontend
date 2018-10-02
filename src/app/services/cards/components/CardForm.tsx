@@ -22,7 +22,7 @@ import {
 } from 'app/services/cards/components';
 import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
 import { UserActions } from 'app/services/user/userActions';
-import { AddCardRequestPayload } from 'app/services/user/userTypes';
+import { RegisterCardRequestPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { a11y } from 'app/styles';
 import {
@@ -162,7 +162,7 @@ export class CardForm extends React.Component<Props, CardFormState> {
     const { numberInputs } = this.state;
     const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
     const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
-    this.props.dispatchRequestAddCard({
+    this.props.dispatchRequestRegisterCard({
       card_expiration_date: expirationDate,
       card_number: numberInputs[cardnumber].value.replace(/\s/g, ''),
       card_password: numberInputs[password].value,
@@ -314,7 +314,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    dispatchRequestAddCard: (payload: AddCardRequestPayload) => dispatch(UserActions.addCardRequest(payload))
+    dispatchRequestRegisterCard: (payload: RegisterCardRequestPayload) => dispatch(UserActions.registerCardRequest(payload))
   }
 }
 

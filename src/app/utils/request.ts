@@ -24,8 +24,8 @@ axios.interceptors.response.use(
     if (code === 'UNAUTHORIZED') {
       location.replace(`${urls.RIDIBOOKS_LOGIN}?return_url=${href}`);
     } else if (code === 'NOT_FOUND_USER') {
-      if (pathname !== urls.ADD_CARD) {
-        history.replace(urls.ADD_CARD);
+      if (pathname !== urls.REGISTER_CARD) {
+        history.replace(urls.REGISTER_CARD);
       }
     }
     return Promise.reject(error.response);

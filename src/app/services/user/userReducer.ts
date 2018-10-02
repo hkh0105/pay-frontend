@@ -41,20 +41,20 @@ export const userReducer: Reducer<UserState, UserActions> = (
         isUserLoggedIn: action.payload.isUserLoggedIn
       };
     }
-    case UserActionTypes.ADD_CARD_REQUEST: {
+    case UserActionTypes.REGISTER_CARD_REQUEST: {
       return {
         ...state,
         isAddingCardFetching: true
       };
     }
-    case UserActionTypes.ADD_CARD_SUCCESS: {
+    case UserActionTypes.REGISTER_CARD_SUCCESS: {
       return {
         ...state,
         isAddingCardFetching: false,
         cards: [...state.cards, action.payload.card]
       };
     }
-    case UserActionTypes.ADD_CARD_FAILURE: {
+    case UserActionTypes.REGISTER_CARD_FAILURE: {
       return {
         ...state,
         isAddingCardFetching: false

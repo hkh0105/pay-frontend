@@ -2,19 +2,19 @@ import { history } from 'app/config';
 import { urls } from 'app/routes';
 import { UserActions, UserActionTypes } from 'app/services/user/userActions';
 import {
-  requestAddCard,
   requestDeleteCard,
   requestProfile,
+  requestRegisterCard,
   requestToggleOnetouch
 } from 'app/services/user/userRequests';
-import { AddCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
+import { RegisterCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
-  yield takeEvery(UserActionTypes.ADD_CARD_REQUEST, watchAddCardRequest);
+  yield takeEvery(UserActionTypes.REGISTER_CARD_REQUEST, watchAddCardRequest);
   yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
   yield takeEvery(UserActionTypes.TOGGLE_ONETOUCH_REQUEST, watchToggleOnetouch);
 }
@@ -29,14 +29,17 @@ function* watchLoadUserProfileRequest() {
   }
 }
 
-function* watchAddCardRequest(action: ReturnType<typeof UserActions.addCardRequest>) {
+function* watchAddCardRequest(action: ReturnType<typeof UserActions.registerCardRequest>) {
   try {
-    const response: AxiosResponse<AddCardResponse> = yield call(requestAddCard, action.payload);
-    yield put(UserActions.addCardSuccess(response.data));
+    const response: AxiosResponse<RegisterCardResponse> = yield call(
+      requestRegisterCard,
+      action.payload
+    );
+    yield put(UserActions.registerCardSuccess(response.data));
     history.replace(urls.SETTINGS);
   } catch (e) {
     alert(e.data.message);
-    yield put(UserActions.addCardFailure());
+    yield put(UserActions.registerCardFailure());
   }
 }
 
