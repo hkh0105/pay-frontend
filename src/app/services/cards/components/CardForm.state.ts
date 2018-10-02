@@ -50,7 +50,7 @@ export const cardNumberInputAutoCompleteProps: {
 const cardInputLength: {
   [inputId: string]: number;
 } = {
-  cardnumber: 16,
+  cardnumber: 19, // This includes 3 spaces between number blocks
   ccmonth: 2,
   ccyear: 2,
   password: 2,
