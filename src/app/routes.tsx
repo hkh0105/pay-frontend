@@ -16,6 +16,10 @@ export const urls = {
   REGISTER_CARD: '/settings/cards/add',
   RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
 };
+export const publicUrls = [
+  urls.SETTINGS,
+  urls.REGISTER_CARD,
+];
 
 export const Routes: React.SFC = () => {
   return (
@@ -31,7 +35,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
           <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
           <Route exact={true} path="/legal/terms" render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
-          <Redirect to={urls.REGISTER_CARD}/>
+          <Redirect to={urls.SETTINGS}/>
         </Switch>
       </ConnectedScrollToTop>
       </ConnectedEnsureLogin>
