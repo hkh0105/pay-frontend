@@ -59,6 +59,10 @@ const settingDefaultItem = css({
   borderTop: `1px solid ${colors.lightsteelblue_20}`,
 })
 
+const settingsDefaultItemDisabled = css({
+  color: colors.slategray_50,
+})
+
 const settingItemName = css({
   fontSize: '15px',
   fontWeight: 'bold',
@@ -124,7 +128,7 @@ export class Settings extends React.Component<Props> {
   }
 
   public render() {
-    const { cards, isUsingOnetouchPay, isDeletingCardFetching } = this.props.user;
+    const { cards, isUsingOnetouchPay, isDeletingCardFetching, isNotRidiPayUser } = this.props.user;
     return (
       <>
         <ConnectedSceneWrapper>
@@ -171,9 +175,9 @@ export class Settings extends React.Component<Props> {
                 />
               </div>
             </div>
-            <div className={classNames(settingItem, settingDefaultItem)}>
+            <div className={classNames(settingItem, settingDefaultItem, isNotRidiPayUser && settingsDefaultItemDisabled)}>
               <h3 className={settingItemName}>원터치 결제 사용</h3>
-              <div className={settingSwitchButtonWrapper}>
+              {!isNotRidiPayUser && <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
                   isChecked={isUsingOnetouchPay}
                   onChange={(e) => {
@@ -183,13 +187,13 @@ export class Settings extends React.Component<Props> {
                   }}
                   id="oneTouchModeInput"
                 />
-              </div>
+              </div>}
             </div>
             <div className={settingDescriptionWrapper}>
               <p>비밀번호 입력 없이 바로 결제하는 기능입니다.</p>
               <p>안전한 결제를 위해 10만원 초과 결제 시에는 비밀번호를 입력해주셔야 합니다.</p>
             </div>
-            <div className={classNames(settingItem, settingDefaultItem)}>
+            <div className={classNames(settingItem, settingDefaultItem, isNotRidiPayUser && settingsDefaultItemDisabled)}>
               <h3 className={settingItemName}>결제 비밀번호 변경</h3>
             </div>
             <div className={settingDescriptionWrapper}>비밀번호를 분실하신 경우 카드를 삭제하신 후 다시 등록해주세요.</div>

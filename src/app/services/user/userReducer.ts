@@ -3,7 +3,6 @@ import { UserState } from 'app/services/user/userTypes';
 import { Reducer } from 'redux';
 
 const initailState: UserState = {
-  isNewUser: false,
   isProfileFetching: false,
   isUserLoggedIn: false,
   isAddingCardFetching: false,
@@ -39,8 +38,8 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isProfileFetching: false,
-        isUserLoggedIn: action.payload.isUserLoggedIn,
-        isNewUser: action.payload.isUserLoggedIn
+        isNotRidiPayUser: true,
+        isUserLoggedIn: action.payload.isUserLoggedIn
       };
     }
     case UserActionTypes.REGISTER_CARD_REQUEST: {
