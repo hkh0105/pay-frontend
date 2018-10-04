@@ -5,8 +5,7 @@ import { CommonLoader } from 'app/components';
 import { RootState } from 'app/store';
 import { Omit } from 'app/types';
 
-export interface PrivateRouteProps {
-  isLoggedIn: boolean;
+export interface PrivateRouteProps extends ReturnType<typeof mapStateToProps> {
   component: React.ComponentType;
 }
 
@@ -21,7 +20,7 @@ export const PrivateRoute: React.SFC<PrivateRouteProps> = (props) => {
   return <Component {...restProps} />;
 };
 
-const mapStateToProps = (state: RootState): Omit<PrivateRouteProps, 'component'> => {
+const mapStateToProps = (state: RootState) => {
   return {
     // isLoggedIn: state.user.isLoggedIn
     isLoggedIn: true,

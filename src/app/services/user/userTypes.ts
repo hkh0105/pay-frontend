@@ -42,3 +42,7 @@ export interface DeleteCardRequestPayload {
 export interface OnetouchToggleRequestPaylaod {
   enable_onetouch_pay: boolean;
 }
+
+export interface RegisteOrUpdatePinPayload {
+  pin: string;
+}

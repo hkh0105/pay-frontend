@@ -39,10 +39,10 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
       pinList: [],
     });
   }
-  
+
   private clickKey = (pinList: number[], key: PinButtonValue) => {
     switch (key) {
-      case PinButtonFunctionKey.clear: 
+      case PinButtonFunctionKey.clear:
         return [];
       case PinButtonFunctionKey.delete:
         return pinList.slice(0, -1);

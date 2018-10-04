@@ -3,10 +3,15 @@ import { Helmet } from 'react-helmet';
 
 import { Button } from '@ridi/rsg';
 import { ConnectedSceneWrapper } from 'app/components';
+import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
-import { cardInputBox, cardInputBoxBorderInteractive, innerInput } from 'app/services/cards/components/CardForm.styles';
-import { postConfirmPassword } from 'app/services/settings/requests';
+import { urls } from 'app/routes';
+import { UserActions } from 'app/services/user/userActions';
+import { OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
+import { RootState } from 'app/store';
 import { css, cx } from 'emotion';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 const titleStyle = css({
   fontSize: '18px',
@@ -36,39 +41,18 @@ const buttonStyle = css({
   },
 })
 
-interface State {
-  isSubmitting: boolean;
-}
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-export class SetOnetouch extends React.PureComponent<{}, State> {
-  public state: State = {
-    isSubmitting: false,
-  }
-
+export class SetOnetouch extends React.PureComponent<Props> {
   private handleEnableButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    this.submit();
+    this.props.dispatchToggleOneTouch({ enable_onetouch_pay: true });
   }
-
 
   private handleSkipButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    // TODO: Replace current page
-  }
-
-  private submit = async () => {
-    if (this.state.isSubmitting) {
+    if (!confirm('결제 비밀번호를 설정하시겠습니까?\n원터치 결제를 사용하시지 않을 경우 결제 비밀번호가 필요합니다.')) {
       return;
     }
-    this.setState({ isSubmitting: true });
-
-    try {
-      await postConfirmPassword();
-      // TODO: Perform further action here
-      alert('Confirmed!');
-      this.setState({ isSubmitting: false });
-    } catch (e) {
-      alert(e);
-      this.setState({ isSubmitting: false });
-    }
+    history.push(urls.REGISTER_PIN);
   }
 
   public render() {
@@ -85,22 +69,35 @@ export class SetOnetouch extends React.PureComponent<{}, State> {
               className={buttonStyle}
               size="large"
               color="blue"
-              disabled={this.state.isSubmitting}
+              disabled={this.props.user.isOnetouchTogglingFetching}
               onClick={this.handleEnableButtonClick}
-              spinner={this.state.isSubmitting}
+              spinner={this.props.user.isOnetouchTogglingFetching}
               >원터치 결제 사용</Button>
             <Button
               className={buttonStyle}
               size="large"
               color="gray"
               outline={true}
-              disabled={this.state.isSubmitting}
+              disabled={this.props.user.isOnetouchTogglingFetching}
               onClick={this.handleSkipButtonClick}
             >사용 안함</Button>
-
           </div>
         </div>
       </ConnectedSceneWrapper>
     );
   }
 };
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    user: state.user,
+  };
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    dispatchToggleOneTouch: (payload: OnetouchToggleRequestPaylaod) => dispatch(UserActions.toggleOnetouchRequest(payload))
+  }
+}
+
+export const ConnectedSetOnetouch = connect(mapStateToProps, mapDispatchToProps)(SetOnetouch);

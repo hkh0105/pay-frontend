@@ -1,6 +1,7 @@
 import {
   DeleteCardRequestPayload,
   OnetouchToggleRequestPaylaod,
+  RegisteOrUpdatePinPayload,
   RegisterCardRequestPayload,
   RegisterCardResponse
 } from 'app/services/user/userTypes';
@@ -30,6 +31,14 @@ export const requestToggleOnetouch = (payload: OnetouchToggleRequestPaylaod) => 
   request({
     method: 'PUT',
     url: '/me/onetouch',
+    data: payload
+  });
+};
+
+export const requestRegisterOrUpdatePin = (payload: RegisteOrUpdatePinPayload) => {
+  return request({
+    method: 'PUT',
+    url: '/me/pin',
     data: payload
   });
 };
