@@ -7,28 +7,30 @@ import {
 } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
 
-export const requestProfile = () =>
-  request({
+export const requestProfile = () => {
+  return request({
     method: 'GET',
     url: '/me'
   });
+};
 
-export const requestRegisterCard = (payload: RegisterCardRequestPayload) =>
-  request({
+export const requestRegisterCard = (payload: RegisterCardRequestPayload) => {
+  return request({
     method: 'POST',
     url: '/me/cards',
     data: payload
   });
+};
 
 export const requestDeleteCard = (payload: DeleteCardRequestPayload) => {
-  request({
+  return request({
     method: 'DELETE',
     url: `/me/cards/${payload.payment_method_id}`
   });
 };
 
 export const requestToggleOnetouch = (payload: OnetouchToggleRequestPaylaod) => {
-  request({
+  return request({
     method: 'PUT',
     url: '/me/onetouch',
     data: payload

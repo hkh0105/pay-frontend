@@ -92,7 +92,8 @@ export const userReducer: Reducer<UserState, UserActions> = (
     case UserActionTypes.TOGGLE_ONETOUCH_SUCCESS: {
       return {
         ...state,
-        isOnetouchTogglingFetching: false
+        isOnetouchTogglingFetching: false,
+        isUsingOnetouchPay: action.payload.enable_onetouch_pay
       };
     }
     case UserActionTypes.TOGGLE_ONETOUCH_FAILURE: {

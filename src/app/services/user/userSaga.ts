@@ -11,13 +11,13 @@ import { RegisterCardResponse, UserProfileResponse } from 'app/services/user/use
 import { RootState } from 'app/store';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
-import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { call, put, select, take, takeEvery } from 'redux-saga/effects';
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
   yield takeEvery(UserActionTypes.REGISTER_CARD_REQUEST, watchAddCardRequest);
   yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
-  yield takeEvery(UserActionTypes.TOGGLE_ONETOUCH_REQUEST, watchToggleOnetouch);
+  yield call(watchToggleOnetouch);
 }
 
 function* watchLoadUserProfileRequest() {
@@ -57,15 +57,20 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
   }
 }
 
-function* watchToggleOnetouch(action: ReturnType<typeof UserActions.toggleOnetouchRequest>) {
-  try {
-    const result: AxiosResponse = yield call(requestToggleOnetouch, action.payload);
-    if (result.status === 200) {
-      yield put(UserActions.toggleOnetouchSuccess(action.payload));
-    } else {
+function* watchToggleOnetouch() {
+  while (true) {
+    const action: ReturnType<typeof UserActions.toggleOnetouchRequest> = yield take(
+      UserActionTypes.TOGGLE_ONETOUCH_REQUEST
+    );
+    try {
+      const result: AxiosResponse = yield call(requestToggleOnetouch, action.payload);
+      if (result.status === 200) {
+        yield put(UserActions.toggleOnetouchSuccess(action.payload));
+      } else {
+        yield put(UserActions.toggleOnetouchFailure(action.payload));
+      }
+    } catch (e) {
       yield put(UserActions.toggleOnetouchFailure(action.payload));
     }
-  } catch (e) {
-    yield put(UserActions.toggleOnetouchFailure(action.payload));
   }
 }
