@@ -60,7 +60,8 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
           this.props.onSubmitPin(newPinList)
-            .then(this.resetPinList);
+            .then(this.resetPinList)
+            .catch(() => null);
         })
       });
     }

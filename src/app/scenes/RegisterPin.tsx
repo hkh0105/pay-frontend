@@ -42,21 +42,24 @@ export class RegisterPin extends React.Component<SetPinProps, SetPinState> {
       return Promise.resolve();
     }
 
-    const currentPinConfirm = pin.join('');
-    if (this.state.currentPin !== currentPinConfirm) {
+    const currentPin = pin.join('');
+    if (this.state.currentPin !== currentPin) {
       alert('비밀번호가 일치하지 않습니다.')
       this.setState({ currentStep: 'newPassword', currentPin: '' });
       return Promise.resolve();
     }
 
-    return requestRegisterOrUpdatePin({ pin: pin.join('') })
+    this.setState({ isFetching: true });
+
+    return requestRegisterOrUpdatePin({ pin: currentPin })
+      .catch(() => {
+        this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false });
+      })
       .then(() => {
         alert('RIDI Pay 카드 등록이 완료되었습니다.');
         // TODO: Redirect to where users were from (e.g. checkout page)
         history.push('/settings');
-      })
-      .catch(() => {
-        this.setState({ currentStep: 'newPassword', currentPin: '' });
+        return Promise.reject();
       });
   }
 
@@ -71,6 +74,7 @@ export class RegisterPin extends React.Component<SetPinProps, SetPinState> {
           <div className={sceneContents}>
             <PinForm
               {...RegisterPin.pinFormPropsForSteps[currentStep]}
+              isSubmitting={currentStep === 'newPasswordConfirm' && this.state.isFetching}
               onSubmitPin={this.handleSubmitPin}
             />
           </div>
