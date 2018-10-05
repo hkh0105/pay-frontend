@@ -51,7 +51,7 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
   try {
     yield call(requestDeleteCard, action.payload);
     yield put(UserActions.deleteCardSuccess(action.payload));
-    history.replace(urls.SETTINGS);
+    alert('카드가 삭제되었습니다.');
   } catch (e) {
     yield put(UserActions.deleteCardFailure());
   }

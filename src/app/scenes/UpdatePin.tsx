@@ -69,7 +69,7 @@ export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
       return;
     } else if (this.state.currentStep === 'newPassword') {
       if (this.state.currentPin === pinString) {
-        alert('기존 비밀번호와 다른 비밀번호를 입력해주세요.');
+        alert('현재 비밀번호와 동일합니다.');
         resetPin();
         return;
       }
@@ -78,7 +78,7 @@ export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
       return;
     } else if (this.state.currentStep === 'newPasswordConfirm') {
       if (this.state.newPin !== pinString) {
-        alert('비밀번호가 일치하지 않습니다.');
+        alert('입력한 비밀번호가 다릅니다.\n다시 입력해주세요.');
         resetPin();
         this.setState({ currentStep: 'newPassword', newPin: '' });
         return;
