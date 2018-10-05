@@ -4,8 +4,9 @@ import * as React from 'react';
 import { PinInput } from 'app/services/pin/components/PinInput';
 import { breakpoints, flexCenter, paperProStylesClassName, paperStylesClassName } from 'app/styles';
 
+export type PinList = number[];
 export interface PinInputGroupProps {
-  pinList: number[];
+  pinList: PinList;
 }
 
 const sixLengthArray = Array.from({ length: 6 });

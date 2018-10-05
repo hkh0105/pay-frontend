@@ -3,43 +3,29 @@ import { css } from 'emotion';
 import * as React from 'react';
 
 import { FindPin } from 'app/services/pin/components/FindPin';
-import { PinInputGroup } from 'app/services/pin/components/PinInputGroup';
+import { PinInputGroup, PinList } from 'app/services/pin/components/PinInputGroup';
 import { PinButtonFunctionKey, PinButtonValue, PinPad } from 'app/services/pin/components/PinPad';
 import { applyGraySpinner, breakpoints, centralHeading2, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
 
-export type PinFormOnSubmit = (pinList: number[], resetPinList: () => void) => any;
+export type PinFormOnSubmit = (pinList: PinList) => any;
 export interface PinFormProps {
   title: string;
+  pinList: PinList;
   description?: string;
   showFindPin?: boolean;
   isSubmitting?: boolean;
   onSubmitPin: PinFormOnSubmit;
-}
-
-export interface PinFormState {
-  pinList: number[];
+  onChange: (pinList: PinList) => any;
 }
 
 const PIN_LENGTH = 6;
 
-export class PinForm extends React.Component<PinFormProps, PinFormState> {
-  public constructor(props: any) {
-    super(props);
-    this.state = {
-      pinList: [],
-    }
-  }
+export class PinForm extends React.Component<PinFormProps> {
   public static defaultProps = {
     description: null,
     showFindPin: false,
     isSubmitting: false,
   };
-
-  private resetPinList = () => {
-    this.setState({
-      pinList: [],
-    });
-  }
 
   private clickKey = (pinList: number[], key: PinButtonValue) => {
     switch (key) {
@@ -53,14 +39,12 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
   }
 
   public handleClickKey = (key: PinButtonValue) => {
-    const newPinList = this.clickKey(this.state.pinList, key);
-    this.setState({
-      pinList: newPinList,
-    });
+    const newPinList = this.clickKey(this.props.pinList, key);
+    this.props.onChange(newPinList);
     if (newPinList.length === PIN_LENGTH) {
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
-          this.props.onSubmitPin(newPinList, this.resetPinList);
+          this.props.onSubmitPin(newPinList);
         })
       });
     }
@@ -74,7 +58,7 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
         {
           this.props.isSubmitting ?
             <div className={styles.spinner} /> :
-            <PinInputGroup pinList={this.state.pinList}/>
+            <PinInputGroup pinList={this.props.pinList}/>
         }
         {this.props.showFindPin && <FindPin />}
         <PinPad clickKey={this.handleClickKey} />

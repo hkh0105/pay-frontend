@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { history } from 'app/config';
 import { PinForm, PinFormOnSubmit, PinFormProps } from 'app/services/pin/components/PinForm';
+import { PinList } from 'app/services/pin/components/PinInputGroup';
 import { requestPinRegistration, requestPinValidation } from 'app/services/pin/requests';
 import { requestRegisterPin, requestUpdatePin, requestValidatePin } from 'app/services/user/userRequests';
 import { ValidatePinResponse } from 'app/services/user/userTypes';
@@ -15,6 +16,7 @@ type UpdatePinSteps = 'currentPassword' | 'newPassword' | 'newPasswordConfirm'
 export interface SetPinState {
   currentStep: UpdatePinSteps;
   isFetching: boolean;
+  pinList: PinList;
   validationToken?: string;
   currentPin?: string;
   newPin?: string;
@@ -26,7 +28,7 @@ export interface SetPinProps {
 }
 
 export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
-  public static pinFormPropsForSteps: Record<UpdatePinSteps, Omit<NonNullable<PinFormProps>, 'onSubmitPin'>> = {
+  public static pinFormPropsForSteps: Record<UpdatePinSteps, Omit<NonNullable<PinFormProps>, 'onSubmitPin' | 'pinList' | 'onChange'>> = {
     currentPassword: {
       title: '현재 비밀번호 입력',
       showFindPin: true,
@@ -46,55 +48,62 @@ export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
   public state: SetPinState = {
     currentStep: 'currentPassword',
     isFetching: false,
+    pinList: [],
   }
 
-  private handleSubmitPin: PinFormOnSubmit = async (pin, resetPin) => {
-    const pinString = pin.join('');
+  private handlePinFormChange = (pinList: PinList) => {
+    if (this.state.isFetching) {
+      return;
+    }
+    this.setState({ pinList })
+  }
+
+  private handleSubmitPin: PinFormOnSubmit = async (pinList) => {
+    const pin = pinList.join('');
+    if (this.state.isFetching) {
+      return;
+    }
     if (this.state.currentStep === 'currentPassword') {
       this.setState({ isFetching: true });
       try {
-        const res: AxiosResponse<ValidatePinResponse> = await requestValidatePin({ pin: pinString })
-        resetPin();
+        const res: AxiosResponse<ValidatePinResponse> = await requestValidatePin({ pin })
         this.setState({
           isFetching: false,
           validationToken: res.data.validation_token,
           currentStep: 'newPassword',
-          currentPin: pinString,
+          currentPin: pin,
+          pinList: [],
         });
       } catch (e) {
         alert(e.data.message);
-        resetPin();
-        this.setState({ isFetching: false });
+        this.setState({ isFetching: false, pinList: [] });
       }
       return;
     } else if (this.state.currentStep === 'newPassword') {
-      if (this.state.currentPin === pinString) {
+      if (this.state.currentPin === pin) {
         alert('현재 비밀번호와 동일합니다.');
-        resetPin();
+        this.setState({ pinList: [] });
         return;
       }
-      resetPin();
-      this.setState({ currentStep: 'newPasswordConfirm', newPin: pinString });
+      this.setState({ currentStep: 'newPasswordConfirm', newPin: pin, pinList: [] });
       return;
     } else if (this.state.currentStep === 'newPasswordConfirm') {
-      if (this.state.newPin !== pinString) {
+      if (this.state.newPin !== pin) {
         alert('입력한 비밀번호가 다릅니다.\n다시 입력해주세요.');
-        resetPin();
-        this.setState({ currentStep: 'newPassword', newPin: '' });
+        this.setState({ currentStep: 'newPassword', newPin: '', pinList: [] });
         return;
       }
 
       this.setState({ isFetching: true });
 
       try {
-        await requestUpdatePin({ pin: pinString, validation_token: this.state.validationToken! })
+        await requestUpdatePin({ pin, validation_token: this.state.validationToken! })
         alert('결제 비밀번호 변경이 완료되었습니다.');
         history.push('/settings');
         return;
       } catch (e) {
         alert(e.data.message);
-        resetPin();
-        this.setState({ currentStep: 'newPassword', newPin: '', isFetching: false });
+        this.setState({ currentStep: 'newPassword', newPin: '', isFetching: false, pinList: [] });
         return;
       }
     }
@@ -114,6 +123,8 @@ export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
               {...UpdatePin.pinFormPropsForSteps[currentStep]}
               isSubmitting={this.state.isFetching}
               onSubmitPin={this.handleSubmitPin}
+              pinList={this.state.pinList}
+              onChange={this.handlePinFormChange}
             />
           </div>
         </ConnectedSceneWrapper>
