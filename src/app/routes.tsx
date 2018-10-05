@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { history } from 'app/config';
-import { ConnectedSetOnetouch, ConnectedSettings, Error404, Payment, RegisterCard, SetOnetouch, SetPin, Settings, ValidatePassword, ValidatePin } from 'app/scenes';
+import { ConnectedSetOnetouch, ConnectedSettings, Error404, Payment, RegisterCard, SetOnetouch, Settings, UpdatePin, ValidatePassword, ValidatePin } from 'app/scenes';
 
 import { ConnectedEnsureLogin } from 'app/components/EnsureLogin';
 import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
@@ -33,7 +33,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={RegisterCard} />} />
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
-          <Route exact={true} path="/settings/pin/update" render={() => <ConnectedPrivateRoute component={SetPin} />} />
+          <Route exact={true} path="/settings/pin/update" render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
           <Route exact={true} path={urls.ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
           <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />

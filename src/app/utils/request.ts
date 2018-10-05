@@ -21,7 +21,7 @@ axios.interceptors.response.use(
   (error) => {
     const { code } = error.response.data;
     const { pathname, href } = location;
-    if (code === 'UNAUTHORIZED') {
+    if (code === 'LOGIN_REQUIRED') {
       location.replace(`${urls.RIDIBOOKS_LOGIN}?return_url=${href}`);
     } else if (code === 'NOT_FOUND_USER') {
       if (!publicUrls.includes(pathname)) {
@@ -40,7 +40,7 @@ export interface RequestConfig extends AxiosRequestConfig {
   };
 }
 
-export function request(config: RequestConfig): AxiosPromise {
+export function request(config: RequestConfig) {
   config.baseURL = process.env.API_BASE_URL;
   config.withCredentials = true;
   return axios(config);

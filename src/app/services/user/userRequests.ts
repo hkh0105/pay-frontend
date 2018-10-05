@@ -1,11 +1,15 @@
 import {
   DeleteCardRequestPayload,
   OnetouchToggleRequestPaylaod,
-  RegisteOrUpdatePinPayload,
   RegisterCardRequestPayload,
-  RegisterCardResponse
+  RegisterCardResponse,
+  RegisterPinPayload,
+  UpdatePinPayload,
+  ValidatePinPayload,
+  ValidatePinResponse
 } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
+import { AxiosResponse } from 'axios';
 
 export const requestProfile = () => {
   return request({
@@ -37,10 +41,26 @@ export const requestToggleOnetouch = (payload: OnetouchToggleRequestPaylaod) => 
   });
 };
 
-export const requestRegisterOrUpdatePin = (payload: RegisteOrUpdatePinPayload) => {
+export const requestRegisterPin = (payload: RegisterPinPayload) => {
+  return request({
+    method: 'POST',
+    url: '/me/pin',
+    data: payload
+  });
+};
+
+export const requestUpdatePin = (payload: UpdatePinPayload) => {
   return request({
     method: 'PUT',
     url: '/me/pin',
+    data: payload
+  });
+};
+
+export const requestValidatePin = (payload: ValidatePinPayload) => {
+  return request({
+    method: 'POST',
+    url: '/me/pin/validate',
     data: payload
   });
 };

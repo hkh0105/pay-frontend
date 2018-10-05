@@ -7,12 +7,13 @@ import { PinInputGroup } from 'app/services/pin/components/PinInputGroup';
 import { PinButtonFunctionKey, PinButtonValue, PinPad } from 'app/services/pin/components/PinPad';
 import { applyGraySpinner, breakpoints, centralHeading2, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
 
+export type PinFormOnSubmit = (pinList: number[], resetPinList: () => void) => any;
 export interface PinFormProps {
   title: string;
   description?: string;
   showFindPin?: boolean;
   isSubmitting?: boolean;
-  onSubmitPin: (pinList: number[]) => Promise<any>;
+  onSubmitPin: PinFormOnSubmit;
 }
 
 export interface PinFormState {
@@ -59,9 +60,7 @@ export class PinForm extends React.Component<PinFormProps, PinFormState> {
     if (newPinList.length === PIN_LENGTH) {
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
-          this.props.onSubmitPin(newPinList)
-            .then(this.resetPinList)
-            .catch(() => null);
+          this.props.onSubmitPin(newPinList, this.resetPinList);
         })
       });
     }

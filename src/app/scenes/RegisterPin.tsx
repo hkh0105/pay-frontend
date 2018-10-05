@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet';
 
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { history } from 'app/config';
-import { PinForm, PinFormProps } from 'app/services/pin/components/PinForm';
+import { PinForm, PinFormOnSubmit, PinFormProps } from 'app/services/pin/components/PinForm';
 import { requestPinRegistration, requestPinValidation } from 'app/services/pin/requests';
-import { requestRegisterOrUpdatePin } from 'app/services/user/userRequests';
+import { requestRegisterPin } from 'app/services/user/userRequests';
 import { Omit } from 'app/types';
 import { connect } from 'react-redux';
 
@@ -36,30 +36,32 @@ export class RegisterPin extends React.Component<SetPinProps, SetPinState> {
     isFetching: false,
   }
 
-  private handleSubmitPin = (pin: number[]): Promise<any> => {
+  private handleSubmitPin: PinFormOnSubmit = (pin, resetPinList) => {
     if (this.state.currentStep === 'newPassword') {
+      resetPinList();
       this.setState({ currentStep: 'newPasswordConfirm', currentPin: pin.join('') });
-      return Promise.resolve();
+      return;
     }
 
     const currentPin = pin.join('');
     if (this.state.currentPin !== currentPin) {
       alert('비밀번호가 일치하지 않습니다.')
+      resetPinList();
       this.setState({ currentStep: 'newPassword', currentPin: '' });
-      return Promise.resolve();
+      return;
     }
 
     this.setState({ isFetching: true });
 
-    return requestRegisterOrUpdatePin({ pin: currentPin })
+    return requestRegisterPin({ pin: currentPin })
       .catch(() => {
+        resetPinList();
         this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false });
       })
       .then(() => {
         alert('RIDI Pay 카드 등록이 완료되었습니다.');
         // TODO: Redirect to where users were from (e.g. checkout page)
         history.push('/settings');
-        return Promise.reject();
       });
   }
 

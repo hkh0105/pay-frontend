@@ -43,6 +43,20 @@ export interface OnetouchToggleRequestPaylaod {
   enable_onetouch_pay: boolean;
 }
 
-export interface RegisteOrUpdatePinPayload {
+export interface RegisterPinPayload {
   pin: string;
+}
+
+export interface UpdatePinPayload {
+  pin: string;
+  validation_token: string;
+}
+
+export interface ValidatePinPayload {
+  pin: string;
+  reservation_id?: string;
+}
+
+export interface ValidatePinResponse {
+  validation_token: string;
 }
