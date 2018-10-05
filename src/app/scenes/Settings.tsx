@@ -197,8 +197,8 @@ export class Settings extends React.Component<Props> {
             </div>
             <Link
               className={classNames(settingItem, settingDefaultItem, isNotRidiPayUser && settingsDefaultItemDisabled)}
-              to="/settings/pin/update"
-
+              to={isNotRidiPayUser ? '' : '/settings/pin/update'}
+              onClick={e => isNotRidiPayUser && e.preventDefault()}
             >
               <h3 className={settingItemName}>결제 비밀번호 변경</h3>
             </Link>
