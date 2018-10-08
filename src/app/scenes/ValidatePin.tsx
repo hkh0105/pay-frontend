@@ -52,6 +52,7 @@ export class ValidatePin extends React.Component<ValidatePinProps, ValidatePinSt
               isSubmitting={this.state.isSubmitting}
               onSubmitPin={this.handleValidationSubmit}
               pinList={[]}
+              onChange={() => null}
             />
           </div>
         </ConnectedSceneWrapper>
