@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { history } from 'app/config';
-import { ConnectedPayment, ConnectedSetOnetouch, ConnectedSettings, Error404, RegisterCard, SetOnetouch, Settings, UpdatePin, ValidatePassword, ValidatePin } from 'app/scenes';
+import { ConnectedPayment, ConnectedSetOnetouch, ConnectedSettings, RegisterCard, UpdatePin, ValidatePin } from 'app/scenes';
 
 import { ConnectedEnsureLogin } from 'app/components/EnsureLogin';
 import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
@@ -37,7 +37,6 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path="/settings/pin/update" render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
           <Route exact={true} path={urls.ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
-          <Route exact={true} path="/validate/password" render={() => <ConnectedPrivateRoute component={ValidatePassword} />} />
           <Route exact={true} path="/legal/terms" render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
           <Redirect to={urls.SETTINGS}/>
         </Switch>

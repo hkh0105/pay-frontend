@@ -60,3 +60,12 @@ export interface ValidatePinPayload {
 export interface ValidatePinResponse {
   validation_token: string;
 }
+
+export interface ValidatePasswordPayload {
+  password: string;
+  reservation_id: string;
+}
+
+export interface ValidatePasswordResponse {
+  validation_token: string;
+}

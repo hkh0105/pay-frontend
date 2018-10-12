@@ -8,6 +8,7 @@ import { css } from 'emotion';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { PageSpinner } from './PageSpinner';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 
@@ -23,9 +24,7 @@ class EnsureLogin extends React.Component<Props> {
       return this.props.children;
     }
     return <ConnectedSceneWrapper>
-      <div className={s.wrapper}>
-        <div className={s.spinner} />
-      </div>
+      <PageSpinner />
     </ConnectedSceneWrapper>
   }
 }
@@ -45,15 +44,3 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 export const ConnectedEnsureLogin = connect(mapStateToProps, mapDispatchToProps, null, {
   pure: false, // Make sure re-render for its children
 })(EnsureLogin);
-
-const s = {
-  wrapper: css({
-    height: `calc(100% - ${headerHeight})`,
-    display: 'flex',
-    alignItems: 'center',
-  }),
-  spinner: css({
-    width: '100%',
-    ...applyGraySpinner('30px'),
-  } as {}),
-}

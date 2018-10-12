@@ -5,5 +5,4 @@ export * from './SetOnetouch';
 export * from 'app/scenes/UpdatePin';
 export * from './Settings';
 export * from './Terms';
-export * from './ValidatePassword';
 export * from './ValidatePin';

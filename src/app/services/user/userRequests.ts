@@ -5,6 +5,7 @@ import {
   RegisterCardResponse,
   RegisterPinPayload,
   UpdatePinPayload,
+  ValidatePasswordPayload,
   ValidatePinPayload,
   ValidatePinResponse
 } from 'app/services/user/userTypes';
@@ -61,6 +62,14 @@ export const requestValidatePin = (payload: ValidatePinPayload) => {
   return request({
     method: 'POST',
     url: '/me/pin/validate',
+    data: payload
+  });
+};
+
+export const requestValidatePassword = (payload: ValidatePasswordPayload) => {
+  return request({
+    method: 'POST',
+    url: '/me/password/validate',
     data: payload
   });
 };

@@ -1,5 +1,6 @@
 import { Button } from '@ridi/rsg';
 import { headerHeight } from 'app/components/Header';
+import { PageSpinner } from 'app/components/PageSpinner';
 import { ConnectedSceneWrapper } from 'app/components/SceneWrapper';
 import { history } from 'app/config';
 import { requestReservationInformation } from 'app/services/payment/paymentRequests';
@@ -26,12 +27,12 @@ export const ensureReservation = <P extends ReservationInformationResponse & Rou
   class extends React.Component<RouteProps, State> {
   public state: State = {}
 
+
   public async componentDidMount() {
     try {
       const response: AxiosResponse<ReservationInformationResponse> = await requestReservationInformation(this.props.reservationId);
       this.setState({ response: response.data });
     } catch (e) {
-      this.setState({ response: { required_validation: 'PASSWORD', validation_token: '' } });
       alert('유효하지 않은 결제 정보입니다.');
       history.replace('/');
     }
@@ -42,21 +43,7 @@ export const ensureReservation = <P extends ReservationInformationResponse & Rou
       return <Component {...this.state.response} reservationId={this.props.reservationId} />
     }
     return <ConnectedSceneWrapper>
-      <div className={s.wrapper}>
-        <div className={s.spinner} />
-      </div>
+      <PageSpinner />
     </ConnectedSceneWrapper>
   }
-}
-
-const s = {
-  wrapper: css({
-    height: `calc(100% - ${headerHeight})`,
-    display: 'flex',
-    alignItems: 'center',
-  }),
-  spinner: css({
-    width: '100%',
-    ...applyGraySpinner('30px'),
-  } as {}),
 }
