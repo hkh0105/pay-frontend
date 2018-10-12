@@ -4,10 +4,11 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { history } from 'app/config';
-import { ConnectedSetOnetouch, ConnectedSettings, Error404, Payment, RegisterCard, SetOnetouch, Settings, UpdatePin, ValidatePassword, ValidatePin } from 'app/scenes';
+import { ConnectedPayment, ConnectedSetOnetouch, ConnectedSettings, Error404, RegisterCard, SetOnetouch, Settings, UpdatePin, ValidatePassword, ValidatePin } from 'app/scenes';
 
 import { ConnectedEnsureLogin } from 'app/components/EnsureLogin';
 import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
+import { ensureReservation } from 'app/hocs/ensureReservation';
 import { LegalTerms } from 'app/scenes/LegalTerms';
 import { ConnectedRegisterPin } from 'app/scenes/RegisterPin';
 
@@ -29,7 +30,7 @@ export const Routes: React.SFC = () => {
       <ConnectedEnsureLogin>
       <ConnectedScrollToTop>
         <Switch>
-          <Route exact={true} path="/payments/:reservation_id" render={() => <ConnectedPrivateRoute component={Payment} />} />
+          <Route exact={true} path="/payments/:reservationId" render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={RegisterCard} />} />
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
