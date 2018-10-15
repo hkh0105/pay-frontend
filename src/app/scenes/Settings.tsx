@@ -122,7 +122,9 @@ interface State {
 
 export class Settings extends React.Component<Props> {
   private handleDeleteCardButtonClick = () => {
-    // TODO: Should use <Popup />
+    if (this.props.user.isDeletingCardFetching) {
+      return;
+    }
     if (!confirm('카드를 삭제하시겠습니까?')) {
       return;
     }
