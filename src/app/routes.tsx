@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { history } from 'app/config';
-import { ConnectedPayment, ConnectedSetOnetouch, ConnectedSettings, RegisterCard, UpdatePin, ValidatePin } from 'app/scenes';
+import { ConnectedPayment, ConnectedRegisterCard, ConnectedSetOnetouch, ConnectedSettings, RegisterCard, UpdatePin, ValidatePin } from 'app/scenes';
 
 import { ConnectedEnsureLogin } from 'app/components/EnsureLogin';
 import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
@@ -32,7 +32,7 @@ export const Routes: React.SFC = () => {
         <Switch>
           <Route exact={true} path="/payments/:reservationId" render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
-          <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={RegisterCard} />} />
+          <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
           <Route exact={true} path="/settings/pin/update" render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
           <Route exact={true} path={urls.ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />

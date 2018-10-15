@@ -66,6 +66,7 @@
     "lodash-es": "^4.17.10",
     "normalize.css": "^8.0.0",
     "object-path-immutable": "^3.0.0",
+    "qs": "^6.5.2",
     "raven-js": "^3.16",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

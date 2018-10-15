@@ -7,6 +7,7 @@ import { PinForm, PinFormOnSubmit, PinFormProps } from 'app/services/pin/compone
 import { PinList } from 'app/services/pin/components/PinInputGroup';
 import { requestPinRegistration, requestPinValidation } from 'app/services/pin/requests';
 import { requestRegisterPin } from 'app/services/user/userRequests';
+import { RootState } from 'app/store';
 import { Omit } from 'app/types';
 import { connect } from 'react-redux';
 import { runInThisContext } from 'vm';
@@ -20,7 +21,9 @@ export interface SetPinState {
   currentPin?: string;
 }
 
-export class RegisterPin extends React.Component<{}, SetPinState> {
+type Props = ReturnType<typeof mapStateToProps>;
+
+export class RegisterPin extends React.Component<Props, SetPinState> {
   public static pinFormPropsForSteps: Record<RegisterPinSteps, Omit<NonNullable<PinFormProps>, 'onSubmitPin' | 'pinList' | 'onChange'>> = {
     newPassword: {
       title: '결제 비밀번호 설정',
@@ -69,8 +72,7 @@ export class RegisterPin extends React.Component<{}, SetPinState> {
       })
       .then(() => {
         alert('RIDI Pay 카드 등록이 완료되었습니다.');
-        // TODO: Redirect to where users were from (e.g. checkout page)
-        history.push('/settings');
+        location.replace(this.props.user.urlToReturn!);
       });
   }
 
@@ -97,4 +99,10 @@ export class RegisterPin extends React.Component<{}, SetPinState> {
   }
 };
 
-export const ConnectedRegisterPin = connect(null, null)(RegisterPin);
+export const mapStateToProps = (state: RootState) => {
+  return {
+    user: state.user,
+  }
+}
+
+export const ConnectedRegisterPin = connect(mapStateToProps, null)(RegisterPin);

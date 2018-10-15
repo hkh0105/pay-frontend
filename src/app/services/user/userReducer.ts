@@ -103,6 +103,12 @@ export const userReducer: Reducer<UserState, UserActions> = (
         isUsingOnetouchPay: !action.payload.enable_onetouch_pay
       };
     }
+    case UserActionTypes.UPDATE_URL_TO_RETURN: {
+      return {
+        ...state,
+        urlToReturn: action.payload.url
+      };
+    }
   }
   return state;
 };

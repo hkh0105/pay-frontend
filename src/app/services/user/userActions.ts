@@ -4,6 +4,7 @@ import {
   OnetouchToggleRequestPaylaod,
   RegisterCardRequestPayload,
   RegisterCardResponse,
+  UpdateUrlToReturnPayload,
   UserProfileResponse
 } from 'app/services/user/userTypes';
 import { ActionsUnion, createAction } from 'app/types/redux';
@@ -20,7 +21,8 @@ export enum UserActionTypes {
   DELETE_CARD_FAILURE = 'DELETE_CARD_FAILURE',
   TOGGLE_ONETOUCH_REQUEST = 'TOGGLE_ONETOUCH_REQUEST',
   TOGGLE_ONETOUCH_SUCCESS = 'TOGGLE_ONETOUCH_SUCCESS',
-  TOGGLE_ONETOUCH_FAILURE = 'TOGGLE_ONETOUCH_FAILURE'
+  TOGGLE_ONETOUCH_FAILURE = 'TOGGLE_ONETOUCH_FAILURE',
+  UPDATE_URL_TO_RETURN = 'UPDATE_URL_TO_RETURN'
 }
 
 export const UserActions = {
@@ -44,7 +46,9 @@ export const UserActions = {
   toggleOnetouchSuccess: (payload: OnetouchToggleRequestPaylaod) =>
     createAction(UserActionTypes.TOGGLE_ONETOUCH_SUCCESS, payload),
   toggleOnetouchFailure: (payload: OnetouchToggleRequestPaylaod) =>
-    createAction(UserActionTypes.TOGGLE_ONETOUCH_FAILURE, payload)
+    createAction(UserActionTypes.TOGGLE_ONETOUCH_FAILURE, payload),
+  updateUrlToReturn: (payload: UpdateUrlToReturnPayload) =>
+    createAction(UserActionTypes.UPDATE_URL_TO_RETURN, payload)
 };
 
 export type UserActions = ActionsUnion<typeof UserActions>;

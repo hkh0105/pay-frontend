@@ -18,6 +18,7 @@ export interface UserState {
   hasPin: boolean;
   isUsingOnetouchPay: boolean;
   cards: Card[];
+  urlToReturn?: string;
 }
 
 export interface FetchUserProfileFailurePayload {
@@ -68,4 +69,8 @@ export interface ValidatePasswordPayload {
 
 export interface ValidatePasswordResponse {
   validation_token: string;
+}
+
+export interface UpdateUrlToReturnPayload {
+  url: string;
 }

@@ -7,6 +7,7 @@ import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
+import { requestToggleOnetouch } from 'app/services/user/userRequests';
 import { OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { css, cx } from 'emotion';
@@ -41,11 +42,28 @@ const buttonStyle = css({
   },
 })
 
-type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapStateToProps>;
+interface State {
+  isFetching: boolean;
+}
 
-export class SetOnetouch extends React.PureComponent<Props> {
-  private handleEnableButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    this.props.dispatchToggleOneTouch({ enable_onetouch_pay: true });
+export class SetOnetouch extends React.PureComponent<Props, State> {
+  public state: State = {
+    isFetching: false,
+  }
+  private handleEnableButtonClick = async (e: React.MouseEvent<HTMLInputElement>) => {
+    if (this.state.isFetching) {
+      return;
+    }
+    try {
+      this.setState({ isFetching: true });
+      await requestToggleOnetouch({ enable_onetouch_pay: true });
+      alert('RIDI Pay 카드 등록이 완료되었습니다.');
+      location.replace(this.props.user.urlToReturn!);
+    } catch (e) {
+      alert(e.data.mssasage);
+      this.setState({ isFetching: false });
+    }
   }
 
   private handleSkipButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -69,16 +87,16 @@ export class SetOnetouch extends React.PureComponent<Props> {
               className={buttonStyle}
               size="large"
               color="blue"
-              disabled={this.props.user.isOnetouchTogglingFetching}
+              disabled={this.state.isFetching}
               onClick={this.handleEnableButtonClick}
-              spinner={this.props.user.isOnetouchTogglingFetching}
+              spinner={this.state.isFetching}
               >원터치 결제 사용</Button>
             <Button
               className={buttonStyle}
               size="large"
               color="gray"
               outline={true}
-              disabled={this.props.user.isOnetouchTogglingFetching}
+              disabled={this.state.isFetching}
               onClick={this.handleSkipButtonClick}
             >사용 안함</Button>
           </div>
@@ -94,10 +112,5 @@ const mapStateToProps = (state: RootState) => {
   };
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    dispatchToggleOneTouch: (payload: OnetouchToggleRequestPaylaod) => dispatch(UserActions.toggleOnetouchRequest(payload))
-  }
-}
 
-export const ConnectedSetOnetouch = connect(mapStateToProps, mapDispatchToProps)(SetOnetouch);
+export const ConnectedSetOnetouch = connect(mapStateToProps)(SetOnetouch);
