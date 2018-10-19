@@ -53,43 +53,6 @@ class Payment extends React.Component<Props, State> {
     }
   }
 
-  private handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ passwordValue: e.target.value });
-  private handlePasswordSubmitButtonClick = async () => {
-    if (this.state.isFetching || this.state.passwordValue.length < 6) {
-      return;
-    }
-    try {
-      this.setState({ isFetching: true });
-      const response: AxiosResponse<ValidatePasswordResponse> = await requestValidatePassword({ 
-        password: this.state.passwordValue, 
-        reservation_id: this.props.reservationId,
-      });
-      this.setState({ 
-        validationToken: response.data.validation_token,
-      }, () => {
-        this.createPayment();
-      });
-    } catch (e) {
-      alert(e.data.message);
-      this.setState({ isFetching: false });
-    }
-  };
-  private renderPasswordValidation = () => {
-    return (
-      <ConnectedSceneWrapper>
-        <Helmet>
-          <title>리디북스 비밀번호 입력 - 리디페이</title>
-        </Helmet>
-        <ValidatePassword
-          isSubmitting={this.state.isFetching}
-          onChange={this.handlePasswordChange}
-          onSubmitButtonClick={this.handlePasswordSubmitButtonClick}
-          password={this.state.passwordValue}
-        />
-      </ConnectedSceneWrapper>
-    )
-  }
-
   private handlePinChange = (pinListValue: PinList) => this.setState({ pinListValue });
   private handleSubmitPin = async () => {
     if (this.state.isFetching || this.state.pinListValue.length !== 6) {
@@ -137,10 +100,8 @@ class Payment extends React.Component<Props, State> {
 
   public render() {
     const { isRedirecting } = this.state;
-    const { required_validation } = this.props;
-    if (required_validation === 'PASSWORD' && !isRedirecting) {
-      return this.renderPasswordValidation();
-    } else if (required_validation === 'PIN' && !isRedirecting) {
+    const { is_pin_validation_required } = this.props;
+    if (is_pin_validation_required && !isRedirecting) {
       return this.renderPinValidation();
     }
 

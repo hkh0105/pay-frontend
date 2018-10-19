@@ -1,5 +1,5 @@
 export interface ReservationInformationResponse {
-  required_validation: 'PASSWORD' | 'PIN' | null;
+  is_pin_validation_required: boolean;
   validation_token?: string;
 }
 
