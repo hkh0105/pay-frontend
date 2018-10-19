@@ -51,26 +51,19 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
   public state: State = {
     isFetching: false,
   }
-  private handleEnableButtonClick = async (e: React.MouseEvent<HTMLInputElement>) => {
+  private handleButtonClick = (enable: boolean) => async (e: React.MouseEvent<HTMLInputElement>) => {
     if (this.state.isFetching) {
       return;
     }
     try {
       this.setState({ isFetching: true });
-      await requestToggleOnetouch({ enable_onetouch_pay: true });
+      await requestToggleOnetouch({ enable_onetouch_pay: enable });
       alert('RIDI Pay 카드 등록이 완료되었습니다.');
       location.replace(this.props.user.urlToReturn!);
     } catch (e) {
       alert(e.data.mssasage);
       this.setState({ isFetching: false });
     }
-  }
-
-  private handleSkipButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (!confirm('결제 비밀번호를 설정하시겠습니까?\n원터치 결제를 사용하시지 않을 경우 결제 비밀번호가 필요합니다.')) {
-      return;
-    }
-    history.push(urls.REGISTER_PIN);
   }
 
   public render() {
@@ -88,7 +81,7 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
               size="large"
               color="blue"
               disabled={this.state.isFetching}
-              onClick={this.handleEnableButtonClick}
+              onClick={this.handleButtonClick(true)}
               spinner={this.state.isFetching}
               >원터치 결제 사용</Button>
             <Button
@@ -97,7 +90,7 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
               color="gray"
               outline={true}
               disabled={this.state.isFetching}
-              onClick={this.handleSkipButtonClick}
+              onClick={this.handleButtonClick(false)}
             >사용 안함</Button>
           </div>
         </div>

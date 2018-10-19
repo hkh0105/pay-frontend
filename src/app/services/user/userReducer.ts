@@ -52,7 +52,7 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isAddingCardFetching: false,
-        cards: [...state.cards, action.payload.card]
+        // cards: [...state.cards, action.payload.card]
       };
     }
     case UserActionTypes.REGISTER_CARD_FAILURE: {

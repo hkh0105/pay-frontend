@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { history } from 'app/config';
+import { urls } from 'app/routes';
 import { PinForm, PinFormOnSubmit, PinFormProps } from 'app/services/pin/components/PinForm';
 import { PinList } from 'app/services/pin/components/PinInputGroup';
 import { requestPinRegistration, requestPinValidation } from 'app/services/pin/requests';
@@ -71,8 +72,7 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
         this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false, pinList: [] });
       })
       .then(() => {
-        alert('RIDI Pay 카드 등록이 완료되었습니다.');
-        location.replace(this.props.user.urlToReturn!);
+        history.replace(urls.SET_ONETOUCH)
       });
   }
 

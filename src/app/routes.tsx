@@ -14,7 +14,7 @@ import { ConnectedRegisterPin } from 'app/scenes/RegisterPin';
 
 export const urls = {
   SETTINGS: '/settings',
-  ONETOUCH: '/settings/onetouch',
+  SET_ONETOUCH: '/settings/onetouch',
   REGISTER_CARD: '/settings/cards/add',
   REGISTER_PIN: '/settings/pin/register',
   RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
@@ -35,7 +35,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
           <Route exact={true} path="/settings/pin/update" render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
-          <Route exact={true} path={urls.ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
+          <Route exact={true} path={urls.SET_ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
           <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
           <Route exact={true} path="/legal/terms" render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
           <Redirect to={urls.SETTINGS}/>

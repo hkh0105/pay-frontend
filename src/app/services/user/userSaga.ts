@@ -38,7 +38,7 @@ function* watchAddCardRequest(action: ReturnType<typeof UserActions.registerCard
     );
     const state: RootState = yield select((s) => s);
     // Ask whther user wants to use one touch payment when they don't have cards registered
-    const nextUrl = state.user.cards.length ? urls.SETTINGS : urls.ONETOUCH;
+    const nextUrl = state.user.cards.length ? urls.SETTINGS : urls.SET_ONETOUCH;
     yield put(UserActions.registerCardSuccess(response.data));
     history.replace(nextUrl);
   } catch (e) {

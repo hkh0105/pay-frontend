@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { SpaceKeyCode } from 'app/components';
 import { history } from 'app/config';
-import { urls } from 'app/routes';
+import { publicUrls, urls } from 'app/routes';
 import {
   cardCheckboxInputKey,
   CardFormState,
@@ -22,6 +22,7 @@ import {
 } from 'app/services/cards/components';
 import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
 import { UserActions } from 'app/services/user/userActions';
+import { requestRegisterCard } from 'app/services/user/userRequests';
 import { RegisterCardRequestPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { a11y } from 'app/styles';
@@ -42,9 +43,15 @@ function preventDefaultOnSpaceKeyEvent(e: React.KeyboardEvent<HTMLInputElement>)
 }
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+interface State extends CardFormState {
+  isFetching: boolean;
+}
 
-export class CardForm extends React.Component<Props, CardFormState> {
-  public state = initialCardFormState;
+export class CardForm extends React.Component<Props, State> {
+  public state: State = {
+    ...initialCardFormState,
+    isFetching: false,
+  };
   public inputRefs = initialCardInputRefs;
 
   private getHandleChangeNumberInput = (inputKey: string) => {
@@ -154,20 +161,28 @@ export class CardForm extends React.Component<Props, CardFormState> {
     );
   }
 
-  private handleSubmitButtonClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  private handleSubmitButtonClick = async (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (this.props.isFetching || !this.isFormValid()) {
+    if (this.state.isFetching || !this.isFormValid()) {
       return;
     }
     const { numberInputs } = this.state;
     const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
     const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
-    this.props.dispatchRequestRegisterCard({
-      card_expiration_date: expirationDate,
-      card_number: numberInputs[cardnumber].value.replace(/\s/g, ''),
-      card_password: numberInputs[password].value,
-      tax_id: numberInputs[birthdate].value,
-    })
+    this.setState({ isFetching: true })
+
+    try {
+      await requestRegisterCard({
+        card_expiration_date: expirationDate,
+        card_number: numberInputs[cardnumber].value.replace(/\s/g, ''),
+        card_password: numberInputs[password].value,
+        tax_id: numberInputs[birthdate].value,
+      });
+      history.replace(urls.REGISTER_PIN);
+    } catch (e) {
+      alert(e.data.message);
+      this.setState({ isFetching: false });
+    }
   }
 
   public componentDidMount() {
@@ -295,7 +310,7 @@ export class CardForm extends React.Component<Props, CardFormState> {
           className={classNames(cardFormSubmitButtonClass, { [cardFormSubmitDisabledButtonClass]: !this.isFormValid() })}
           onClick={this.handleSubmitButtonClick}
           disabled={!this.isFormValid()}
-          spinner={this.props.isFetching}
+          spinner={this.state.isFetching}
           color="blue"
         >
           카드 등록
@@ -307,14 +322,13 @@ export class CardForm extends React.Component<Props, CardFormState> {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isFetching: state.user.isAddingCardFetching,
     cardExists: state.user.cards.length > 0,
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    dispatchRequestRegisterCard: (payload: RegisterCardRequestPayload) => dispatch(UserActions.registerCardRequest(payload))
+    // dispatchRequestRegisterCard: (payload: RegisterCardRequestPayload) => dispatch(UserActions.registerCardRequest(payload))
   }
 }
 
