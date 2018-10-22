@@ -32,9 +32,6 @@ module.exports = {
     '**/*.{ts,tsx}',
   ],
   coveragePathIgnorePatterns: testAndCoverageIgnorePatterns,
-  setupFiles: [
-    'jest-localstorage-mock',
-  ],
   globals: {
     'ts-jest': {
       skipBabel: true,
