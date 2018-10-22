@@ -22,7 +22,8 @@ axios.interceptors.response.use(
     const { code } = error.response.data;
     const { pathname, href } = location;
     if (code === 'LOGIN_REQUIRED') {
-      location.replace(`${urls.RIDIBOOKS_LOGIN}?return_url=${href}`);
+      const returnUrl = encodeURIComponent(href);
+      location.replace(`${urls.RIDIBOOKS_LOGIN}?return_url=${returnUrl}`);
     } else if (code === 'NOT_FOUND_USER') {
       if (!publicUrls.includes(pathname)) {
         history.replace(urls.SETTINGS);
