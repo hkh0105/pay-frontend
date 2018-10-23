@@ -10,7 +10,8 @@ const initailState: UserState = {
   isOnetouchTogglingFetching: false,
   cards: [],
   hasPin: false,
-  isUsingOnetouchPay: false
+  isUsingOnetouchPay: false,
+  userId: ''
 };
 
 export const userReducer: Reducer<UserState, UserActions> = (
@@ -51,7 +52,7 @@ export const userReducer: Reducer<UserState, UserActions> = (
     case UserActionTypes.REGISTER_CARD_SUCCESS: {
       return {
         ...state,
-        isAddingCardFetching: false,
+        isAddingCardFetching: false
         // cards: [...state.cards, action.payload.card]
       };
     }

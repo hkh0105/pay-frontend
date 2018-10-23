@@ -13,6 +13,7 @@ export interface UserProfileResponse {
   };
   has_pin: boolean;
   is_using_onetouch_pay: boolean;
+  user_id: string;
 }
 
 export interface UserState {
@@ -25,6 +26,7 @@ export interface UserState {
   hasPin: boolean;
   isUsingOnetouchPay: boolean;
   cards: Card[];
+  userId: string;
   urlToReturn?: string;
 }
 

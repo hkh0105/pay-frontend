@@ -8,6 +8,8 @@ import { env, history } from 'app/config';
 import { environmentReducer, environmentSaga, EnvironmentState } from 'app/services/environment';
 import { userReducer } from 'app/services/user/userReducer';
 import { userSaga } from 'app/services/user/userSaga';
+import { trackingReducer } from './services/tracking/trackingReducer';
+import { trackingSaga } from './services/tracking/trackingSaga';
 
 declare global {
   interface Window {
@@ -16,11 +18,7 @@ declare global {
 }
 
 function* rootSaga(dispatch: Dispatch<RootState>) {
-  yield all([
-    userSaga(),
-    // trackingSaga(),
-    environmentSaga()
-  ]);
+  yield all([userSaga(), trackingSaga(), environmentSaga()]);
 }
 
 const composeEnhancers = env.isDevelopment
@@ -31,7 +29,8 @@ const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
   router: routerReducer,
   user: userReducer,
-  environment: environmentReducer
+  environment: environmentReducer,
+  tracking: trackingReducer
 });
 
 export type RootState = ReturnType<typeof reducers>;

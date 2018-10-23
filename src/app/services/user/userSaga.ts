@@ -12,6 +12,8 @@ import { RootState } from 'app/store';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, select, take, takeEvery } from 'redux-saga/effects';
+import { TrackingActions } from '../tracking/trackingActions';
+import { initializeTracker, trackCurrentPage } from '../tracking/trackingSaga';
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
@@ -24,6 +26,9 @@ function* watchLoadUserProfileRequest() {
   try {
     const response = yield call(requestProfile);
     yield put(UserActions.fetchUserProfileSuccess(response.data));
+    const state: RootState = yield select((s) => s);
+    yield call(initializeTracker, state);
+    yield call(trackCurrentPage);
   } catch (e) {
     const isUserLoggedIn = e && e.data && e.data.code === 'NOT_FOUND_USER';
     yield put(UserActions.fetchUserProfileFailure({ isUserLoggedIn }));
