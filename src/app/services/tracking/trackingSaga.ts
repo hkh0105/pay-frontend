@@ -10,7 +10,7 @@ export function* trackingSaga() {
 
 const TRACKING_ID = 'GTM-5K6C8CJ';
 
-let tracker: Tracker;
+export let tracker: Tracker;
 
 export const initializeTracker = (state: RootState) => {
   if (tracker) {

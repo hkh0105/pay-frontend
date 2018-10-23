@@ -7,8 +7,10 @@ import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
-import { requestToggleOnetouch } from 'app/services/user/userRequests';
+import { requestProfile, requestToggleOnetouch } from 'app/services/user/userRequests';
 import { OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
+import { VoidActions } from 'app/services/void/voidActions';
+import { FinishPaymentRegistrationPayload } from 'app/services/void/voidTypes';
 import { RootState } from 'app/store';
 import { css, cx } from 'emotion';
 import { connect } from 'react-redux';
@@ -42,27 +44,30 @@ const buttonStyle = css({
   },
 })
 
-type Props = ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 interface State {
-  isFetching: boolean;
+  isEnabling: boolean;
+  isDisabling: boolean;
 }
 
 export class SetOnetouch extends React.PureComponent<Props, State> {
   public state: State = {
-    isFetching: false,
+    isEnabling: false,
+    isDisabling: false,
   }
   private handleButtonClick = (enable: boolean) => async (e: React.MouseEvent<HTMLInputElement>) => {
-    if (this.state.isFetching) {
+    if (this.state.isEnabling || this.state.isDisabling) {
       return;
     }
     try {
-      this.setState({ isFetching: true });
-      await requestToggleOnetouch({ enable_onetouch_pay: enable });
-      alert('RIDI Pay 카드 등록이 완료되었습니다.');
-      location.replace(this.props.user.urlToReturn!);
+      this.setState({ 
+        isEnabling: enable,
+        isDisabling: !enable,
+      });
+      this.props.dispatchFinishPaymentRegistration({ enable_onetouch_pay: enable })
     } catch (e) {
       alert(e.data.mssasage);
-      this.setState({ isFetching: false });
+      this.setState({ isEnabling: false, isDisabling: false });
     }
   }
 
@@ -80,16 +85,17 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
               className={buttonStyle}
               size="large"
               color="blue"
-              disabled={this.state.isFetching}
+              disabled={this.state.isEnabling || this.state.isDisabling}
               onClick={this.handleButtonClick(true)}
-              spinner={this.state.isFetching}
+              spinner={this.state.isEnabling}
               >원터치 결제 사용</Button>
             <Button
               className={buttonStyle}
               size="large"
               color="gray"
               outline={true}
-              disabled={this.state.isFetching}
+              disabled={this.state.isEnabling || this.state.isDisabling}
+              spinner={this.state.isDisabling}
               onClick={this.handleButtonClick(false)}
             >사용 안함</Button>
           </div>
@@ -105,5 +111,11 @@ const mapStateToProps = (state: RootState) => {
   };
 }
 
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    dispatchFinishPaymentRegistration: (payload: FinishPaymentRegistrationPayload) => dispatch(VoidActions.finishPaymentRegistration(payload)),
+  }
+}
 
-export const ConnectedSetOnetouch = connect(mapStateToProps)(SetOnetouch);
+
+export const ConnectedSetOnetouch = connect(mapStateToProps, mapDispatchToProps)(SetOnetouch);

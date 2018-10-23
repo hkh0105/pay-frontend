@@ -7,13 +7,17 @@ import {
   requestRegisterCard,
   requestToggleOnetouch
 } from 'app/services/user/userRequests';
-import { RegisterCardResponse, UserProfileResponse } from 'app/services/user/userTypes';
+import {
+  OnetouchToggleRequestPaylaod,
+  RegisterCardResponse,
+  UserProfileResponse
+} from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, select, take, takeEvery } from 'redux-saga/effects';
 import { TrackingActions } from '../tracking/trackingActions';
-import { initializeTracker, trackCurrentPage } from '../tracking/trackingSaga';
+import { initializeTracker, trackCurrentPage, tracker } from '../tracking/trackingSaga';
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
@@ -23,12 +27,18 @@ export function* userSaga() {
 }
 
 function* watchLoadUserProfileRequest() {
+  yield call(loadUserProfileRequest);
+}
+
+export function* loadUserProfileRequest() {
   try {
     const response = yield call(requestProfile);
     yield put(UserActions.fetchUserProfileSuccess(response.data));
-    const state: RootState = yield select((s) => s);
-    yield call(initializeTracker, state);
-    yield call(trackCurrentPage);
+    if (!tracker) {
+      const state: RootState = yield select((s) => s);
+      yield call(initializeTracker, state);
+      yield call(trackCurrentPage);
+    }
   } catch (e) {
     const isUserLoggedIn = e && e.data && e.data.code === 'NOT_FOUND_USER';
     yield put(UserActions.fetchUserProfileFailure({ isUserLoggedIn }));
@@ -67,15 +77,19 @@ function* watchToggleOnetouch() {
     const action: ReturnType<typeof UserActions.toggleOnetouchRequest> = yield take(
       UserActionTypes.TOGGLE_ONETOUCH_REQUEST
     );
-    try {
-      const result: AxiosResponse = yield call(requestToggleOnetouch, action.payload);
-      if (result.status === 200) {
-        yield put(UserActions.toggleOnetouchSuccess(action.payload));
-      } else {
-        yield put(UserActions.toggleOnetouchFailure(action.payload));
-      }
-    } catch (e) {
-      yield put(UserActions.toggleOnetouchFailure(action.payload));
+    yield call(toggleOnetouch, action.payload);
+  }
+}
+
+export function* toggleOnetouch(payload: OnetouchToggleRequestPaylaod) {
+  try {
+    const result: AxiosResponse = yield call(requestToggleOnetouch, payload);
+    if (result.status === 200) {
+      yield put(UserActions.toggleOnetouchSuccess(payload));
+    } else {
+      yield put(UserActions.toggleOnetouchFailure(payload));
     }
+  } catch (e) {
+    yield put(UserActions.toggleOnetouchFailure(payload));
   }
 }

@@ -10,6 +10,7 @@ import { userReducer } from 'app/services/user/userReducer';
 import { userSaga } from 'app/services/user/userSaga';
 import { trackingReducer } from './services/tracking/trackingReducer';
 import { trackingSaga } from './services/tracking/trackingSaga';
+import { voidSaga } from './services/void/voidSaga';
 
 declare global {
   interface Window {
@@ -18,7 +19,7 @@ declare global {
 }
 
 function* rootSaga(dispatch: Dispatch<RootState>) {
-  yield all([userSaga(), trackingSaga(), environmentSaga()]);
+  yield all([userSaga(), trackingSaga(), environmentSaga(), voidSaga()]);
 }
 
 const composeEnhancers = env.isDevelopment
