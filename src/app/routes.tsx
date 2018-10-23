@@ -17,8 +17,13 @@ export const urls = {
   SET_ONETOUCH: '/settings/onetouch',
   REGISTER_CARD: '/settings/cards/add',
   REGISTER_PIN: '/settings/pin/register',
-  RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
+  PAYMENT: '/payments/:reservationId',
+  UPDATE_PIN: '/settings/pin/update',
+  TERMS: '/legal/terms',
 };
+export const externalUrls = {
+  RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
+}
 export const publicUrls = [
   urls.SETTINGS,
   urls.REGISTER_CARD,
@@ -30,14 +35,13 @@ export const Routes: React.SFC = () => {
       <ConnectedEnsureLogin>
       <ConnectedScrollToTop>
         <Switch>
-          <Route exact={true} path="/payments/:reservationId" render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
+          <Route exact={true} path={urls.PAYMENT} render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
-          <Route exact={true} path="/settings/pin/update" render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
+          <Route exact={true} path={urls.UPDATE_PIN} render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
           <Route exact={true} path={urls.SET_ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
-          <Route exact={true} path="/validate/pin" render={() => <ConnectedPrivateRoute component={ValidatePin} />} />
-          <Route exact={true} path="/legal/terms" render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
+          <Route exact={true} path={urls.TERMS} render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
           <Redirect to={urls.SETTINGS}/>
         </Switch>
       </ConnectedScrollToTop>

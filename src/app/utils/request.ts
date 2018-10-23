@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 const axiosRetry = require('axios-retry'); // https://github.com/softonic/axios-retry/issues/53
 
 import { env, history } from 'app/config';
-import { publicUrls, urls } from 'app/routes';
+import { externalUrls, publicUrls, urls } from 'app/routes';
 
 // Retry on a network error or a 5xx error on an idempotent request https://github.com/softonic/axios-retry
 // You can disable retry by request adding {'axios-retry': { retries: 0 }} to axios config
@@ -23,7 +23,7 @@ axios.interceptors.response.use(
     const { pathname, href } = location;
     if (code === 'LOGIN_REQUIRED') {
       const returnUrl = encodeURIComponent(href);
-      location.replace(`${urls.RIDIBOOKS_LOGIN}?return_url=${returnUrl}`);
+      location.replace(`${externalUrls.RIDIBOOKS_LOGIN}?return_url=${returnUrl}`);
     } else if (code === 'NOT_FOUND_USER') {
       if (!publicUrls.includes(pathname)) {
         history.replace(urls.SETTINGS);
