@@ -1,4 +1,4 @@
-# frontend
+# frontend [![Build Status](https://travis-ci.com/ridi-pay/frontend.svg?token=16qtyzyM3jfWvR4jy2oZ&branch=master)](https://travis-ci.com/ridi-pay/frontend)
 
 > RIDI Pay Web Frontend
 
