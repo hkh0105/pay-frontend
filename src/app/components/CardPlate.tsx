@@ -3,8 +3,7 @@ import { css } from 'emotion';
 import * as React from 'react'
 
 import { colors } from 'app/constants/colors';;
-import { CardIssuerCode, cardIssuerStyleSets } from 'app/constants/cards';
-import { Card } from 'app/services/cards/cardTypes';
+import { Card } from 'app/services/user/userTypes';
 
 export interface CardPlateProps {
   card?: Card;

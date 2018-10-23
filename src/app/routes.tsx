@@ -7,10 +7,10 @@ import { history } from 'app/config';
 import { ConnectedPayment, ConnectedRegisterCard, ConnectedSetOnetouch, ConnectedSettings, RegisterCard, UpdatePin, ValidatePin } from 'app/scenes';
 
 import { ConnectedEnsureLogin } from 'app/components/EnsureLogin';
-import { ConnectedPrivateRoute, ConnectedScrollToTop } from 'app/hocs';
-import { ensureReservation } from 'app/hocs/ensureReservation';
 import { LegalTerms } from 'app/scenes/LegalTerms';
 import { ConnectedRegisterPin } from 'app/scenes/RegisterPin';
+import { ConnectedPrivateRoute } from './components/PrivateRoute';
+import { ConnectedScrollToTop } from './components/ScrollToTop';
 
 export const urls = {
   SETTINGS: '/settings',

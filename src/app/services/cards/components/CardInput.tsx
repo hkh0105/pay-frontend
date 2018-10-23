@@ -2,7 +2,7 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { FocusMovableInput, FocusMovableInputProps } from 'app/components';
-import { numberOnly, NumberOnlyProps } from 'app/hocs';
+import { numberOnly, NumberOnlyProps } from 'app/hocs/numberOnly';
 import { innerInput, innerInputObscured, innerInputPlaceholder } from 'app/services/cards/components/CardForm.styles';
 
 export type BaseInputProps =
