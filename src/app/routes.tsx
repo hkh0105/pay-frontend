@@ -22,7 +22,7 @@ export const urls = {
   TERMS: '/legal/terms',
 };
 export const externalUrls = {
-  RIDIBOOKS_LOGIN: `${process.env.RIDIBOOKS_URL}/account/login`,
+  RIDIBOOKS_LOGIN: `//${process.env.RIDIBOOKS_HOST}/account/login`,
 }
 export const publicUrls = [
   urls.SETTINGS,

@@ -1,5 +1,7 @@
 /* eslint-disable */
+require('dotenv-safe').config();
 
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -40,9 +42,10 @@ module.exports = {
       // path.join(baseDir, 'public'),
       path.join(baseDir, 'src'), // to support sourcemap
     ],
-    proxy: {
-      '/api': 'http://localhost:3030', // TODO: change to backend local host
-      secure: false,
+    host: '0.0.0.0',
+    https: {
+      cert: fs.readFileSync(path.join(baseDir, '.ssl', `${process.env.RIDI_PAY_HOST}.pem`), 'utf-8'),
+      key: fs.readFileSync(path.join(baseDir, '.ssl', `${process.env.RIDI_PAY_HOST}-key.pem`), 'utf-8'),
     },
     disableHostCheck: true,
     historyApiFallback: true,

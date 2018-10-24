@@ -84,8 +84,8 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin([
-      'API_BASE_URL',
-      'RIDIBOOKS_URL',
+      'RIDI_PAY_API_SERVER_HOST',
+      'RIDIBOOKS_HOST',
     ]),
     new CheckerPlugin(),
     new ChunkRenamePlugin({

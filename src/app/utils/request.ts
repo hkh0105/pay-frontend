@@ -42,7 +42,7 @@ export interface RequestConfig extends AxiosRequestConfig {
 }
 
 export function request(config: RequestConfig) {
-  config.baseURL = process.env.API_BASE_URL;
+  config.baseURL = `//${process.env.RIDI_PAY_API_SERVER_HOST}`;
   config.withCredentials = true;
   return axios(config);
 }
