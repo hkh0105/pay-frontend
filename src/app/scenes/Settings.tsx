@@ -127,6 +127,9 @@ export class Settings extends React.Component<Props, State> {
   private renderConfrimCardDeletionPopup = () => {
     const { cards } = this.props.user;
     const { isConfirmDeletionPopupOpened } = this.state;
+    if (!cards.length) {
+      return;
+    }
     return (
       <Popup
         title="카드 삭제"
