@@ -23,8 +23,8 @@ export interface UserState {
   isAddingCardFetching: boolean;
   isDeletingCardFetching: boolean;
   isOnetouchTogglingFetching: boolean;
-  hasPin: boolean;
-  isUsingOnetouchPay: boolean;
+  hasPin: boolean | null;
+  isUsingOnetouchPay: boolean | null;
   cards: Card[];
   userId: string;
   urlToReturn?: string;

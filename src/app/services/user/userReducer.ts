@@ -1,6 +1,7 @@
 import { UserActions, UserActionTypes } from 'app/services/user/userActions';
 import { UserState } from 'app/services/user/userTypes';
 import { Reducer } from 'redux';
+import { cardFormSubmitButtonClass } from '../cards/components/CardForm.styles';
 
 const initailState: UserState = {
   isProfileFetching: false,
@@ -69,12 +70,15 @@ export const userReducer: Reducer<UserState, UserActions> = (
       };
     }
     case UserActionTypes.DELETE_CARD_SUCCESS: {
+      const filteredCards = state.cards.filter(
+        (card) => card.payment_method_id !== action.payload.payment_method_id
+      );
       return {
         ...state,
         isDeletingCardFetching: false,
-        cards: state.cards.filter(
-          (card) => card.payment_method_id !== action.payload.payment_method_id
-        )
+        cards: filteredCards,
+        hasPin: filteredCards.length === 0 ? null : state.hasPin,
+        isUsingOnetouchPay: filteredCards.length === 0 ? null : state.isUsingOnetouchPay
       };
     }
     case UserActionTypes.DELETE_CARD_FAILURE: {

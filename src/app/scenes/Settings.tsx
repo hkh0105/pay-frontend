@@ -183,7 +183,7 @@ export class Settings extends React.Component<Props> {
               <h3 className={settingItemName}>원터치 결제 사용</h3>
               {!isNotRidiPayUser && <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
-                  isChecked={isUsingOnetouchPay}
+                  isChecked={isUsingOnetouchPay || false}
                   onChange={(e) => {
                     if (!this.props.user.isOnetouchTogglingFetching) {
                       this.props.requestToggleOnetouch({ enable_onetouch_pay: e.target.checked });
