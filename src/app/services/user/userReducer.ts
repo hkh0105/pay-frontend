@@ -76,7 +76,7 @@ export const userReducer: Reducer<UserState, UserActions> = (
         ...state,
         isDeletingCardFetching: false,
         cards: filteredCards,
-        hasPin: filteredCards.length === 0 ? null : state.hasPin,
+        hasPin: filteredCards.length === 0 ? false : state.hasPin,
         isUsingOnetouchPay: filteredCards.length === 0 ? null : state.isUsingOnetouchPay
       };
     }
