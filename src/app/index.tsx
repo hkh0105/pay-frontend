@@ -9,12 +9,11 @@ import { store } from 'app/store';
 import { setTabKeyFocus } from 'app/utils';
 import { env } from './config';
 
-// if (env.isProduction) {
+if (env.isProduction) {
   Sentry.init({
     dsn: 'https://0bc859e1423a42dc8728690b03bcedf0@sentry.io/1307887',
   });
-// }
-Sentry.captureMessage("TEST");
+}
 
 setTabKeyFocus();
 store.dispatch(requestInitializeEnvironment());
