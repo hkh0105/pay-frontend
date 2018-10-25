@@ -86,9 +86,9 @@
   dependencies:
     lodash "^4.17.10"
 
-"@ridi/rsg@2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@ridi/rsg/-/rsg-2.0.9.tgz#7c0ec48c31ae70f99c2c2dd2c3ad0a5f195aecfa"
+"@ridi/rsg@2.0.13":
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/@ridi/rsg/-/rsg-2.0.13.tgz#73b7450020943f3ab446c9acbdba4ed6129d5c84"
   dependencies:
     "@ridi/object-case-converter" "^2.0.0"
     classnames "^2.2.5"

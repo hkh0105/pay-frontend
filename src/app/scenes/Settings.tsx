@@ -3,7 +3,7 @@ import { css, cx } from 'emotion';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { Button, Icon } from '@ridi/rsg';
+import { Button, ButtonProps, Icon, Popup } from '@ridi/rsg';
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { CardPlate } from 'app/components/CardPlate';
 import { SwtichButton } from 'app/components/SwitchButton';
@@ -115,20 +115,74 @@ const addCardIcon = css({
 })
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+interface State {
+  isConfirmDeletionPopupOpened: boolean;
+}
 
-export class Settings extends React.Component<Props> {
-  private handleDeleteCardButtonClick = () => {
-    if (this.props.user.isDeletingCardFetching) {
-      return;
-    }
-    if (!confirm('카드를 삭제하시겠습니까?')) {
-      return;
-    }
-    this.props.requestDeleteCard({ payment_method_id: this.props.user.cards[0]!.payment_method_id });
+export class Settings extends React.Component<Props, State> {
+  public state: State = {
+    isConfirmDeletionPopupOpened: false,
+  }
+
+  private renderConfrimCardDeletionPopup = () => {
+    const { cards } = this.props.user;
+    const { isConfirmDeletionPopupOpened } = this.state;
+    return (
+      <Popup
+        title="카드 삭제"
+        active={isConfirmDeletionPopupOpened}
+        useButtons={true}
+        onCancel={() => this.setState({ isConfirmDeletionPopupOpened: false })}
+        onConfirm={() => {
+          this.setState({ isConfirmDeletionPopupOpened: false });
+          this.props.requestDeleteCard({ payment_method_id: cards[0]!.payment_method_id });
+        }}
+        cancelButtonName="취소"
+        confirmButtonName="카드 삭제"
+        showFooterHr={false}
+      >
+        <div className={s.confirmDeletionPopupContent}>
+          <h3 className={s.confirmDeletionPopupHeading}><Icon name="exclamation_3" className={s.confirmDeletionPopupIcon} />카드를 삭제하시겠습니까?</h3>
+          {cards[0]!.subscriptions.length > 0 && (
+            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시 <strong>{cards[0]!.subscriptions.join(', ')}</strong> 구독이 중지됩니다.</p>
+          )}
+        </div>
+      </Popup>
+    )
+  }
+
+  private getCardActionButtonProps = (): ButtonProps => {
+    const { cards, isDeletingCardFetching } = this.props.user;
+    return cards.length
+      ? {
+        outline: true,
+        color: "gray",
+        size: "medium",
+        className: deleteCardButton,
+        spinner: isDeletingCardFetching,
+        onClick: () => {
+          if (!isDeletingCardFetching) {
+            this.setState({ isConfirmDeletionPopupOpened: true })
+          }
+        },
+        children: '카드 삭제',
+      }
+      : {
+        color: "blue",
+        size: "medium",
+        className: addCardButton,
+        component: Link,
+        to: "/settings/cards/add",
+        children: <>
+          <Icon name="plus_1" className={addCardIcon} />
+          카드 등록
+        </>
+      };
   }
 
   public render() {
     const { cards, isUsingOnetouchPay, isDeletingCardFetching, hasPin } = this.props.user;
+    const { isConfirmDeletionPopupOpened } = this.state;
     const isOnetouchPayNotSet = isUsingOnetouchPay === null;
     return (
       <>
@@ -144,32 +198,10 @@ export class Settings extends React.Component<Props> {
                   <p className={settingItemDescription}>카드는 1개만 등록 가능합니다.</p>
                 </div>
                 <div>
-                  {cards.length
-                    ? (
-                      <Button
-                        outline={true}
-                        color="gray"
-                        size="medium"
-                        className={deleteCardButton}
-                        spinner={isDeletingCardFetching}
-                        onClick={this.handleDeleteCardButtonClick}
-                      >카드 삭제</Button>
-                    )
-                    : (
-                      <Button
-                        color="blue"
-                        size="medium"
-                        className={addCardButton}
-                        component={Link}
-                        to="/settings/cards/add"
-                      >
-                        <Icon name="plus_1" className={addCardIcon} />
-                        카드 등록
-                      </Button>
-                    )
-                  }
+                  <Button {...this.getCardActionButtonProps()} />
                 </div>
               </div>
+              {this.renderConfrimCardDeletionPopup()}
               <div className={cardPlateWrapper}>
                 <CardPlate
                   card={cards.length ? cards[0] : undefined}
@@ -222,3 +254,29 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 }
 
 export const ConnectedSettings = connect(mapStateToProps, mapDispatchToProps)(Settings);
+
+const s = {
+  confirmDeletionPopupContent: css({
+    padding: '40px 0 30px',
+    width: '210px',
+    margin: '0 auto',
+    textAlign: 'center',
+  }),
+  confirmDeletionPopupIcon: css({
+    width: '17px',
+    height: '17px',
+    fill: colors.slategray_60,
+    marginRight: '6px',
+  }),
+  confirmDeletionPopupHeading: css({
+    margin: 0,
+    fontSize: '18px',
+  }),
+  confirmDeletionPopupDescription: css({
+    color: colors.slategray_60,
+    lineHeight: '23px',
+    margin: '14px 0 0 0',
+    fontSize: '15px',
+    wordBreak: 'keep-all',
+  }),
+}

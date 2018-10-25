@@ -1,17 +1,48 @@
+import { Popup } from '@ridi/rsg';
+import { history } from 'app/config';
+import { colors } from 'app/constants/colors';
+import { urls } from 'app/routes';
 import { flexCenter, paperProStylesClassName, paperStylesClassName, resetButton } from 'app/styles';
 import { css } from 'emotion';
 import * as React from 'react';
 
-export const FindPin: React.SFC = () => (
-  <div className={styles.findPinDiv}>
-    <button
-      className={styles.findPinButton}
-      onClick={() => alert('비밀번호를 분실하신 경우\n카드를 삭제하신 후 다시 등록해주세요.')}
-    >
-      비밀번호를 잊으셨나요?
-    </button>
-  </div>
-);
+interface State {
+  isPopupOpened: boolean;
+}
+
+export class FindPin extends React.PureComponent<{}, State> {
+  public state: State = {
+    isPopupOpened: false,
+  }
+  public render() {
+    const { isPopupOpened } = this.state;
+    return (
+      <div className={styles.findPinDiv}>
+        <button
+          className={styles.findPinButton}
+          onClick={() => this.setState({ isPopupOpened: true })}
+        >
+          비밀번호를 잊으셨나요?
+        </button>
+        <Popup
+          title="비밀번호 분실"
+          active={isPopupOpened}
+          useButtons={true}
+          onCancel={() => this.setState({ isPopupOpened: false })}
+          onConfirm={() => history.push(urls.SETTINGS)}
+          cancelButtonName="닫기"
+          confirmButtonName="카드 관리"
+          showFooterHr={false}
+        >
+          <div className={styles.popupContent}>
+            비밀번호를 분실하신 경우<br/>
+            <strong>카드를 삭제하신 후 다시 등록</strong>해주세요.
+          </div>
+        </Popup>
+      </div>
+    )
+  };
+}
 
 const styles = {
   findPinDiv: css({
@@ -43,5 +74,13 @@ const styles = {
       lineHeight: '24px',
       paddingBottom: '8px',
     }
+  }),
+  popupContent: css({
+    marginTop: '40px',
+    marginBottom: '30px',
+    lineHeight: '23px',
+    fontSize: '15px',
+    textAlign: 'center',
+    color: colors.slategray_60,
   }),
 };
