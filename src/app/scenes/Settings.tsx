@@ -115,10 +115,6 @@ const addCardIcon = css({
 })
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
-interface State {
-  isOneTouchEnabled: boolean;
-  cardIssuerCode: CardIssuerCode | null;
-}
 
 export class Settings extends React.Component<Props> {
   private handleDeleteCardButtonClick = () => {
@@ -132,7 +128,8 @@ export class Settings extends React.Component<Props> {
   }
 
   public render() {
-    const { cards, isUsingOnetouchPay, isDeletingCardFetching, isNotRidiPayUser } = this.props.user;
+    const { cards, isUsingOnetouchPay, isDeletingCardFetching, hasPin } = this.props.user;
+    const isOnetouchPayNotSet = isUsingOnetouchPay === null;
     return (
       <>
         <ConnectedSceneWrapper>
@@ -179,9 +176,9 @@ export class Settings extends React.Component<Props> {
                 />
               </div>
             </div>
-            <div className={classNames(settingItem, settingDefaultItem, isNotRidiPayUser && settingsDefaultItemDisabled)}>
+            <div className={classNames(settingItem, settingDefaultItem, isOnetouchPayNotSet && settingsDefaultItemDisabled)}>
               <h3 className={settingItemName}>원터치 결제 사용</h3>
-              {!isNotRidiPayUser && <div className={settingSwitchButtonWrapper}>
+              {!isOnetouchPayNotSet && <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
                   isChecked={isUsingOnetouchPay || false}
                   onChange={(e) => {
@@ -197,9 +194,9 @@ export class Settings extends React.Component<Props> {
               <p>10만원 미만 결제 시 비밀번호 입력 없이 바로 결제하는 기능입니다.</p>
             </div>
             <Link
-              className={classNames(settingItem, settingDefaultItem, isNotRidiPayUser && settingsDefaultItemDisabled)}
-              to={isNotRidiPayUser ? '' : '/settings/pin/update'}
-              onClick={e => isNotRidiPayUser && e.preventDefault()}
+              className={classNames(settingItem, settingDefaultItem, !hasPin && settingsDefaultItemDisabled)}
+              to={!hasPin ? '' : '/settings/pin/update'}
+              onClick={e => !hasPin && e.preventDefault()}
             >
               <h3 className={settingItemName}>결제 비밀번호 변경</h3>
             </Link>

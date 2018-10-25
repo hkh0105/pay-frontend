@@ -40,7 +40,6 @@ export const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         isProfileFetching: false,
-        isNotRidiPayUser: true,
         isUserLoggedIn: action.payload.isUserLoggedIn
       };
     }

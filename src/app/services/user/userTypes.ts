@@ -17,13 +17,12 @@ export interface UserProfileResponse {
 }
 
 export interface UserState {
-  isNotRidiPayUser?: boolean;
   isUserLoggedIn: boolean;
   isProfileFetching: boolean;
   isAddingCardFetching: boolean;
   isDeletingCardFetching: boolean;
   isOnetouchTogglingFetching: boolean;
-  hasPin: boolean | null;
+  hasPin: boolean;
   isUsingOnetouchPay: boolean | null;
   cards: Card[];
   userId: string;
