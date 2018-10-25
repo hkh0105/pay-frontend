@@ -1,7 +1,7 @@
 import { applyGraySpinner } from "app/styles";
 import { css } from "emotion";
 import * as React from 'react';
-import { headerHeight } from "./Header";
+import { headerHeight, headerHeightPixel } from "./Header";
 
 interface Props {
   text?: string;
@@ -21,7 +21,7 @@ export const PageSpinner = (props: Props) => {
 const spinnerHeight = '30px';
 const s = {
   wrapper: css({
-    height: `calc(100% - ${headerHeight})`,
+    height: `calc(100% - ${headerHeightPixel * 2}px)`,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

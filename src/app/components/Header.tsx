@@ -28,7 +28,8 @@ export const Header: React.SFC<HeaderProps> = ({
   );
 };
 
-export const headerHeight = '42px';
+export const headerHeightPixel = 42;
+export const headerHeight = `${headerHeightPixel}px`;
 const header = css({
   ...resetLayout,
   ...flexSpaceBetween,
