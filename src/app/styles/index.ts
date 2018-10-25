@@ -3,7 +3,6 @@ import { css, injectGlobal } from 'emotion';
 import 'normalize.css/normalize.css';
 
 import '@ridi/rsg/components/dist/components.css';
-import '@ridi/rsg/stylesheets/dist/rui-no-reset.css';
 
 import { spinners } from './base64';
 import { spinnerRotation } from './keyFrames';
