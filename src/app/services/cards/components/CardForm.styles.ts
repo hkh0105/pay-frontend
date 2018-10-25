@@ -108,6 +108,9 @@ export const innerInput = css({
   '&:-internal-input-suggested, &:-webkit-autofill': {
     fontFamily: museoSansFontFamily,
     fontSize: '17px'
+  },
+  '&:required': {
+    boxShadow: 'none'
   }
 } as {});
 
