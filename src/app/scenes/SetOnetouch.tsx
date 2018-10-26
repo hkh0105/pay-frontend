@@ -51,7 +51,7 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
         </Helmet>
         <div className={s.wrapper}>
           <h2 className={s.title}>원터치 결제를 사용하시겠습니까?</h2>
-          <p className={s.description}>원터치 결제는 등록하신 카드로<br/><strong>비밀번호 입력 없이 바로 결제</strong>하는 기능입니다.</p>
+          <p className={s.description}>원터치 결제는 10만원 미만 결제 시  <br/><strong>비밀번호 입력 없이 바로 결제</strong>하는 기능입니다.</p>
           <div className={s.form}>
             <Button
               className={s.button}
