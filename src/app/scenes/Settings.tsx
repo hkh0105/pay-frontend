@@ -143,8 +143,9 @@ export class Settings extends React.Component<Props, State> {
         cancelButtonName="취소"
         confirmButtonName="카드 삭제"
         showFooterHr={false}
+        contentClassName={s.confirmDeletioPopupContent}
       >
-        <div className={s.confirmDeletionPopupContent}>
+        <div className={s.confirmDeletioPopupBody}>
           <h3 className={s.confirmDeletionPopupHeading}><Icon name="exclamation_3" className={s.confirmDeletionPopupIcon} />카드를 삭제하시겠습니까?</h3>
           {cards[0]!.subscriptions.length > 0 && (
             <p className={s.confirmDeletionPopupDescription}>카드 삭제 시 <strong>{cards[0]!.subscriptions.join(', ')}</strong>이 해지 예약됩니다.</p>
@@ -259,7 +260,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 export const ConnectedSettings = connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 const s = {
-  confirmDeletionPopupContent: css({
+  confirmDeletioPopupBody: css({
     padding: '40px 0 30px',
     width: '210px',
     margin: '0 auto',
@@ -281,5 +282,11 @@ const s = {
     margin: '14px 0 0 0',
     fontSize: '15px',
     wordBreak: 'keep-all',
+  }),
+  confirmDeletioPopupContent: css({
+    // TODO: Make a PR to RIDI UI that adds a Prop setting classNames for ButtonsWrapper
+    '.RUIPopup_ButtonsWrapper': {
+      paddingBottom: '20px',
+    },
   }),
 }
