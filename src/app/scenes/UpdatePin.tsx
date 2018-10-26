@@ -99,7 +99,7 @@ export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
       try {
         await requestUpdatePin({ pin, validation_token: this.state.validationToken! })
         alert('결제 비밀번호 변경이 완료되었습니다.');
-        history.push('/settings');
+        history.replace('/settings');
         return;
       } catch (e) {
         alert(e.data.message);
