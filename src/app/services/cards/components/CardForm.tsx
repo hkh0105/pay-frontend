@@ -282,7 +282,6 @@ export class CardForm extends React.Component<Props, State> {
               <p className={cardInputBoxLabel}>유효 기간</p>
               {this.renderCardInput({
                 currentInputKey: cardNumberInputKey.ccmonth,
-                prevInputKey: cardNumberInputKey.cardnumber,
                 nextInputKey: cardNumberInputKey.ccyear,
                 placeholder: 'MM',
                 className: innerInputJust,
