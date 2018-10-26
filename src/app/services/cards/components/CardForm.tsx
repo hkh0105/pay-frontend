@@ -69,7 +69,7 @@ export class CardForm extends React.Component<Props, State> {
     } else if (this.state.creditCardType === 'diners') {
       return 14;
     }
-    return 14;
+    return 16;
   }
 
   private getHandleChangeNumberInput = (inputKey: string) => {
@@ -133,15 +133,10 @@ export class CardForm extends React.Component<Props, State> {
     };
   }
 
-  private isCardNumberValid = () => {
-    const { cardNumber } = this.state;
-    const validLength = this.getCreditCardNumberValidLength();
-    return cardNumber.length >= validLength;
-  }
-
   private isFormValid = () => {
     return (
-      this.isCardNumberValid() &&
+      // Delegate card number validation to backend
+      this.state.cardNumber.length >= 14 &&
       every(this.state.numberInputs, ((input) => input.isValid)) &&
       every(this.state.checkboxInputs, ((input) => input.isValid))
     );
