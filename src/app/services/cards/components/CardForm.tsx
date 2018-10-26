@@ -1,5 +1,7 @@
 import { Button, CheckBox } from '@ridi/rsg';
 import * as classNames from 'classnames';
+import { CreditCardType } from 'cleave.js/options/creditCard'
+import * as Cleave from 'cleave.js/react'
 import detectIt from 'detect-it';
 import { every } from 'lodash-es';
 import * as React from 'react';
@@ -20,7 +22,7 @@ import {
   initialCardFormState,
   initialCardInputRefs,
 } from 'app/services/cards/components';
-import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInput, innerInputJust } from 'app/services/cards/components/CardForm.styles';
 import { UserActions } from 'app/services/user/userActions';
 import { requestRegisterCard } from 'app/services/user/userRequests';
 import { RegisterCardRequestPayload } from 'app/services/user/userTypes';
@@ -42,17 +44,30 @@ function preventDefaultOnSpaceKeyEvent(e: React.KeyboardEvent<HTMLInputElement>)
   }
 }
 
+type CleaveChangeEvent = React.ChangeEvent<HTMLInputElement & { rawValue: string }>;
+
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 interface State extends CardFormState {
   isFetching: boolean;
+  cardNumber: string;
+  creditCardType: CreditCardType;
 }
 
 export class CardForm extends React.Component<Props, State> {
   public state: State = {
     ...initialCardFormState,
     isFetching: false,
+    cardNumber: '',
+    creditCardType: 'unknown',
   };
   public inputRefs = initialCardInputRefs;
+
+  private getCreditCardNumberMaxLength = (): number => {
+    if (this.state.creditCardType === 'amex') {
+      return 15;
+    }
+    return 16;
+  }
 
   private getHandleChangeNumberInput = (inputKey: string) => {
     return (event: React.SyntheticEvent<HTMLInputElement>) => {
@@ -212,7 +227,28 @@ export class CardForm extends React.Component<Props, State> {
             <label htmlFor={cardNumberInputKey.cardnumber} className={cardInputBoxLabel}>
               카드 번호
             </label>
-            {this.renderCardInput({
+            <Cleave
+              options={{
+                creditCard: true,
+                onCreditCardTypeChanged: (creditCardType: CreditCardType) => this.setState({ creditCardType }),
+              }}
+              onChange={(e: CleaveChangeEvent) => {
+                const { rawValue } = e.target;
+                const { cardNumber } = this.state;
+                const hasLastCharacterAdded = cardNumber.slice(0, rawValue.length - 1) === rawValue.slice(0, rawValue.length - 1);
+                if (
+                  rawValue.length === this.getCreditCardNumberMaxLength() && 
+                  hasLastCharacterAdded &&
+                  rawValue !== cardNumber
+                ) {
+                  this.inputRefs[cardNumberInputKey.ccmonth].current.focus();
+                }
+                this.setState({ cardNumber: rawValue });
+              }}
+              className={classNames([innerInput])}
+              placeholder="'-' 없이 입력"
+            />
+            {/* {this.renderCardInput({
               currentInputKey: cardNumberInputKey.cardnumber,
               nextInputKey: cardNumberInputKey.ccmonth,
               onChange: this.handleChangeCardNumberInput,
@@ -221,7 +257,7 @@ export class CardForm extends React.Component<Props, State> {
                 allowSpace: true,
                 onKeyDown: preventDefaultOnSpaceKeyEvent,
               },
-            })}
+            })} */}
             <div className={cardInputBoxBorderInteractive} />
           </div>
           <div className={cardInputBoxInlineGroup}>
