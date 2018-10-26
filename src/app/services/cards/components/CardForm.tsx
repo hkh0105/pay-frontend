@@ -54,6 +54,7 @@ interface State extends CardFormState {
 }
 
 export class CardForm extends React.Component<Props, State> {
+  private cardNumberRef: HTMLInputElement;
   public state: State = {
     ...initialCardFormState,
     isFetching: false,
@@ -62,11 +63,13 @@ export class CardForm extends React.Component<Props, State> {
   };
   public inputRefs = initialCardInputRefs;
 
-  private getCreditCardNumberMaxLength = (): number => {
+  private getCreditCardNumberValidLength = (): number => {
     if (this.state.creditCardType === 'amex') {
       return 15;
+    } else if (this.state.creditCardType === 'diners') {
+      return 14;
     }
-    return 16;
+    return 14;
   }
 
   private getHandleChangeNumberInput = (inputKey: string) => {
@@ -130,9 +133,18 @@ export class CardForm extends React.Component<Props, State> {
     };
   }
 
+  private isCardNumberValid = () => {
+    const { cardNumber } = this.state;
+    const validLength = this.getCreditCardNumberValidLength();
+    return cardNumber.length >= validLength;
+  }
+
   private isFormValid = () => {
-    return every(this.state.numberInputs, ((input) => input.isValid)) &&
-      every(this.state.checkboxInputs, ((input) => input.isValid));
+    return (
+      this.isCardNumberValid() &&
+      every(this.state.numberInputs, ((input) => input.isValid)) &&
+      every(this.state.checkboxInputs, ((input) => input.isValid))
+    );
   }
 
   private renderCardInput = ({
@@ -181,7 +193,7 @@ export class CardForm extends React.Component<Props, State> {
     if (this.state.isFetching || !this.isFormValid()) {
       return;
     }
-    const { numberInputs } = this.state;
+    const { numberInputs, cardNumber } = this.state;
     const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
     const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
     this.setState({ isFetching: true })
@@ -189,7 +201,8 @@ export class CardForm extends React.Component<Props, State> {
     try {
       await requestRegisterCard({
         card_expiration_date: expirationDate,
-        card_number: numberInputs[cardnumber].value.replace(/\s/g, ''),
+        // card_number: numberInputs[cardnumber].value.replace(/\s/g, ''),
+        card_number: cardNumber,
         card_password: numberInputs[password].value,
         tax_id: numberInputs[birthdate].value,
       });
@@ -200,7 +213,7 @@ export class CardForm extends React.Component<Props, State> {
     }
   }
 
-  public componentDidMount() {
+  public componentDidMount = () =>  {
     if (this.props.cardExists) {
       history.replace(urls.SETTINGS);
       return;
@@ -209,7 +222,9 @@ export class CardForm extends React.Component<Props, State> {
       // autofocus 속성을 사용하거나 requestAnimationFrame 사용 시
       // 포커스 outline 스타일이 보였다 사라지므로 setTimeout으로 처리
       window.setTimeout(() => {
-        this.inputRefs[cardNumberInputKey.cardnumber].current.focus();
+        if (this.cardNumberRef) {
+          this.cardNumberRef.focus();
+        }
       }, 500);
     }
   }
@@ -237,7 +252,7 @@ export class CardForm extends React.Component<Props, State> {
                 const { cardNumber } = this.state;
                 const hasLastCharacterAdded = cardNumber.slice(0, rawValue.length - 1) === rawValue.slice(0, rawValue.length - 1);
                 if (
-                  rawValue.length === this.getCreditCardNumberMaxLength() && 
+                  rawValue.length === this.getCreditCardNumberValidLength() && 
                   hasLastCharacterAdded &&
                   rawValue !== cardNumber
                 ) {
@@ -247,6 +262,10 @@ export class CardForm extends React.Component<Props, State> {
               }}
               className={classNames([innerInput])}
               placeholder="'-' 없이 입력"
+              name={cardNumberInputName[cardNumberInputKey.cardnumber]}
+              autoComplete={cardNumberInputAutoCompleteProps[cardNumberInputKey.cardnumber]}
+              id={cardNumberInputKey.cardnumber}
+              htmlRef={cardNumberRef => this.cardNumberRef = cardNumberRef}
             />
             {/* {this.renderCardInput({
               currentInputKey: cardNumberInputKey.cardnumber,

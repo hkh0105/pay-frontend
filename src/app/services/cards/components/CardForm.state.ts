@@ -88,6 +88,7 @@ export interface CardInputRefs {
 export const initialCardFormState: CardFormState = {
   numberInputs: flow(
     (inputKeyMap: typeof cardNumberInputKey) => Object.keys(inputKeyMap),
+    (list: string[]) => list.filter((key) => key !== cardNumberInputKey.cardnumber),
     (list: string[]) => keyBy(list),
     (dic) =>
       mapValues(dic, (inputState, key) => ({
