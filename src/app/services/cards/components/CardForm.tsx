@@ -19,7 +19,7 @@ import {
   cardNumberInputAutoCompleteProps,
   cardNumberInputKey,
   cardNumberInputName,
-  initialCardFormState,
+  getInitialCardFormState,
   initialCardInputRefs,
 } from 'app/services/cards/components';
 import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInput, innerInputJust } from 'app/services/cards/components/CardForm.styles';
@@ -33,15 +33,17 @@ import {
   getCardTypeByNumber,
   prettifyCardNumber,
 } from 'app/utils';
+import { number } from 'prop-types';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { numberInputRegexes } from './CardForm.state';
 
+const cardFormStorageKey = 'cardForm'
 const isTouchDevice = detectIt.hasTouch;
 
-function preventDefaultOnSpaceKeyEvent(e: React.KeyboardEvent<HTMLInputElement>) {
-  if (e.keyCode === SpaceKeyCode) {
-    e.preventDefault();
-  }
+interface StorageData {
+  storedAt: number;
+  state: State;
 }
 
 type CleaveChangeEvent = React.ChangeEvent<HTMLInputElement & { rawValue: string }>;
@@ -51,16 +53,31 @@ interface State extends CardFormState {
   isFetching: boolean;
   cardNumber: string;
   creditCardType: CreditCardType;
+  displayLegal: boolean;
 }
 
 export class CardForm extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    const prevState = sessionStorage.getItem(cardFormStorageKey); 
+    sessionStorage.removeItem(cardFormStorageKey);
+    const storageData: StorageData = prevState ? JSON.parse(prevState) : null;
+    
+    if (storageData && (Date.now() - storageData.storedAt) <= 1000 * 60 * 3) {
+      this.state = storageData.state;
+    } else {
+      this.state = {
+        ...getInitialCardFormState(),
+        displayLegal: false,
+        isFetching: false,
+        cardNumber: '',
+        creditCardType: 'unknown',
+      };
+    }
+  }
   private cardNumberRef: HTMLInputElement;
-  public state: State = {
-    ...initialCardFormState,
-    isFetching: false,
-    cardNumber: '',
-    creditCardType: 'unknown',
-  };
+  private isSubmitted: boolean = false;
+  public state: State;
   public inputRefs = initialCardInputRefs;
 
   private getCreditCardNumberValidLength = (): number => {
@@ -77,29 +94,12 @@ export class CardForm extends React.Component<Props, State> {
       const newInputs = { ...this.state.numberInputs };
 
       newInputs[inputKey].value = event.currentTarget.value;
-      newInputs[inputKey].isValid = newInputs[inputKey].regexp.test(event.currentTarget.value);
+      newInputs[inputKey].isValid = numberInputRegexes[inputKey].test(event.currentTarget.value);
 
       this.setState({
         numberInputs: newInputs,
       });
     };
-  }
-
-  private handleChangeCardNumberInput = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    const inputKey = cardNumberInputKey.cardnumber;
-    const newInputs = { ...this.state.numberInputs };
-
-    const cardNumber = cleanUpCardNumber(event.currentTarget.value);
-    const cardType = getCardTypeByNumber(cardNumber);
-
-    newInputs[inputKey].value = prettifyCardNumber(cardNumber, cardType);
-    newInputs[inputKey].regexp = cardType.pattern;
-    newInputs[inputKey].isValid = cardType.pattern.test(cardNumber);
-    newInputs[inputKey].maxLength = cardType.maxLength + cardType.gap.length;
-
-    this.setState({
-      numberInputs: newInputs,
-    });
   }
 
   private getHandleChangeCheckbox = (inputKey: string) => {
@@ -175,7 +175,7 @@ export class CardForm extends React.Component<Props, State> {
         nextInputRef={nextInputKey ? this.getInputRef(nextInputKey) : undefined}
         deletePrevInputLastChar={prevInputKey ? this.getDeleteLastChar(prevInputKey) : undefined}
         maxLength={numberInputs[currentInputKey].maxLength}
-        pattern={numberInputs[currentInputKey].regexp.toString()}
+        pattern={numberInputRegexes[currentInputKey].toString()}
         placeholder={placeholder}
         required={true}
         {...extraProps}
@@ -196,11 +196,11 @@ export class CardForm extends React.Component<Props, State> {
     try {
       await requestRegisterCard({
         card_expiration_date: expirationDate,
-        // card_number: numberInputs[cardnumber].value.replace(/\s/g, ''),
         card_number: cardNumber,
         card_password: numberInputs[password].value,
         tax_id: numberInputs[birthdate].value,
       });
+      this.isSubmitted = true;
       history.replace(urls.REGISTER_PIN);
     } catch (e) {
       alert(e.data.message);
@@ -224,11 +224,21 @@ export class CardForm extends React.Component<Props, State> {
     }
   }
 
+  public componentWillUnmount = () => {
+    // TODO: Set expiration tiime
+    if (!this.isSubmitted) {
+      sessionStorage.setItem(cardFormStorageKey, JSON.stringify({
+        state: this.state,
+        storedAt: Date.now(),
+      } as StorageData));
+    }
+  }
+
   public render() {
     const { checkboxInputs } = this.state;
 
     return (
-      <form
+      <div
         id="RegisterCreditCard_Form"
         className="RegisterCreditCard_Form"
       >
@@ -261,6 +271,7 @@ export class CardForm extends React.Component<Props, State> {
               autoComplete={cardNumberInputAutoCompleteProps[cardNumberInputKey.cardnumber]}
               id={cardNumberInputKey.cardnumber}
               htmlRef={cardNumberRef => this.cardNumberRef = cardNumberRef}
+              value={this.state.cardNumber}
             />
             {/* {this.renderCardInput({
               currentInputKey: cardNumberInputKey.cardnumber,
@@ -364,7 +375,7 @@ export class CardForm extends React.Component<Props, State> {
         >
           카드 등록
         </Button>
-      </form>
+      </div>
     );
   }
 }
