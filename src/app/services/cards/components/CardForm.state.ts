@@ -6,7 +6,6 @@ import { DEFAULT_CARD_NUMBER_PATTERN } from 'app/utils/prettifyCardNumber';
 export interface CardNumberInput {
   value: string;
   maxLength: number;
-  regexp: RegExp;
   isValid: boolean;
 }
 
@@ -57,6 +56,15 @@ const cardInputLength: {
   birthdate: 6
 };
 
+export const numberInputRegexes: Record<string, RegExp> = Object.keys(cardNumberInputKey)
+  .filter((key) => key !== cardNumberInputKey.cardnumber)
+  .reduce((acc, key) => {
+    return {
+      ...acc,
+      [key]: new RegExp(`[0-9]{${cardInputLength[key]}}`)
+    };
+  }, {});
+
 export type CardNumberInputKey = (typeof cardNumberInputKey)[keyof typeof cardNumberInputKey];
 
 export const cardCheckboxInputKey = {
@@ -85,7 +93,7 @@ export interface CardInputRefs {
   [inputId: string]: React.RefObject<any>;
 }
 
-export const initialCardFormState: CardFormState = {
+export const getInitialCardFormState = (): CardFormState => ({
   numberInputs: flow(
     (inputKeyMap: typeof cardNumberInputKey) => Object.keys(inputKeyMap),
     (list: string[]) => list.filter((key) => key !== cardNumberInputKey.cardnumber),
@@ -94,10 +102,6 @@ export const initialCardFormState: CardFormState = {
       mapValues(dic, (inputState, key) => ({
         value: '',
         maxLength: cardInputLength[key],
-        regexp:
-          key === cardNumberInputKey.cardnumber
-            ? DEFAULT_CARD_NUMBER_PATTERN
-            : new RegExp(`[0-9]{${cardInputLength[key]}}`),
         isValid: false
       }))
   )(cardNumberInputKey),
@@ -107,7 +111,7 @@ export const initialCardFormState: CardFormState = {
       isValid: false
     }
   }
-};
+});
 
 export const initialCardInputRefs: CardInputRefs = flow(
   (inputKeyEnum: typeof cardInputKey) => Object.keys(inputKeyEnum),
