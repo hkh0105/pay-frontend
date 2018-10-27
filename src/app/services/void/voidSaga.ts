@@ -16,7 +16,7 @@ function* watchFinishPaymentRegistration(
   const state: RootState = yield select((s) => s);
   if (state.user.urlToReturn) {
     alert('RIDI Pay 카드 등록이 완료되었습니다.');
-    location.replace(state.user.urlToReturn);
+    location.replace(decodeURIComponent(state.user.urlToReturn));
   } else {
     yield call(loadUserProfileRequest);
     alert('RIDI Pay 카드 등록이 완료되었습니다.');
