@@ -3,12 +3,7 @@ import { Helmet } from 'react-helmet';
 
 import { Button } from '@ridi/rsg';
 import { ConnectedSceneWrapper, headerHeight, headerHeightPixel } from 'app/components';
-import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
-import { urls } from 'app/routes';
-import { UserActions } from 'app/services/user/userActions';
-import { requestProfile, requestToggleOnetouch } from 'app/services/user/userRequests';
-import { OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
 import { VoidActions } from 'app/services/void/voidActions';
 import { FinishPaymentRegistrationPayload } from 'app/services/void/voidTypes';
 import { RootState } from 'app/store';
@@ -104,16 +99,17 @@ const s = {
     fontSize: '18px',
     letterSpacing: '-0.4px',
     textAlign: 'center',
-    marginTop: '0',
+    margin: 0,
   }),
   description: css({
     color: colors.bluegray_40,
     fontSize: '14px',
     textAlign: 'center',
     lineHeight: '22px',
+    margin: '10px 0 0 0',
   }),
   form: css({
-    margin: '40px 40px 0',
+    margin: '30px 40px 0',
   }),
   button: css({
     display: 'block',
