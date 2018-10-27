@@ -2,17 +2,27 @@ import { Popup } from '@ridi/rsg';
 import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
+import { RootState } from 'app/store';
 import { flexCenter, paperProStylesClassName, paperStylesClassName, resetButton } from 'app/styles';
 import { css } from 'emotion';
 import * as React from 'react';
+import { connect } from 'react-redux';
 
+type Props = ReturnType<typeof mapStateToProps>;
 interface State {
   isPopupOpened: boolean;
 }
 
-export class FindPin extends React.PureComponent<{}, State> {
+export class FindPin extends React.PureComponent<Props, State> {
   public state: State = {
     isPopupOpened: false,
+  }
+  private handleButtonClick = () => {
+    if (this.props.platform.isPaper || this.props.platform.isPaperPro) {
+      alert('비밀번호를 분실하신 경우 카드를 삭제하신 후 다시 등록해주세요.')
+    } else {
+      this.setState({ isPopupOpened: true });
+    }
   }
   public render() {
     const { isPopupOpened } = this.state;
@@ -20,7 +30,7 @@ export class FindPin extends React.PureComponent<{}, State> {
       <div className={styles.findPinDiv}>
         <button
           className={styles.findPinButton}
-          onClick={() => this.setState({ isPopupOpened: true })}
+          onClick={this.handleButtonClick}
         >
           비밀번호를 잊으셨나요?
         </button>
@@ -43,6 +53,14 @@ export class FindPin extends React.PureComponent<{}, State> {
     )
   };
 }
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    platform: state.environment.platform,
+  }
+}
+
+export const ConnectedFindPin = connect(mapStateToProps)(FindPin);
 
 const styles = {
   findPinDiv: css({

@@ -2,7 +2,7 @@ import * as classNames from 'classnames';
 import { css } from 'emotion';
 import * as React from 'react';
 
-import { FindPin } from 'app/services/pin/components/FindPin';
+import { ConnectedFindPin, FindPin } from 'app/services/pin/components/FindPin';
 import { PinInputGroup, PinList } from 'app/services/pin/components/PinInputGroup';
 import { PinButtonFunctionKey, PinButtonValue, PinPad } from 'app/services/pin/components/PinPad';
 import { applyGraySpinner, breakpoints, centralHeading2, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
@@ -60,7 +60,7 @@ export class PinForm extends React.Component<PinFormProps> {
             <div className={styles.spinner} /> :
             <PinInputGroup pinList={this.props.pinList}/>
         }
-        {this.props.showFindPin && <FindPin />}
+        {this.props.showFindPin && <ConnectedFindPin />}
         <PinPad clickKey={this.handleClickKey} />
       </>
     );
