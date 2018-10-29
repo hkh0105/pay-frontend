@@ -44,7 +44,7 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
         <Helmet>
           <title>원터치 결제 설정 - 리디페이</title>
         </Helmet>
-        <div className={s.wrapper}>
+        <div>
           <h2 className={s.title}>원터치 결제를 사용하시겠습니까?</h2>
           <p className={s.description}>원터치 결제는 10만원 미만 결제 시  <br/><strong>비밀번호 입력 없이 바로 결제</strong>하는 기능입니다.</p>
           <div className={s.form}>
@@ -88,18 +88,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 export const ConnectedSetOnetouch = connect(mapStateToProps, mapDispatchToProps)(SetOnetouch);
 
 const s = {
-  wrapper: css({
-    height: `calc(100% - ${headerHeightPixel * 2}px)`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  }),
   title: css({
     fontSize: '18px',
     letterSpacing: '-0.4px',
     textAlign: 'center',
-    margin: 0,
+    margin: '80px 0 0 0',
   }),
   description: css({
     color: colors.bluegray_40,
