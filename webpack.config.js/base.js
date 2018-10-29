@@ -51,7 +51,22 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader',
         ]
-      }
+      },
+      {
+        test: /\.(js)$/,
+        include: /node_modules/,
+        exclude: /polyfill/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            babelrc: false,
+            plugins: [
+              "transform-es3-member-expression-literals",
+              "transform-es3-property-literals",
+            ],
+          }
+        },
+      },
     ],
   },
   resolve: {
