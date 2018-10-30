@@ -86,6 +86,10 @@ export function* toggleOnetouch(payload: OnetouchToggleRequestPaylaod) {
     const result: AxiosResponse = yield call(requestToggleOnetouch, payload);
     if (result.status === 200) {
       yield put(UserActions.toggleOnetouchSuccess(payload));
+      if (payload.enable_onetouch_pay) {
+        alert('원터치 결제가 설정되었습니다.');
+        history.replace(urls.SETTINGS);
+      }
     } else {
       yield put(UserActions.toggleOnetouchFailure(payload));
     }

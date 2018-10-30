@@ -1,5 +1,6 @@
 import {
   DeleteCardRequestPayload,
+  OnetouchSetRequestPaylaod,
   OnetouchToggleRequestPaylaod,
   RegisterCardRequestPayload,
   RegisterCardResponse,
@@ -31,6 +32,14 @@ export const requestDeleteCard = (payload: DeleteCardRequestPayload) => {
   return request({
     method: 'DELETE',
     url: `/me/cards/${payload.payment_method_id}`
+  });
+};
+
+export const requestSetOnetouch = (payload: OnetouchSetRequestPaylaod) => {
+  return request({
+    method: 'POST',
+    url: '/me/onetouch',
+    data: payload
   });
 };
 

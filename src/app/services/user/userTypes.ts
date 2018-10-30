@@ -48,8 +48,14 @@ export interface DeleteCardRequestPayload {
   payment_method_id: string;
 }
 
+export interface OnetouchSetRequestPaylaod {
+  enable_onetouch_pay: boolean;
+  validation_token?: string;
+}
+
 export interface OnetouchToggleRequestPaylaod {
   enable_onetouch_pay: boolean;
+  validation_token?: string;
 }
 
 export interface RegisterPinPayload {

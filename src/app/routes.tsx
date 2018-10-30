@@ -11,10 +11,12 @@ import { LegalTerms } from 'app/scenes/LegalTerms';
 import { ConnectedRegisterPin } from 'app/scenes/RegisterPin';
 import { ConnectedPrivateRoute } from './components/PrivateRoute';
 import { ConnectedScrollToTop } from './components/ScrollToTop';
+import { ConnectedEnableOnetouch } from './scenes/EnableOnetouch';
 
 export const urls = {
   SETTINGS: '/settings',
-  SET_ONETOUCH: '/settings/onetouch',
+  SET_ONETOUCH: '/settings/onetouch/set',
+  ENABLE_ONETOUCH: '/settings/onetouch/enable',
   REGISTER_CARD: '/settings/cards/register',
   REGISTER_PIN: '/settings/pin/register',
   PAYMENT: '/payments/:reservationId',
@@ -41,6 +43,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
           <Route exact={true} path={urls.UPDATE_PIN} render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
           <Route exact={true} path={urls.SET_ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
+          <Route exact={true} path={urls.ENABLE_ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedEnableOnetouch} />} />
           <Route exact={true} path={urls.TERMS} render={() => <ConnectedPrivateRoute component={LegalTerms} />} />
           <Redirect to={urls.SETTINGS}/>
         </Switch>

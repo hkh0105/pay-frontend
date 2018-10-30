@@ -7,6 +7,7 @@ import { Button, ButtonProps, Icon, Popup } from '@ridi/rsg';
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { CardPlate } from 'app/components/CardPlate';
 import { SwtichButton } from 'app/components/SwitchButton';
+import { history } from 'app/config';
 import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
@@ -185,6 +186,19 @@ export class Settings extends React.Component<Props, State> {
       };
   }
 
+  private handleOnetouchSwitchButtonClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (this.props.user.isOnetouchTogglingFetching) {
+      return;
+    }
+    if (e.target.checked) {
+      e.preventDefault();
+      history.push(urls.ENABLE_ONETOUCH);
+      return;
+    } else {
+      this.props.requestToggleOnetouch({ enable_onetouch_pay: false });
+    }
+  }
+
   public render() {
     const { cards, isUsingOnetouchPay, isDeletingCardFetching, hasPin } = this.props.user;
     const { isConfirmDeletionPopupOpened } = this.state;
@@ -218,11 +232,7 @@ export class Settings extends React.Component<Props, State> {
               {!isOnetouchPayNotSet && <div className={settingSwitchButtonWrapper}>
                 <SwtichButton
                   isChecked={isUsingOnetouchPay || false}
-                  onChange={(e) => {
-                    if (!this.props.user.isOnetouchTogglingFetching) {
-                      this.props.requestToggleOnetouch({ enable_onetouch_pay: e.target.checked });
-                    }
-                  }}
+                  onChange={this.handleOnetouchSwitchButtonClick}
                   id="oneTouchModeInput"
                 />
               </div>}
