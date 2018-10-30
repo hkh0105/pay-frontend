@@ -9,6 +9,7 @@ import { CardPlate } from 'app/components/CardPlate';
 import { SwtichButton } from 'app/components/SwitchButton';
 import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
+import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
 import { DeleteCardRequestPayload, OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
@@ -176,7 +177,7 @@ export class Settings extends React.Component<Props, State> {
         size: "medium",
         className: addCardButton,
         component: Link,
-        to: "/settings/cards/add",
+        to: urls.REGISTER_CARD,
         children: <>
           <Icon name="plus_1" className={addCardIcon} />
           카드 등록

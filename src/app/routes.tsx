@@ -15,7 +15,7 @@ import { ConnectedScrollToTop } from './components/ScrollToTop';
 export const urls = {
   SETTINGS: '/settings',
   SET_ONETOUCH: '/settings/onetouch',
-  REGISTER_CARD: '/settings/cards/add',
+  REGISTER_CARD: '/settings/cards/register',
   REGISTER_PIN: '/settings/pin/register',
   PAYMENT: '/payments/:reservationId',
   UPDATE_PIN: '/settings/pin/update',
