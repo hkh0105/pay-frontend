@@ -273,7 +273,6 @@ export const ConnectedSettings = connect(mapStateToProps, mapDispatchToProps)(Se
 const s = {
   confirmDeletioPopupBody: css({
     padding: '40px 0 30px',
-    width: '210px',
     margin: '0 auto',
     textAlign: 'center',
   }),
@@ -299,5 +298,9 @@ const s = {
     '.RUIPopup_ButtonsWrapper': {
       paddingBottom: '20px',
     },
+    '.RUIPopup_LastBlock': {
+      // This removes a strange horizontal line on IE 11 (https://app.asana.com/0/463186034180511/889966775647198)
+      borderRadius: 0, 
+    }
   }),
 }
