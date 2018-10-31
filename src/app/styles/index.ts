@@ -4,6 +4,7 @@ import 'normalize.css/normalize.css';
 
 import '@ridi/rsg/components/dist/components.css';
 
+import { colors } from 'app/constants/colors';
 import { spinners } from './base64';
 import { spinnerRotation } from './keyFrames';
 
@@ -147,7 +148,11 @@ injectGlobal({
   '*': {
     touchAction: 'manipulation'
   },
-  html: resetFont,
+  html: {
+    ...resetFont,
+    background: colors.bluegray_5,
+    minHeight: '100%'
+  },
   input: resetFont,
   textarea: resetFont,
   select: resetFont,
