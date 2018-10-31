@@ -6,7 +6,7 @@ import { Header } from 'app/components/Header';
 import { RIDIPayIcon } from 'app/components/RIDIPayIcon';
 import { colors } from 'app/constants/colors';
 import { RootState } from 'app/store';
-import { breakpoints, full, half, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
+import { breakpoints, desktopViewCondition, desktopViewShortHeightCondition, full, half, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
 import { connect } from 'react-redux';
 
 export interface SceneWrapperProps {
@@ -49,6 +49,8 @@ const mapStateToProps = (state: RootState): SceneWrapperProps => {
 
 export const ConnectedSceneWrapper = connect(mapStateToProps)(SceneWrapper);
 
+const desktopViewMinHeight = '640px';
+
 const sceneBg =  css({
   display: 'none',
   [breakpoints.desktopView]: {
@@ -57,6 +59,7 @@ const sceneBg =  css({
     width: full,
     height: full,
     backgroundColor: '#b8bfc4',
+    minHeight: desktopViewMinHeight,
   },
   [`&.${paperStylesClassName}`]: {
     display: 'none',
@@ -74,9 +77,13 @@ const sceneMain =  css({
     top: half,
     left: half,
     width: '360px',
-    height: '640px',
+    height: desktopViewMinHeight,
     marginTop: '-320px',
     marginLeft: '-180px',
+  },
+  [`@media ${desktopViewCondition} and ${desktopViewShortHeightCondition}`]: {
+    marginTop: 0,
+    top: 0,
   },
   [`&.${paperStylesClassName}`]: {
     ...resetLayout,

@@ -16,8 +16,11 @@ export const half = '50%';
 export const paperStylesClassName = 'paper';
 export const paperProStylesClassName = 'paperPro';
 
+export const desktopViewCondition = '(min-width: 481px)';
+export const desktopViewShortHeightCondition = '(max-height: 639px)';
+
 export const breakpoints = {
-  desktopView: '@media (min-width: 481px)',
+  desktopView: `@media ${desktopViewCondition}`,
   mouseDevice: '@media (hover: hover)',
   pinPageSmallHeight: '@media (max-height: 561px)',
   pinPageXSmallHeight: '@media (max-height: 488px)'
