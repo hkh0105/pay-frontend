@@ -362,7 +362,7 @@ export class CardForm extends React.Component<Props, State> {
               checked={!!checkboxInputs[cardCheckboxInputKey.agreeToTerms].checked}
               onChange={this.getHandleChangeCheckbox(cardCheckboxInputKey.agreeToTerms)}
             >
-              RIDI Pay 이용약관 동의
+              이용약관 동의
             </CheckBox>
             <div className={cardInputBoxBorder} />
             <Link className={agreementLinkClass} to="/legal/terms">
