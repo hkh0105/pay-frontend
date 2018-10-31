@@ -204,7 +204,7 @@ export class CardForm extends React.Component<Props, State> {
       history.replace(urls.REGISTER_PIN);
     } catch (e) {
       if (e.data.code === 'CARD_REGISTRATION_FAILED') {
-        alert(`${e.data.message} (${e.data.pg_message})`);
+        alert(`${e.data.message}\n[${e.data.pg_message}]`);
       } else {
         alert(e.data.message);
       }
