@@ -186,7 +186,11 @@ export const agreeToTermsCheckbox = css({
       marginTop: '-9px'
     },
     '& .RUICheckBox_SVGIcon': {
-      top: '50%'
+      width: '11px',
+      height: '11px',
+      top: '10px',
+      left: '4px',
+      transform: 'none'
     },
     [breakpoints.mouseDevice]: {
       '&:hover': {
