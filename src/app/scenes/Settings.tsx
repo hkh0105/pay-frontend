@@ -14,6 +14,7 @@ import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
 import { DeleteCardRequestPayload, OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
+import { rsgPopupCommonStyle } from 'app/styles';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -145,7 +146,7 @@ export class Settings extends React.Component<Props, State> {
         cancelButtonName="취소"
         confirmButtonName="카드 삭제"
         showFooterHr={false}
-        contentClassName={s.confirmDeletioPopupContent}
+        contentClassName={rsgPopupCommonStyle}
       >
         <div className={s.confirmDeletioPopupBody}>
           <h3 className={s.confirmDeletionPopupHeading}><Icon name="exclamation_3" className={s.confirmDeletionPopupIcon} />카드를 삭제하시겠습니까?</h3>
@@ -292,15 +293,6 @@ const s = {
     margin: '14px 0 0 0',
     fontSize: '15px',
     wordBreak: 'keep-all',
-  }),
-  confirmDeletioPopupContent: css({
-    // TODO: Make a PR to RIDI UI that adds a Prop setting classNames for ButtonsWrapper
-    '.RUIPopup_ButtonsWrapper': {
-      paddingBottom: '20px',
-    },
-    '.RUIPopup_LastBlock': {
-      // This removes a strange horizontal line on IE 11 (https://app.asana.com/0/463186034180511/889966775647198)
-      borderRadius: 0, 
-    }
+    padding: '0 20px',
   }),
 }

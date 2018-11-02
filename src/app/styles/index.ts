@@ -144,6 +144,20 @@ export const centralHeading2 = css({
   }
 });
 
+export const rsgPopupCommonStyle = css({
+  // TODO: Make a PR to RIDI UI that adds a Prop setting classNames for ButtonsWrapper
+  '.RUIPopup_ButtonsWrapper': {
+    paddingBottom: '20px'
+  },
+  '.RUIPopup_LastBlock': {
+    // This removes a strange horizontal line on IE 11 (https://app.asana.com/0/463186034180511/889966775647198)
+    borderRadius: 0
+  },
+  '.RUIPopup_ButtonsList': {
+    padding: '0 3px'
+  }
+});
+
 injectGlobal({
   '*': {
     touchAction: 'manipulation'

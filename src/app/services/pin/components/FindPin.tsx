@@ -3,7 +3,7 @@ import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
 import { RootState } from 'app/store';
-import { flexCenter, paperProStylesClassName, paperStylesClassName, resetButton } from 'app/styles';
+import { flexCenter, paperProStylesClassName, paperStylesClassName, resetButton, rsgPopupCommonStyle } from 'app/styles';
 import { css } from 'emotion';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -43,6 +43,7 @@ export class FindPin extends React.PureComponent<Props, State> {
           cancelButtonName="닫기"
           confirmButtonName="카드 관리"
           showFooterHr={false}
+          contentClassName={rsgPopupCommonStyle}
         >
           <div className={styles.popupContent}>
             비밀번호를 분실하신 경우<br/>
