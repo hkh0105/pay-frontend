@@ -11,7 +11,7 @@ const initailState: UserState = {
   isOnetouchTogglingFetching: false,
   cards: [],
   hasPin: false,
-  isUsingOnetouchPay: false,
+  isUsingOnetouchPay: null,
   userId: ''
 };
 
