@@ -276,6 +276,7 @@ export class CardForm extends React.Component<Props, State> {
               id={cardNumberInputKey.cardnumber}
               htmlRef={cardNumberRef => this.cardNumberRef = cardNumberRef}
               value={this.state.cardNumber}
+              type="tel"
             />
             {/* {this.renderCardInput({
               currentInputKey: cardNumberInputKey.cardnumber,
