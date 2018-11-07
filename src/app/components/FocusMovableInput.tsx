@@ -25,7 +25,6 @@ export class FocusMovableInput extends React.Component<
   public render() {
     const {
       onChange,
-      onKeyDown = noop,
       onKeyUp = noop,
       refObject,
       maxLength,
@@ -51,20 +50,6 @@ export class FocusMovableInput extends React.Component<
           }
           onChange(e);
         }}
-        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-          e.persist();
-          if (
-            !!prevInputRef &&
-            e.keyCode === BackSpaceKeyCode &&
-            e.currentTarget.value.length === 0
-          ) {
-            e.preventDefault();
-            prevInputRef.current.focus();
-            deletePrevInputLastChar();
-            return;
-          }
-          onKeyDown(e);
-        }}
         onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
           e.persist();
           if (
@@ -73,6 +58,7 @@ export class FocusMovableInput extends React.Component<
             // tslint:disable-next-line:max-line-length
             // https://m.blog.naver.com/PostView.nhn?blogId=tommybee&logNo=220887899552&proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F
             e.key.length > 1 && e.keyCode !== PlaceholderKeyCode ||
+            // Range of numbers from the numeric keboard and the numbers from the top of the keyboard
             !((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105))
           ) {
             return;
