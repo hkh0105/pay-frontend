@@ -11,7 +11,18 @@ import {
   ValidatePinResponse
 } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
-import { AxiosResponse } from 'axios';
+
+export const requestAccountToken = () => {
+  return request({
+    method: 'GET',
+    url: `https://${process.env.ACCOUNT_SERVER_HOST}/ridi/authorize/`,
+    params: {
+      client_id: process.env.OAUTH2_CLIENT_ID,
+      response_type: 'code',
+      redirect_uri: `https://${process.env.ACCOUNT_SERVER_HOST}/ridi/complete/`
+    }
+  });
+};
 
 export const requestProfile = () => {
   return request({

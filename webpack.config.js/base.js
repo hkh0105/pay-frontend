@@ -101,6 +101,8 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       'RIDI_PAY_API_SERVER_HOST',
       'RIDIBOOKS_HOST',
+      'ACCOUNT_SERVER_HOST',
+      'OAUTH2_CLIENT_ID',
     ]),
     new CheckerPlugin(),
     new ChunkRenamePlugin({
