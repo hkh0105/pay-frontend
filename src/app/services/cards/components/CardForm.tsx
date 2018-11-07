@@ -7,8 +7,9 @@ import { every } from 'lodash-es';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { SpaceKeyCode } from 'app/components';
 import { history } from 'app/config';
-import { urls } from 'app/routes';
+import { publicUrls, urls } from 'app/routes';
 import {
   cardCheckboxInputKey,
   CardFormState,
@@ -22,9 +23,17 @@ import {
   initialCardInputRefs,
 } from 'app/services/cards/components';
 import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInput, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { UserActions } from 'app/services/user/userActions';
 import { requestRegisterCard } from 'app/services/user/userRequests';
+import { RegisterCardRequestPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { a11y } from 'app/styles';
+import {
+  cleanUpCardNumber,
+  getCardTypeByNumber,
+  prettifyCardNumber,
+} from 'app/utils';
+import { number } from 'prop-types';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { numberInputRegexes } from './CardForm.state';
@@ -110,6 +119,20 @@ export class CardForm extends React.Component<Props, State> {
     return this.inputRefs[inputKey];
   }
 
+  private getDeleteLastChar = (inputKey: string) => {
+    return () => {
+      this.setState((prevState: CardFormState) => ({
+        numberInputs: {
+          ...prevState.numberInputs,
+          [inputKey]: {
+            ...prevState.numberInputs[inputKey],
+            value: prevState.numberInputs[inputKey].value.slice(0, -1),
+          },
+        },
+      }));
+    };
+  }
+
   private isFormValid = () => {
     return (
       // Delegate card number validation to backend
@@ -150,6 +173,7 @@ export class CardForm extends React.Component<Props, State> {
         refObject={this.getInputRef(currentInputKey)}
         prevInputRef={prevInputKey ? this.getInputRef(prevInputKey) : undefined}
         nextInputRef={nextInputKey ? this.getInputRef(nextInputKey) : undefined}
+        deletePrevInputLastChar={prevInputKey ? this.getDeleteLastChar(prevInputKey) : undefined}
         maxLength={numberInputs[currentInputKey].maxLength}
         pattern={numberInputRegexes[currentInputKey].toString()}
         placeholder={placeholder}
@@ -254,6 +278,16 @@ export class CardForm extends React.Component<Props, State> {
               value={this.state.cardNumber}
               type="tel"
             />
+            {/* {this.renderCardInput({
+              currentInputKey: cardNumberInputKey.cardnumber,
+              nextInputKey: cardNumberInputKey.ccmonth,
+              onChange: this.handleChangeCardNumberInput,
+              placeholder: `‘-’ 없이 입력`,
+              extraProps: {
+                allowSpace: true,
+                onKeyDown: preventDefaultOnSpaceKeyEvent,
+              },
+            })} */}
             <div className={cardInputBoxBorderInteractive} />
           </div>
           <div className={cardInputBoxInlineGroup}>
