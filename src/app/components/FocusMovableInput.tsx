@@ -3,6 +3,7 @@ import * as React from 'react';
 
 export const BackSpaceKeyCode = 8;
 export const SpaceKeyCode = 32;
+export const TabKeyCode = 32;
 export const PlaceholderKeyCode = 229;
 
 export interface FocusMovableInputProps {
@@ -72,15 +73,12 @@ export class FocusMovableInput extends React.Component<
             // tslint:disable-next-line:max-line-length
             // https://m.blog.naver.com/PostView.nhn?blogId=tommybee&logNo=220887899552&proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F
             e.key.length > 1 && e.keyCode !== PlaceholderKeyCode ||
-            e.altKey ||
-            e.ctrlKey ||
-            e.metaKey ||
-            e.keyCode === BackSpaceKeyCode
+            !((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105))
           ) {
             return;
           }
-          if (e.currentTarget.value.length >= maxLength) {
-            !!nextInputRef ? nextInputRef.current.focus() : e.currentTarget.blur();
+          if (nextInputRef && e.currentTarget.value.length >= maxLength) {
+            nextInputRef.current.focus();
             return;
           }
           onKeyUp(e);
