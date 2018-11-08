@@ -88,3 +88,7 @@ export interface ValidatePasswordResponse {
 export interface UpdateUrlToReturnPayload {
   url: string;
 }
+
+export interface SetOnetouchResponse {
+  payment_method_id: string;
+}
