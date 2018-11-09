@@ -2,6 +2,7 @@ import {
   DeleteCardRequestPayload,
   FetchUserProfileFailurePayload,
   OnetouchToggleRequestPaylaod,
+  RegisterCardPayload,
   RegisterCardRequestPayload,
   RegisterCardResponse,
   UpdateUrlToReturnPayload,
@@ -22,7 +23,8 @@ export enum UserActionTypes {
   TOGGLE_ONETOUCH_REQUEST = 'TOGGLE_ONETOUCH_REQUEST',
   TOGGLE_ONETOUCH_SUCCESS = 'TOGGLE_ONETOUCH_SUCCESS',
   TOGGLE_ONETOUCH_FAILURE = 'TOGGLE_ONETOUCH_FAILURE',
-  UPDATE_URL_TO_RETURN = 'UPDATE_URL_TO_RETURN'
+  UPDATE_URL_TO_RETURN = 'UPDATE_URL_TO_RETURN',
+  UPDATE_CARD_REGISTRATION_TOKEN = 'UPDATE_CARD_REGISTRATION_TOKEN'
 }
 
 export const UserActions = {
@@ -48,7 +50,9 @@ export const UserActions = {
   toggleOnetouchFailure: (payload: OnetouchToggleRequestPaylaod) =>
     createAction(UserActionTypes.TOGGLE_ONETOUCH_FAILURE, payload),
   updateUrlToReturn: (payload: UpdateUrlToReturnPayload) =>
-    createAction(UserActionTypes.UPDATE_URL_TO_RETURN, payload)
+    createAction(UserActionTypes.UPDATE_URL_TO_RETURN, payload),
+  updateCardRegistrationToken: (payload: RegisterCardPayload) =>
+    createAction(UserActionTypes.UPDATE_CARD_REGISTRATION_TOKEN, payload)
 };
 
 export type UserActions = ActionsUnion<typeof UserActions>;

@@ -113,6 +113,12 @@ export const userReducer: Reducer<UserState, UserActions> = (
         urlToReturn: action.payload.url
       };
     }
+    case UserActionTypes.UPDATE_CARD_REGISTRATION_TOKEN: {
+      return {
+        ...state,
+        cardRegistrationToken: action.payload.validation_token
+      };
+    }
   }
   return state;
 };

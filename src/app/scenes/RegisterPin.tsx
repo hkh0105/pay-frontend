@@ -67,13 +67,19 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 
     this.setState({ isFetching: true });
 
-    return requestRegisterPin({ pin })
+    return requestRegisterPin({ pin, validation_token: this.props.user.cardRegistrationToken! })
       .catch(() => {
         this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false, pinList: [] });
       })
       .then(() => {
         history.replace(urls.SET_ONETOUCH)
       });
+  }
+
+  public componentDidMount() {
+    if (!this.props.user.cardRegistrationToken) {
+      history.replace(urls.SETTINGS);
+    }
   }
 
   public render() {

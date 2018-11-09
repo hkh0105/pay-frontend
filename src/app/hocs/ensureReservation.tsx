@@ -1,19 +1,10 @@
-import { Button } from '@ridi/rsg';
-import { headerHeight } from 'app/components/Header';
 import { PageSpinner } from 'app/components/PageSpinner';
 import { ConnectedSceneWrapper } from 'app/components/SceneWrapper';
 import { history } from 'app/config';
 import { requestReservationInformation } from 'app/services/payment/paymentRequests';
 import { ReservationInformationResponse } from 'app/services/payment/paymentTypes';
-import { UserActions } from 'app/services/user/userActions';
-import { RootState } from 'app/store';
-import { applyGraySpinner } from 'app/styles';
 import { AxiosResponse } from 'axios';
-import { css } from 'emotion';
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Dispatch } from 'redux';
 
 interface RouteProps {
   reservationId: string;

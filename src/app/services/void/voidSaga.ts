@@ -18,19 +18,22 @@ function* watchFinishPaymentRegistration(
   action: ReturnType<typeof VoidActions.finishPaymentRegistration>
 ) {
   let paymentMethodId: string;
+  let state: RootState = yield select((s) => s);
   try {
     const response: AxiosResponse<SetOnetouchResponse> = yield call(requestSetOnetouch, {
-      enable_onetouch_pay: action.payload.enable_onetouch_pay
+      enable_onetouch_pay: action.payload.enable_onetouch_pay,
+      validation_token: state.user.cardRegistrationToken
     });
     paymentMethodId = response.data.payment_method_id;
     yield put(
       UserActions.toggleOnetouchSuccess({ enable_onetouch_pay: action.payload.enable_onetouch_pay })
     );
+    yield put(UserActions.updateCardRegistrationToken({ validation_token: '' }));
   } catch (e) {
     alert(e.data.message);
     return;
   }
-  const state: RootState = yield select((s) => s);
+  state = yield select((s) => s);
   if (state.user.urlToReturn) {
     alert('RIDI Pay 카드 등록이 완료되었습니다.');
 

@@ -27,6 +27,7 @@ export interface UserState {
   cards: Card[];
   userId: string;
   urlToReturn?: string;
+  cardRegistrationToken?: string;
 }
 
 export interface FetchUserProfileFailurePayload {
@@ -60,6 +61,7 @@ export interface OnetouchToggleRequestPaylaod {
 
 export interface RegisterPinPayload {
   pin: string;
+  validation_token: string;
 }
 
 export interface UpdatePinPayload {
@@ -91,4 +93,8 @@ export interface UpdateUrlToReturnPayload {
 
 export interface SetOnetouchResponse {
   payment_method_id: string;
+}
+
+export interface RegisterCardPayload {
+  validation_token: string;
 }

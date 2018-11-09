@@ -3,7 +3,9 @@ import { Helmet } from 'react-helmet';
 
 import { Button } from '@ridi/rsg';
 import { ConnectedSceneWrapper, headerHeight, headerHeightPixel } from 'app/components';
+import { history } from 'app/config';
 import { colors } from 'app/constants/colors';
+import { urls } from 'app/routes';
 import { VoidActions } from 'app/services/void/voidActions';
 import { FinishPaymentRegistrationPayload } from 'app/services/void/voidTypes';
 import { RootState } from 'app/store';
@@ -22,6 +24,7 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
     isEnabling: false,
     isDisabling: false,
   }
+
   private handleButtonClick = (enable: boolean) => async (e: React.MouseEvent<HTMLInputElement>) => {
     if (this.state.isEnabling || this.state.isDisabling) {
       return;
@@ -35,6 +38,12 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
     } catch (e) {
       alert(e.data.mssasage);
       this.setState({ isEnabling: false, isDisabling: false });
+    }
+  }
+
+  public componentDidMount() {
+    if (!this.props.user.cardRegistrationToken) {
+      history.replace(urls.SETTINGS);
     }
   }
 

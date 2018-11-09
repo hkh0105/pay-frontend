@@ -22,9 +22,12 @@ import {
   initialCardInputRefs,
 } from 'app/services/cards/components';
 import { agreementLinkClass, agreeToTermsCheckbox, cardFormSubmitButtonClass, cardFormSubmitDisabledButtonClass, cardInputBox60, cardInputBoxAgreeToTerms, cardInputBoxBorder, cardInputBoxBorderInteractive, cardInputBoxInline, cardInputBoxInlineGroup, cardInputBoxLabel, cardInputGroup, expDateDelimiter, innerInput, innerInputJust } from 'app/services/cards/components/CardForm.styles';
+import { UserActions } from 'app/services/user/userActions';
 import { requestRegisterCard } from 'app/services/user/userRequests';
+import { RegisterCardPayload, RegisterCardResponse } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { a11y } from 'app/styles';
+import { AxiosResponse } from 'axios';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { numberInputRegexes } from './CardForm.state';
@@ -170,12 +173,13 @@ export class CardForm extends React.Component<Props, State> {
     this.setState({ isFetching: true })
 
     try {
-      await requestRegisterCard({
+      const response: AxiosResponse<RegisterCardPayload> = await requestRegisterCard({
         card_expiration_date: expirationDate,
         card_number: cardNumber,
         card_password: numberInputs[password].value,
         tax_id: numberInputs[birthdate].value,
       });
+      this.props.dispatchUpdateCardRegistrationToken({ validation_token: response.data.validation_token });
       this.isSubmitted = true;
       history.replace(urls.REGISTER_PIN);
     } catch (e) {
@@ -357,6 +361,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
+    dispatchUpdateCardRegistrationToken: (payload: RegisterCardPayload) => dispatch(UserActions.updateCardRegistrationToken(payload)),
     // dispatchRequestRegisterCard: (payload: RegisterCardRequestPayload) => dispatch(UserActions.registerCardRequest(payload))
   }
 }
