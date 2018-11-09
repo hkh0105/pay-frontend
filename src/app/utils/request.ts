@@ -51,6 +51,12 @@ export interface RequestConfig extends AxiosRequestConfig {
 export function request(config: RequestConfig) {
   config.baseURL = `//${process.env.RIDI_PAY_API_SERVER_HOST}`;
   config.withCredentials = true;
+  config.headers = {
+    ...config.headers,
+    'Content-Type': 'application/json'
+  };
+  // Workaround to set Content-Type: https://github.com/axios/axios/issues/86
+  config.data = config.data || {};
   return axios(config);
 }
 
