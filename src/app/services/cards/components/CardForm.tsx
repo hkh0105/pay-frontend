@@ -53,21 +53,13 @@ interface State extends CardFormState {
 export class CardForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const prevState = sessionStorage.getItem(cardFormStorageKey); 
-    sessionStorage.removeItem(cardFormStorageKey);
-    const storageData: StorageData = prevState ? JSON.parse(prevState) : null;
-    
-    if (storageData && (Date.now() - storageData.storedAt) <= 1000 * 60 * 3) {
-      this.state = storageData.state;
-    } else {
-      this.state = {
-        ...getInitialCardFormState(),
-        displayLegal: false,
-        isFetching: false,
-        cardNumber: '',
-        creditCardType: 'unknown',
-      };
-    }
+    this.state = {
+      ...getInitialCardFormState(),
+      displayLegal: false,
+      isFetching: false,
+      cardNumber: '',
+      creditCardType: 'unknown',
+    };
   }
   private cardNumberRef: HTMLInputElement;
   private isSubmitted: boolean = false;
@@ -205,16 +197,6 @@ export class CardForm extends React.Component<Props, State> {
           this.cardNumberRef.focus();
         }
       }, 500);
-    }
-  }
-
-  public componentWillUnmount = () => {
-    // TODO: Set expiration tiime
-    if (!this.isSubmitted) {
-      sessionStorage.setItem(cardFormStorageKey, JSON.stringify({
-        state: this.state,
-        storedAt: Date.now(),
-      } as StorageData));
     }
   }
 
