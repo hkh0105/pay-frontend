@@ -33,7 +33,13 @@ function* watchLoadUserProfileRequest() {
 export function* loadUserProfileRequest() {
   try {
     const response = yield call(requestProfile);
-    yield put(UserActions.fetchUserProfileSuccess(response.data));
+
+    if (response.data && response.data.code === 'NOT_FOUND_USER') {
+      yield put(UserActions.fetchUserProfileFailure({ isUserLoggedIn: true }));
+    } else {
+      yield put(UserActions.fetchUserProfileSuccess(response.data));
+    }
+
     if (!tracker) {
       const state: RootState = yield select((s) => s);
       yield call(initializeTracker, state);
