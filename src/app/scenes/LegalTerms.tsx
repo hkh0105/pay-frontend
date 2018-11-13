@@ -22,7 +22,9 @@ export class LegalTerms extends React.PureComponent {
 
   public render() {
     return (
-      <ConnectedSceneWrapper>
+      <ConnectedSceneWrapper
+        onBackButtonClick={() => window.close()}
+      >
         <Helmet>
           <title>이용약관 - 리디페이</title>
         </Helmet>

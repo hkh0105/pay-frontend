@@ -316,7 +316,11 @@ export class CardForm extends React.Component<Props, State> {
               이용약관 동의
             </CheckBox>
             <div className={cardInputBoxBorder} />
-            <Link className={agreementLinkClass} to="/legal/terms">
+            <Link
+              className={agreementLinkClass}
+              to="/legal/terms"
+              target="_blank"
+            >
               약관 보기
             </Link>
           </div>
