@@ -2,7 +2,7 @@ import * as classNames from 'classnames';
 import { css } from 'emotion';
 import * as React from 'react';
 
-import { Header, HeaderProps } from 'app/components/Header';
+import { Header } from 'app/components/Header';
 import { RIDIPayIcon } from 'app/components/RIDIPayIcon';
 import { colors } from 'app/constants/colors';
 import { RootState } from 'app/store';
@@ -12,10 +12,9 @@ import { connect } from 'react-redux';
 export interface SceneWrapperProps {
   isPaper: boolean;
   isPaperPro: boolean;
-  onBackButtonClick?: HeaderProps['onBackButtonClick'];
 }
 
-export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, isPaperPro, onBackButtonClick }) => (
+export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, isPaperPro }) => (
   <>
     <div
       className={classNames(
@@ -33,10 +32,7 @@ export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, 
         [paperProStylesClassName]: isPaperPro,
       },
     )}>
-      <Header
-        isPaper={isPaper}
-        onBackButtonClick={onBackButtonClick}
-      >
+      <Header isPaper={isPaper}>
         <RIDIPayIcon className={ridiPayIcon} />
       </Header>
       {children}
@@ -44,11 +40,10 @@ export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, 
   </>
 );
 
-const mapStateToProps = (state: RootState, ownProps: Partial<SceneWrapperProps>): SceneWrapperProps => {
+const mapStateToProps = (state: RootState): SceneWrapperProps => {
   return {
     isPaper: state.environment.platform.isPaper,
     isPaperPro: state.environment.platform.isPaperPro,
-    ...ownProps,
   };
 };
 
