@@ -2,6 +2,10 @@
 
 > RIDI Pay Web Frontend
 
+## Security
+
+All security bugs in RIDI Pay should be reported by email to security@ridi.com.
+
 ## Requirements
 
 - [Yarn](https://yarnpkg.com/)
