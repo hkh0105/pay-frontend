@@ -21,7 +21,7 @@ export class RegisterCard extends React.PureComponent<Props> {
         queryString[currentKey] :
         `${accumulator}&${currentKey}=${queryString[currentKey]}`
       ), '');
-      this.props.updateUrlToReturn({ url: queryString.returnUrl });
+      this.props.updateUrlToReturn({ url: encodeURIComponent(returnUrl) });
     }
   }
 
