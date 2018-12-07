@@ -17,6 +17,10 @@ export class RegisterCard extends React.PureComponent<Props> {
       ignoreQueryPrefix: true,
     });
     if (queryString.returnUrl) {
+      const returnUrl = Object.keys(queryString).reduce((accumulator, currentKey) => ( currentKey === 'return_url' ?
+        queryString[currentKey] :
+        `${accumulator}&${currentKey}=${queryString[currentKey]}`
+      ), '');
       this.props.updateUrlToReturn({ url: queryString.returnUrl });
     }
   }
