@@ -36,12 +36,11 @@ function* watchFinishPaymentRegistration(
   state = yield select((s) => s);
   if (state.user.urlToReturn) {
     alert('RIDI Pay 카드 등록이 완료되었습니다.');
-
     const { urlToReturn } = state.user;
-    const [host, queryString] = urlToReturn.split('?');
+    const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
     const query: { payment_method_id: string } = qs.parse(queryString);
     query.payment_method_id = paymentMethodId;
-    location.replace(decodeURIComponent(`${host}?${qs.stringify(query)}`));
+    location.replace(`${host}?${qs.stringify(query)}`);
   } else {
     yield call(loadUserProfileRequest);
     alert('RIDI Pay 카드 등록이 완료되었습니다.');

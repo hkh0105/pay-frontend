@@ -17,7 +17,7 @@ export class RegisterCard extends React.PureComponent<Props> {
       ignoreQueryPrefix: true,
     });
     if (queryString.returnUrl) {
-      this.props.updateUrlToReturn({ url: queryString.returnUrl });
+      this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
     }
   }
 
