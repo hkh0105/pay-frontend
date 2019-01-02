@@ -43,15 +43,12 @@ module.exports = {
       path.join(baseDir, 'src'), // to support sourcemap
     ],
     host: '0.0.0.0',
-    https: {
-      cert: fs.readFileSync(path.join(baseDir, '.ssl', `${process.env.RIDI_PAY_HOST}.pem`), 'utf-8'),
-      key: fs.readFileSync(path.join(baseDir, '.ssl', `${process.env.RIDI_PAY_HOST}-key.pem`), 'utf-8'),
-    },
     disableHostCheck: true,
     historyApiFallback: true,
     compress: true,
     hot: true,
     open: false,
+    public: `https://${process.env.RIDI_PAY_HOST}`,
   },
   watchOptions: {
     poll: true,
