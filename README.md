@@ -18,18 +18,6 @@ All security bugs in RIDI Pay should be reported by email to security@ridi.com.
 $ yarn
 ```
 
-**Create a local certificate**
-
-```sh
-$ make cert
-```
-
-**Add a host name**
-
-```
-127.0.0.1    pay.ridi.io
-```
-
 **Set environment variables**
 
 You can refer `.env.example` to see which variables are required.
@@ -40,4 +28,18 @@ You can use `PORT` environment variable to run the server on a different port.
 
 ```sh
 $ yarn start
+```
+
+**[optional] traefik config**
+
+```toml
+[frontends]
+  [frontends.frontend-ridipay]
+  backend = "backend-ridipay"
+    [frontends.frontend-ridipay.routes.test_1]
+    rule = "Host:pay.local.ridi.io"
+[backends]
+  [backends.backend-ridipay]
+    [backends.backend-ridipay.servers.server1]
+    url = "http://host.docker.internal:8090"
 ```
