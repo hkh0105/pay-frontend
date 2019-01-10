@@ -51,7 +51,7 @@ export class SetOnetouch extends React.PureComponent<Props, State> {
     return (
       <ConnectedSceneWrapper>
         <Helmet>
-          <title>원터치 결제 설정 - 리디페이</title>
+          <title>원터치 결제 설정 - 리디</title>
         </Helmet>
         <div>
           <h2 className={s.title}>원터치 결제를 사용하시겠습니까?</h2>

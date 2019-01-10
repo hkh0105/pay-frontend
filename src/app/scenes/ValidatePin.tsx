@@ -43,7 +43,7 @@ export class ValidatePin extends React.Component<ValidatePinProps, ValidatePinSt
       <>
         <ConnectedSceneWrapper>
           <Helmet>
-            <title>결제 비밀번호 입력 - 리디페이</title>
+            <title>결제 비밀번호 입력 - 리디</title>
           </Helmet>
           <div className={sceneContents}>
             <PinForm 

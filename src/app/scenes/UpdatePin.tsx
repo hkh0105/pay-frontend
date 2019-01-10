@@ -116,7 +116,7 @@ export class UpdatePin extends React.Component<SetPinProps, SetPinState> {
       <>
         <ConnectedSceneWrapper>
           <Helmet>
-            <title>결제 비밀번호 변경 - 리디페이</title>
+            <title>결제 비밀번호 변경 - 리디</title>
           </Helmet>
           <div className={sceneContents}>
             <PinForm

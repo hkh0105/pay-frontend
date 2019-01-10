@@ -78,7 +78,7 @@ class Payment extends React.Component<Props, State> {
     return (
       <ConnectedSceneWrapper>
         <Helmet>
-          <title>결제 비밀번호 입력 - 리디페이</title>
+          <title>결제 비밀번호 입력 - 리디</title>
         </Helmet>
         <PinForm
           title="결제 비밀번호 입력"
@@ -108,7 +108,7 @@ class Payment extends React.Component<Props, State> {
     return (
       <ConnectedSceneWrapper>
         <Helmet>
-          <title>결제 - 리디페이</title>
+          <title>결제 - 리디</title>
         </Helmet>
         <PageSpinner text="결제 완료를 위해 리디북스로 이동합니다." />
       </ConnectedSceneWrapper>

@@ -8,7 +8,7 @@ export const Terms: React.SFC = () => {
     <>
       <ConnectedSceneWrapper>
         <Helmet>
-          <title>이용 약관 - 리디페이</title>
+          <title>이용 약관 - 리디</title>
         </Helmet>
         <div className={sceneContents}>
           {/* contents */}
