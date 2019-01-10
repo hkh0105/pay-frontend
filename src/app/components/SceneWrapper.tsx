@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import * as React from 'react';
 
 import { Header, HeaderProps } from 'app/components/Header';
-import { RIDIPayIcon } from 'app/components/RIDIPayIcon';
+import { RidiIcon } from 'app/components/RidiIcon';
 import { colors } from 'app/constants/colors';
 import { RootState } from 'app/store';
 import { breakpoints, desktopViewCondition, desktopViewShortHeightCondition, full, half, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
@@ -37,7 +37,7 @@ export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, 
         isPaper={isPaper}
         onBackButtonClick={onBackButtonClick}
       >
-        <RIDIPayIcon className={ridiPayIcon} />
+        <RidiIcon className={ridiIconStyle} />
       </Header>
       {children}
     </main>
@@ -104,12 +104,12 @@ export const sceneContents = css({
   padding: '16px 15px 15px'
 });
 
-export const ridiPayIcon = css({
-  width: '58px',
+export const ridiIconStyle = css({
+  width: '30px',
   fill: colors.dodgerblue_50,
   marginTop: '4px',
   [`.${paperStylesClassName} &`]: {
-    width: '68px',
+    width: '30px',
     fill: 'black',
     marginTop: '2px',
   }
