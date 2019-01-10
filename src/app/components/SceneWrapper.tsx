@@ -37,7 +37,7 @@ export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, 
         isPaper={isPaper}
         onBackButtonClick={onBackButtonClick}
       >
-        <RidiIcon className={ridiIconStyle} />
+        <RidiIcon className={ridiIcon} />
       </Header>
       {children}
     </main>
@@ -104,7 +104,7 @@ export const sceneContents = css({
   padding: '16px 15px 15px'
 });
 
-export const ridiIconStyle = css({
+export const ridiIcon = css({
   width: '30px',
   fill: colors.dodgerblue_50,
   marginTop: '4px',
