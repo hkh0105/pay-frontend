@@ -68,7 +68,7 @@ const backButtonIcon = css({
 const headerTitle = css({
   ...resetHeading,
   color: '#1f8ce6',
-  fontSize: '16px',
+  fontSize: '12px',
   [`.${paperStylesClassName} &`]: {
     color: 'black',
   }
