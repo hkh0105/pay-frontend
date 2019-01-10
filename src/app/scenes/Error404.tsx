@@ -36,7 +36,7 @@ export const Error404: React.SFC = () => {
               wrapperElement="a"
               wrapperProps={{ href: '/' }}
             >
-              리디페이 설정 보기
+              카드 관리
             </Button>
           </li>
         </ul>
