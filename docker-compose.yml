@@ -1,0 +1,24 @@
+version: "3.6"
+
+services:
+  web:
+    image: pay-frontend
+    build: .
+    ports:
+      - 9000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:pay.local.ridi.io"
+    volumes:
+      - .:/app
+      - modules:/app/node_modules
+    networks:
+      - traefik
+
+volumes:
+  modules:
+
+networks:
+  traefik:
+    external:
+      name: ${EXTERNAL_NETWORK:-ridi}

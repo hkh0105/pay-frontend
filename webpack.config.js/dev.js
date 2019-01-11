@@ -35,7 +35,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    port: process.env.DEV_SERVER_PORT,
+    port: 9000,
     contentBase: [
       outputDir,
       baseDir,
