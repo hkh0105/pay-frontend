@@ -107,9 +107,7 @@ export const sceneContents = css({
 export const ridiIcon = css({
   width: '30px',
   fill: colors.dodgerblue_50,
-  marginTop: '4px',
   [`.${paperStylesClassName} &`]: {
-    width: '30px',
     fill: 'black',
     marginTop: '2px',
   }

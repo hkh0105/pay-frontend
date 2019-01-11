@@ -7,7 +7,7 @@ interface Props {
 export const RidiIcon: React.SFC<Props> = (props) => {
   const { className = '' } = props;
   return (
-    <svg className={className} version="1.0" width="120px" height="48px" viewBox="0 0 120 48">
+    <svg className={className} version="1.0" viewBox="0 0 120 48">
       <g>
         <path d="M65.328,48h13.818c7.108,0,12.327-1.807,15.512-5.37c3.213-3.589,4.841-9.858,4.841-18.629
           c0-8.771-1.64-15.039-4.872-18.627C91.416,1.808,86.159,0,79.004,0H65.328c-1.134,0-1.554,0.423-1.554,1.557v44.887
