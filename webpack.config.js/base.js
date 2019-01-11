@@ -1,7 +1,6 @@
 // shared config (dev and prod)
 const webpack = require('webpack');
 const path = require('path');
-const { CheckerPlugin } = require('awesome-typescript-loader');
 const ChunkRenamePlugin = require('webpack-chunk-rename-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -104,7 +103,6 @@ module.exports = {
       'ACCOUNT_SERVER_HOST',
       'OAUTH2_CLIENT_ID',
     ]),
-    new CheckerPlugin(),
     new ChunkRenamePlugin({
       initialChunksWithEntry: true,
       common: '[name].[chunkhash].min.js',
