@@ -60,7 +60,7 @@ export class EnableOnetouch extends React.Component<Props, State> {
     return (
       <ConnectedSceneWrapper>
         <Helmet>
-          <title>원터치 결제 설정 - 리디페이</title>
+          <title>원터치 결제 설정 - 리디</title>
         </Helmet>
         <div className={sceneContents}>
           <PinForm

@@ -208,7 +208,7 @@ export class Settings extends React.Component<Props, State> {
       <>
         <ConnectedSceneWrapper>
           <Helmet>
-            <title>설정 - 리디페이</title>
+            <title>카드 관리 - 리디</title>
           </Helmet>
           <div className={settingWrapper}>
             <div className={classNames(settingItem, settingCardItem)}>

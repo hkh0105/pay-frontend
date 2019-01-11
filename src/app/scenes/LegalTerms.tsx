@@ -26,7 +26,7 @@ export class LegalTerms extends React.PureComponent {
         onBackButtonClick={() => window.close()}
       >
         <Helmet>
-          <title>이용약관 - 리디페이</title>
+          <title>이용약관 - 리디</title>
         </Helmet>
         <ul className={s.wrapper}>
           {this.renderItem('서비스 이용약관', '//policy.ridi.com/ridi-pay/terms-of-use')}

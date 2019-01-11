@@ -88,7 +88,7 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
       <>
         <ConnectedSceneWrapper>
           <Helmet>
-            <title>결제 비밀번호 설정 - 리디페이</title>
+            <title>결제 비밀번호 설정 - 리디</title>
           </Helmet>
           <div className={sceneContents}>
             <PinForm

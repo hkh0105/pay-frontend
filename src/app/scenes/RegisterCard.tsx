@@ -26,7 +26,7 @@ export class RegisterCard extends React.PureComponent<Props> {
       <>
         <ConnectedSceneWrapper>
           <Helmet>
-            <title>카드 등록 - 리디페이</title>
+            <title>카드 등록 - 리디</title>
           </Helmet>
           <div className={sceneContents}>
             <ConnectedCardForm />
