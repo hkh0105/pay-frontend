@@ -12,13 +12,11 @@ services:
     volumes:
       - .:/app
       - modules:/app/node_modules
-    networks:
-      - traefik
 
 volumes:
   modules:
 
 networks:
-  traefik:
+  default:
     external:
       name: ${EXTERNAL_NETWORK:-ridi}

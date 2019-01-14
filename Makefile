@@ -7,6 +7,3 @@ deploy:
 	--exclude index.html
 	aws s3 cp ./dist/index.html s3://$(BUCKET_NAME)/ \
 	--cache-control immutable,max-age=0,public
-
-cert:
-	mkdir -p .ssl && cd .ssl && mkcert ${RIDI_PAY_HOST}
