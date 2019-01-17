@@ -10,6 +10,7 @@ cache:
 stages:
   - test
   - build
+  - deploy
 
 jobs:
   include:
