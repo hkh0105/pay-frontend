@@ -47,6 +47,7 @@ deploy:
     access_key_id: $ACCESS_KEY_ID
     secret_access_key: $SECRET_ACCESS_KEY
     bucket: ridi-pay-frontend-prod
+    region: ap-northeast-2
     local_dir: dist
     on:
       branch: master
@@ -56,6 +57,7 @@ deploy:
     access_key_id: $ACCESS_KEY_ID
     secret_access_key: $SECRET_ACCESS_KEY
     bucket: ridi-pay-frontend-staging
+    region: ap-northeast-2
     local_dir: dist
     on:
       branch: master
@@ -64,6 +66,7 @@ deploy:
     access_key_id: $ACCESS_KEY_ID
     secret_access_key: $SECRET_ACCESS_KEY
     bucket: ridi-pay-frontend-test
+    region: ap-northeast-2
     local_dir: dist
     on:
       branch: develop
