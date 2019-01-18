@@ -35,7 +35,7 @@ jobs:
         - S3_BUCKET_NAME=ridi-pay-frontend-staging
     -
       name: "prod"
-      if: branch = master AND tag = true
+      if: tag IS present
       script: yarn build
       env:
         - RIDI_PAY_HOST=pay.ridibooks.com
@@ -55,4 +55,4 @@ deploy:
     local_dir: dist
     on:
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^master|develop$
+      condition: $TRAVIS_BRANCH =~ ^master|develop$ || -n $TRAVIS_TAG
