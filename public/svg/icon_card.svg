@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>icon_card</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon_card" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4,15 L8,15 L8,12 L4,12 L4,15 Z M2,8 L2,6 C2,5.43529412 2.40278464,5 3,5 L21,5 C21.5972154,5 22,5.43529412 22,6 L22,8 L2,8 Z M22,17.8979592 C22,18.4857143 21.4814815,19 20.8888889,19 L3.11111111,19 C2.51851852,19 2,18.4857143 2,17.8979592 L2,10 L22,10 L22,17.8979592 Z M3,3 C1.37578125,3 0,4.35 0,6 L0,8 L0,10 L0,18 C0,19.65 1.37578125,21 3,21 L21,21 C22.6242187,21 24,19.65 24,18 L24,10 L24,8 L24,6 C24,4.35 22.6242188,3 21,3 L3,3 Z" fill="#000000"></path>
+    </g>
+</svg>
