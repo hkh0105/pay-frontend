@@ -7,10 +7,13 @@ import { urls } from 'app/routes';
 import { PinForm, PinFormOnSubmit, PinFormProps } from 'app/services/pin/components/PinForm';
 import { PinList } from 'app/services/pin/components/PinInputGroup';
 import { requestPinRegistration, requestPinValidation } from 'app/services/pin/requests';
+import { UserActions } from 'app/services/user/userActions';
 import { requestRegisterPin } from 'app/services/user/userRequests';
+import { RegisterPinPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { Omit } from 'app/types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { runInThisContext } from 'vm';
 
 
@@ -22,7 +25,7 @@ export interface SetPinState {
   currentPin?: string;
 }
 
-type Props = ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 export class RegisterPin extends React.Component<Props, SetPinState> {
   public static pinFormPropsForSteps: Record<RegisterPinSteps, Omit<NonNullable<PinFormProps>, 'onSubmitPin' | 'pinList' | 'onChange'>> = {
@@ -51,6 +54,7 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 
   private handleSubmitPin: PinFormOnSubmit = (pinList) => {
     const pin = pinList.join('');
+    const { dispatchRequestRegisterPin } = this.props;
     if (this.state.isFetching) {
       return;
     }
@@ -67,13 +71,15 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 
     this.setState({ isFetching: true });
 
-    return requestRegisterPin({ pin, validation_token: this.props.user.cardRegistrationToken! })
-      .catch(() => {
-        this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false, pinList: [] });
-      })
-      .then(() => {
-        history.replace(urls.SET_ONETOUCH)
-      });
+    dispatchRequestRegisterPin({pin, validation_token: this.props.user.cardRegistrationToken!})
+    
+    // return requestRegisterPin({ pin, validation_token: this.props.user.cardRegistrationToken! })
+    //   .catch(() => {
+    //     this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false, pinList: [] });
+    //   })
+    //   .then(() => {
+    //     history.replace(urls.SET_ONETOUCH)
+    //   });
   }
 
   public componentDidMount() {
@@ -108,7 +114,14 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 export const mapStateToProps = (state: RootState) => {
   return {
     user: state.user,
+    isFetching: state.user.isAddingPinFetching,
   }
 }
 
-export const ConnectedRegisterPin = connect(mapStateToProps, null)(RegisterPin);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    dispatchRequestRegisterPin: (payload: RegisterPinPayload) => dispatch(UserActions.registerPinRequest(payload)),
+  }
+}
+
+export const ConnectedRegisterPin = connect(mapStateToProps, mapDispatchToProps)(RegisterPin);

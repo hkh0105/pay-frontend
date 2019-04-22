@@ -5,6 +5,7 @@ import {
   requestDeleteCard,
   requestProfile,
   requestRegisterCard,
+  requestRegisterPin,
   requestToggleOnetouch
 } from 'app/services/user/userRequests';
 import {
@@ -22,6 +23,7 @@ import { initializeTracker, trackCurrentPage, tracker } from '../tracking/tracki
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
   yield takeEvery(UserActionTypes.REGISTER_CARD_REQUEST, watchAddCardRequest);
+  yield takeEvery(UserActionTypes.REGISTER_PIN_REQUEST, watchRegisterPinRequest);
   yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
   yield call(watchToggleOnetouch);
 }
@@ -75,6 +77,18 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
     alert('카드가 삭제되었습니다.');
   } catch (e) {
     yield put(UserActions.deleteCardFailure());
+  }
+}
+
+function* watchRegisterPinRequest(action: ReturnType<typeof UserActions.registerPinRequest>) {
+  try {
+    const response = yield call(requestRegisterPin, action.payload);
+    // const oneTouchResponse = yield call(requestRegisterOneTouch, action.payload);    
+    yield put(UserActions.registerPinSuccess());
+    history.replace(urls.SETTINGS);
+  } catch (e) {
+    alert(e.data.message);
+    yield put(UserActions.registerPinFailure());
   }
 }
 
