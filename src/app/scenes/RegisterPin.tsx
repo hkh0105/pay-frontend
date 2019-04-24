@@ -20,7 +20,6 @@ import { runInThisContext } from 'vm';
 type RegisterPinSteps = 'newPassword' | 'newPasswordConfirm'
 export interface SetPinState {
   currentStep: RegisterPinSteps;
-  isFetching: boolean;
   pinList: PinList;
   currentPin?: string;
 }
@@ -41,12 +40,11 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 
   public state: SetPinState = {
     currentStep: 'newPassword',
-    isFetching: false,
     pinList: [],
   }
 
   private handlePinFormChange = (pinList: PinList) => {
-    if (this.state.isFetching) {
+    if (this.props.isFetching) {
       return;
     }
     this.setState({ pinList })
@@ -55,7 +53,7 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
   private handleSubmitPin: PinFormOnSubmit = (pinList) => {
     const pin = pinList.join('');
     const { dispatchRequestRegisterPin } = this.props;
-    if (this.state.isFetching) {
+    if (this.props.isFetching) {
       return;
     }
     if (this.state.currentStep === 'newPassword') {
@@ -68,24 +66,17 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
       this.setState({ currentStep: 'newPassword', currentPin: '', pinList: [] });
       return;
     }
-
-    this.setState({ isFetching: true });
-
-    dispatchRequestRegisterPin({pin, validation_token: this.props.user.cardRegistrationToken!})
-    
-    // return requestRegisterPin({ pin, validation_token: this.props.user.cardRegistrationToken! })
-    //   .catch(() => {
-    //     this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false, pinList: [] });
-    //   })
-    //   .then(() => {
-    //     history.replace(urls.SET_ONETOUCH)
-    //   });
+    dispatchRequestRegisterPin({pin, validation_token: this.props.user.cardRegistrationToken!})    
   }
 
   public componentDidMount() {
     if (!this.props.user.cardRegistrationToken) {
       history.replace(urls.SETTINGS);
     }
+  }
+
+  public componentWillUnmount() {
+    this.setState({ currentStep: 'newPassword', currentPin: '', pinList: [] });
   }
 
   public render() {
@@ -99,7 +90,7 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
           <div className={sceneContents}>
             <PinForm
               {...RegisterPin.pinFormPropsForSteps[currentStep]}
-              isSubmitting={currentStep === 'newPasswordConfirm' && this.state.isFetching}
+              isSubmitting={currentStep === 'newPasswordConfirm' && this.props.isFetching}
               onSubmitPin={this.handleSubmitPin}
               pinList={this.state.pinList}
               onChange={this.handlePinFormChange}

@@ -19,6 +19,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, select, take, takeEvery } from 'redux-saga/effects';
 import { TrackingActions } from '../tracking/trackingActions';
 import { initializeTracker, trackCurrentPage, tracker } from '../tracking/trackingSaga';
+import { VoidActions } from '../void/voidActions';
+
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
@@ -82,10 +84,10 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
 
 function* watchRegisterPinRequest(action: ReturnType<typeof UserActions.registerPinRequest>) {
   try {
-    const response = yield call(requestRegisterPin, action.payload);
-    // const oneTouchResponse = yield call(requestRegisterOneTouch, action.payload);    
+    yield call(requestRegisterPin, action.payload);
     yield put(UserActions.registerPinSuccess());
-    history.replace(urls.SETTINGS);
+    // 원터치페이 false값으로 고정
+    yield put(VoidActions.finishPaymentRegistration({ enable_onetouch_pay: false }));
   } catch (e) {
     alert(e.data.message);
     yield put(UserActions.registerPinFailure());
