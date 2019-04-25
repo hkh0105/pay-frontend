@@ -31,11 +31,14 @@ function* watchFinishPaymentRegistration(
     yield put(UserActions.updateCardRegistrationToken({ validation_token: '' }));
   } catch (e) {
     alert(e.data.message);
+    yield put(UserActions.registerPinFailure());
     return;
   }
+
   state = yield select((s) => s);
   if (state.user.urlToReturn) {
     alert('카드 등록이 완료되었습니다.');
+    yield put(UserActions.registerPinSuccess());
     const { urlToReturn } = state.user;
     const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
     const query: { payment_method_id: string } = qs.parse(queryString);

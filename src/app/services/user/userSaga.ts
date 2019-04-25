@@ -85,7 +85,6 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
 function* watchRegisterPinRequest(action: ReturnType<typeof UserActions.registerPinRequest>) {
   try {
     yield call(requestRegisterPin, action.payload);
-    yield put(UserActions.registerPinSuccess());
     // 원터치페이 false값으로 고정
     yield put(VoidActions.finishPaymentRegistration({ enable_onetouch_pay: false }));
   } catch (e) {
