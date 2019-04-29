@@ -5,7 +5,7 @@ import axios from 'axios';
 export function refreshToken() {
   const requestConfig = {
     ...axios.defaults,
-    baseURL: `${env.accountServerUrl}`,
+    baseURL: `https://${process.env.ACCOUNT_SERVER_HOST}`,
     withCredentials: true,
   }
   const instance = axios.create(requestConfig);

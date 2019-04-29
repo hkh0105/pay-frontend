@@ -41,7 +41,6 @@ module.exports = {
     new webpack.DefinePlugin({
       API_SEVER_URL: '"https://pay.ridi.com"',
       BOOKS_SERVER_URL: '"https://ridibooks.com"',
-      ACCOUNT_SERVER_URL: '"https://account.ridibooks.com"',
     }),
     new HtmlWebpackPlugin({
       template: 'template/index.hbs',
