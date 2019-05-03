@@ -18,7 +18,7 @@ jobs:
       env:
         - RIDI_PAY_HOST=pay.ridi.io
         - RIDI_PAY_API_SERVER_HOST=api.pay.ridi.io
-        - RIDIBOOKS_HOST=dev.ridi.io
+        - RIDIBOOKS_HOST=master.test.ridi.io
         - ACCOUNT_SERVER_HOST=account.dev.ridi.io
         - OAUTH2_CLIENT_ID=${DEV_OAUTH2_CLIENT_ID}
         - S3_BUCKET_NAME=ridi-pay-frontend-test
