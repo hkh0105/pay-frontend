@@ -7,22 +7,24 @@ import { urls } from 'app/routes';
 import { PinForm, PinFormOnSubmit, PinFormProps } from 'app/services/pin/components/PinForm';
 import { PinList } from 'app/services/pin/components/PinInputGroup';
 import { requestPinRegistration, requestPinValidation } from 'app/services/pin/requests';
+import { UserActions } from 'app/services/user/userActions';
 import { requestRegisterPin } from 'app/services/user/userRequests';
+import { RegisterPinPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { Omit } from 'app/types';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { runInThisContext } from 'vm';
 
 
 type RegisterPinSteps = 'newPassword' | 'newPasswordConfirm'
 export interface SetPinState {
   currentStep: RegisterPinSteps;
-  isFetching: boolean;
   pinList: PinList;
   currentPin?: string;
 }
 
-type Props = ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 export class RegisterPin extends React.Component<Props, SetPinState> {
   public static pinFormPropsForSteps: Record<RegisterPinSteps, Omit<NonNullable<PinFormProps>, 'onSubmitPin' | 'pinList' | 'onChange'>> = {
@@ -38,12 +40,11 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 
   public state: SetPinState = {
     currentStep: 'newPassword',
-    isFetching: false,
     pinList: [],
   }
 
   private handlePinFormChange = (pinList: PinList) => {
-    if (this.state.isFetching) {
+    if (this.props.isFetching) {
       return;
     }
     this.setState({ pinList })
@@ -51,7 +52,8 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 
   private handleSubmitPin: PinFormOnSubmit = (pinList) => {
     const pin = pinList.join('');
-    if (this.state.isFetching) {
+    const { dispatchRequestRegisterPin } = this.props;
+    if (this.props.isFetching) {
       return;
     }
     if (this.state.currentStep === 'newPassword') {
@@ -64,22 +66,17 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
       this.setState({ currentStep: 'newPassword', currentPin: '', pinList: [] });
       return;
     }
-
-    this.setState({ isFetching: true });
-
-    return requestRegisterPin({ pin, validation_token: this.props.user.cardRegistrationToken! })
-      .catch(() => {
-        this.setState({ currentStep: 'newPassword', currentPin: '', isFetching: false, pinList: [] });
-      })
-      .then(() => {
-        history.replace(urls.SET_ONETOUCH)
-      });
+    dispatchRequestRegisterPin({pin, validation_token: this.props.user.cardRegistrationToken!})    
   }
 
   public componentDidMount() {
     if (!this.props.user.cardRegistrationToken) {
       history.replace(urls.SETTINGS);
     }
+  }
+
+  public componentWillUnmount() {
+    this.setState({ currentStep: 'newPassword', currentPin: '', pinList: [] });
   }
 
   public render() {
@@ -93,7 +90,7 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
           <div className={sceneContents}>
             <PinForm
               {...RegisterPin.pinFormPropsForSteps[currentStep]}
-              isSubmitting={currentStep === 'newPasswordConfirm' && this.state.isFetching}
+              isSubmitting={currentStep === 'newPasswordConfirm' && this.props.isFetching}
               onSubmitPin={this.handleSubmitPin}
               pinList={this.state.pinList}
               onChange={this.handlePinFormChange}
@@ -108,7 +105,14 @@ export class RegisterPin extends React.Component<Props, SetPinState> {
 export const mapStateToProps = (state: RootState) => {
   return {
     user: state.user,
+    isFetching: state.user.isAddingPinFetching,
   }
 }
 
-export const ConnectedRegisterPin = connect(mapStateToProps, null)(RegisterPin);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    dispatchRequestRegisterPin: (payload: RegisterPinPayload) => dispatch(UserActions.registerPinRequest(payload)),
+  }
+}
+
+export const ConnectedRegisterPin = connect(mapStateToProps, mapDispatchToProps)(RegisterPin);

@@ -5,6 +5,7 @@ import {
   requestDeleteCard,
   requestProfile,
   requestRegisterCard,
+  requestRegisterPin,
   requestToggleOnetouch
 } from 'app/services/user/userRequests';
 import {
@@ -18,10 +19,13 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, select, take, takeEvery } from 'redux-saga/effects';
 import { TrackingActions } from '../tracking/trackingActions';
 import { initializeTracker, trackCurrentPage, tracker } from '../tracking/trackingSaga';
+import { VoidActions } from '../void/voidActions';
+
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
   yield takeEvery(UserActionTypes.REGISTER_CARD_REQUEST, watchAddCardRequest);
+  yield takeEvery(UserActionTypes.REGISTER_PIN_REQUEST, watchRegisterPinRequest);
   yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
   yield call(watchToggleOnetouch);
 }
@@ -75,6 +79,17 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
     alert('카드가 삭제되었습니다.');
   } catch (e) {
     yield put(UserActions.deleteCardFailure());
+  }
+}
+
+function* watchRegisterPinRequest(action: ReturnType<typeof UserActions.registerPinRequest>) {
+  try {
+    yield call(requestRegisterPin, action.payload);
+    // 원터치페이 false값으로 고정
+    yield put(VoidActions.finishPaymentRegistration({ enable_onetouch_pay: false }));
+  } catch (e) {
+    alert(e.data.message);
+    yield put(UserActions.registerPinFailure());
   }
 }
 

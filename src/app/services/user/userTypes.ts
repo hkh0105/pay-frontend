@@ -22,6 +22,7 @@ export interface UserState {
   isAddingCardFetching: boolean;
   isDeletingCardFetching: boolean;
   isOnetouchTogglingFetching: boolean;
+  isAddingPinFetching: boolean;
   hasPin: boolean;
   isUsingOnetouchPay: boolean | null;
   cards: Card[];
@@ -57,6 +58,11 @@ export interface OnetouchSetRequestPaylaod {
 export interface OnetouchToggleRequestPaylaod {
   enable_onetouch_pay: boolean;
   validation_token?: string;
+}
+
+export interface RegisterPinRequestPayload {
+  pin: string,
+  validation_token: string,
 }
 
 export interface RegisterPinPayload {

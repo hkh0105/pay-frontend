@@ -5,6 +5,7 @@ import {
   RegisterCardPayload,
   RegisterCardRequestPayload,
   RegisterCardResponse,
+  RegisterPinRequestPayload,
   UpdateUrlToReturnPayload,
   UserProfileResponse
 } from 'app/services/user/userTypes';
@@ -24,7 +25,10 @@ export enum UserActionTypes {
   TOGGLE_ONETOUCH_SUCCESS = 'TOGGLE_ONETOUCH_SUCCESS',
   TOGGLE_ONETOUCH_FAILURE = 'TOGGLE_ONETOUCH_FAILURE',
   UPDATE_URL_TO_RETURN = 'UPDATE_URL_TO_RETURN',
-  UPDATE_CARD_REGISTRATION_TOKEN = 'UPDATE_CARD_REGISTRATION_TOKEN'
+  UPDATE_CARD_REGISTRATION_TOKEN = 'UPDATE_CARD_REGISTRATION_TOKEN',
+  REGISTER_PIN_REQUEST = 'REGISTER_PIN_REQUEST',
+  REGISTER_PIN_SUCCESS = 'REGISTER_PIN_SUCCESS',
+  REGISTER_PIN_FAILURE = 'REGISTER_PIN_FAILURE'
 }
 
 export const UserActions = {
@@ -52,7 +56,11 @@ export const UserActions = {
   updateUrlToReturn: (payload: UpdateUrlToReturnPayload) =>
     createAction(UserActionTypes.UPDATE_URL_TO_RETURN, payload),
   updateCardRegistrationToken: (payload: RegisterCardPayload) =>
-    createAction(UserActionTypes.UPDATE_CARD_REGISTRATION_TOKEN, payload)
+    createAction(UserActionTypes.UPDATE_CARD_REGISTRATION_TOKEN, payload),
+  registerPinRequest: (payload: RegisterPinRequestPayload) =>
+    createAction(UserActionTypes.REGISTER_PIN_REQUEST, payload),
+  registerPinSuccess: () => createAction(UserActionTypes.REGISTER_PIN_SUCCESS),
+  registerPinFailure: () => createAction(UserActionTypes.REGISTER_PIN_FAILURE),
 };
 
 export type UserActions = ActionsUnion<typeof UserActions>;

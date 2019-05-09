@@ -9,6 +9,7 @@ const initailState: UserState = {
   isAddingCardFetching: false,
   isDeletingCardFetching: false,
   isOnetouchTogglingFetching: false,
+  isAddingPinFetching: false,
   cards: [],
   hasPin: false,
   isUsingOnetouchPay: null,
@@ -41,6 +42,24 @@ export const userReducer: Reducer<UserState, UserActions> = (
         ...state,
         isProfileFetching: false,
         isUserLoggedIn: action.payload.isUserLoggedIn
+      };
+    }
+    case UserActionTypes.REGISTER_PIN_REQUEST: {
+      return {
+        ...state,
+        isAddingPinFetching: true
+      };
+    }
+    case UserActionTypes.REGISTER_PIN_SUCCESS: {
+      return {
+        ...state,
+        isAddingPinFetching: false
+      };
+    }
+    case UserActionTypes.REGISTER_PIN_FAILURE: {
+      return {
+        ...state,
+        isAddingCardFetching: false
       };
     }
     case UserActionTypes.REGISTER_CARD_REQUEST: {
