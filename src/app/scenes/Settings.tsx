@@ -192,7 +192,7 @@ export class Settings extends React.Component<Props, State> {
         size: "medium",
         className: changeCardButton,
         component: Link,
-        to: urls.REGISTER_CARD,
+        to: urls.CHANGE_CARD,
         children: <>
           <SwapIconComponent />
           결제 수단 변경

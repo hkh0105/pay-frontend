@@ -6,8 +6,9 @@ import {
   RegisterCardRequestPayload,
   RegisterCardResponse,
   RegisterPinRequestPayload,
+  UpdateRegisterTypePayload,
   UpdateUrlToReturnPayload,
-  UserProfileResponse
+  UserProfileResponse,
 } from 'app/services/user/userTypes';
 import { ActionsUnion, createAction } from 'app/types/redux';
 
@@ -25,6 +26,7 @@ export enum UserActionTypes {
   TOGGLE_ONETOUCH_SUCCESS = 'TOGGLE_ONETOUCH_SUCCESS',
   TOGGLE_ONETOUCH_FAILURE = 'TOGGLE_ONETOUCH_FAILURE',
   UPDATE_URL_TO_RETURN = 'UPDATE_URL_TO_RETURN',
+  UPDATE_REGISTER_TYPE = 'UPDATE_REGISTER_TYPE',
   UPDATE_CARD_REGISTRATION_TOKEN = 'UPDATE_CARD_REGISTRATION_TOKEN',
   REGISTER_PIN_REQUEST = 'REGISTER_PIN_REQUEST',
   REGISTER_PIN_SUCCESS = 'REGISTER_PIN_SUCCESS',
@@ -55,6 +57,8 @@ export const UserActions = {
     createAction(UserActionTypes.TOGGLE_ONETOUCH_FAILURE, payload),
   updateUrlToReturn: (payload: UpdateUrlToReturnPayload) =>
     createAction(UserActionTypes.UPDATE_URL_TO_RETURN, payload),
+  updateRegisterType: (payload: UpdateRegisterTypePayload) =>
+    createAction(UserActionTypes.UPDATE_REGISTER_TYPE, payload),
   updateCardRegistrationToken: (payload: RegisterCardPayload) =>
     createAction(UserActionTypes.UPDATE_CARD_REGISTRATION_TOKEN, payload),
   registerPinRequest: (payload: RegisterPinRequestPayload) =>

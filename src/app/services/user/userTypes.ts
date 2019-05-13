@@ -96,6 +96,9 @@ export interface ValidatePasswordResponse {
 export interface UpdateUrlToReturnPayload {
   url: string;
 }
+export interface UpdateRegisterTypePayload {
+  type: string;
+}
 
 export interface SetOnetouchResponse {
   payment_method_id: string;

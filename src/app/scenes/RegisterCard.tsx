@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { CardForm, ConnectedCardForm } from 'app/services/cards/components';
 import { UserActions } from 'app/services/user/userActions';
-import { UpdateUrlToReturnPayload } from 'app/services/user/userTypes';
+import { UpdateRegisterTypePayload, UpdateUrlToReturnPayload } from 'app/services/user/userTypes';
 import * as qs from 'qs';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -16,9 +16,14 @@ export class RegisterCard extends React.PureComponent<Props> {
     const queryString = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
+
     if (queryString.returnUrl) {
       this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
     }
+    if (queryString.registerType === 'change') {
+      this.props.updateRegisterType({ type: 'change' });
+    }
+
   }
 
   public render() {
@@ -40,6 +45,7 @@ export class RegisterCard extends React.PureComponent<Props> {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     updateUrlToReturn: (payload: UpdateUrlToReturnPayload) => dispatch(UserActions.updateUrlToReturn(payload)),
+    updateRegisterType: (payload: UpdateRegisterTypePayload) => dispatch(UserActions.updateRegisterType(payload)),
   }
 };
 

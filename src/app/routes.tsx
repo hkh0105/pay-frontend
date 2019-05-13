@@ -18,6 +18,7 @@ export const urls = {
   SET_ONETOUCH: '/settings/onetouch/set',
   ENABLE_ONETOUCH: '/settings/onetouch/enable',
   REGISTER_CARD: '/settings/cards/register',
+  CHANGE_CARD: '/settings/cards/change',
   REGISTER_PIN: '/settings/pin/register',
   PAYMENT: '/payments/:reservationId',
   UPDATE_PIN: '/settings/pin/update',
@@ -29,6 +30,7 @@ export const externalUrls = {
 export const publicUrls = [
   urls.SETTINGS,
   urls.REGISTER_CARD,
+  urls.CHANGE_CARD,
 ];
 
 export const Routes: React.SFC = () => {
@@ -40,6 +42,7 @@ export const Routes: React.SFC = () => {
           <Route exact={true} path={urls.PAYMENT} render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />
+          <Route exact={true} path={urls.CHANGE_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />
           <Route exact={true} path={urls.REGISTER_PIN} render={() => <ConnectedPrivateRoute component={ConnectedRegisterPin} />} />
           <Route exact={true} path={urls.UPDATE_PIN} render={() => <ConnectedPrivateRoute component={UpdatePin} />} />
           <Route exact={true} path={urls.SET_ONETOUCH} render={() => <ConnectedPrivateRoute component={ConnectedSetOnetouch} />} />
