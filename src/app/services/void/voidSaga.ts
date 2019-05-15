@@ -1,4 +1,5 @@
 import { history } from 'app/config';
+import { alertMessageText } from 'app/constants/message';
 import { urls } from 'app/routes';
 import { RootState } from 'app/store';
 import { AxiosResponse } from 'axios';
@@ -18,7 +19,11 @@ function* watchFinishPaymentRegistration(
   const paymentMethodId: string = action.payload.payment_method_id;
   const state: RootState = yield select((s) => s);
   if (state.user.urlToReturn) {
-    alert('카드 등록이 완료되었습니다.');
+    if (state.user.registerType === 'change') {
+      alert(alertMessageText.NEW_CARD_REGISTRATION);
+    } else {
+      alert(alertMessageText.CARD_REGISTRATION);
+    }
     yield put(UserActions.registerPinSuccess());
     const { urlToReturn } = state.user;
     const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
@@ -27,7 +32,12 @@ function* watchFinishPaymentRegistration(
     location.replace(`${host}?${qs.stringify(query)}`);
   } else {
     yield call(loadUserProfileRequest);
-    alert('카드 등록이 완료되었습니다.');
+    if (state.user.registerType === 'change') {
+      alert(alertMessageText.CHANGE_PAYMENT)
+    } else {
+      alert(alertMessageText.CARD_REGISTRATION);
+    }
+    yield put(UserActions.registerPinSuccess());
     history.replace(urls.SETTINGS);
   }
 }

@@ -194,6 +194,12 @@ export class CardForm extends React.Component<Props, State> {
       history.replace(urls.SETTINGS);
       return;
     }
+    // 카드 변경 url로 들어왔는데 카드가 없을 때
+    if (!this.props.cardExists && this.props.type === 'change') {
+      history.replace(urls.SETTINGS);
+      return;
+    }
+
     if (!isTouchDevice) {
       // autofocus 속성을 사용하거나 requestAnimationFrame 사용 시
       // 포커스 outline 스타일이 보였다 사라지므로 setTimeout으로 처리

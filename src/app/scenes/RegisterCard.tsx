@@ -22,7 +22,11 @@ export class RegisterCard extends React.PureComponent<Props, State> {
     let type = 'register'
     if (location.pathname === '/settings/cards/change') {
       type = 'change'
+      this.props.updateRegisterType({ type: 'change' });  
+    } else {
+      this.props.updateRegisterType({ type: 'register' });  
     }
+    
     this.state = {
       type,
     }
