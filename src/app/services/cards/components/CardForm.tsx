@@ -40,9 +40,14 @@ interface StorageData {
   state: State;
 }
 
+interface CardFormProps {
+  type: string;
+}
+
+
 type CleaveChangeEvent = React.ChangeEvent<HTMLInputElement & { rawValue: string }>;
 
-type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & CardFormProps
 interface State extends CardFormState {
   isFetching: boolean;
   cardNumber: string;
@@ -185,7 +190,7 @@ export class CardForm extends React.Component<Props, State> {
   }
 
   public componentDidMount = () =>  {
-    if (this.props.cardExists) {
+    if (this.props.cardExists && this.props.type === 'register') {
       history.replace(urls.SETTINGS);
       return;
     }

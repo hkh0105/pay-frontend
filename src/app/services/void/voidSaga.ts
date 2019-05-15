@@ -5,9 +5,7 @@ import { AxiosResponse } from 'axios';
 import * as qs from 'qs';
 import { all, call, put, select, takeEvery } from 'redux-saga/effects';
 import { UserActions } from '../user/userActions';
-import { requestSetOnetouch } from '../user/userRequests';
-import { loadUserProfileRequest, toggleOnetouch } from '../user/userSaga';
-import { SetOnetouchResponse } from '../user/userTypes';
+import { loadUserProfileRequest } from '../user/userSaga';
 import { VoidActions, VoidActionsTypes } from './voidActions';
 
 export function* voidSaga() {
@@ -17,25 +15,8 @@ export function* voidSaga() {
 function* watchFinishPaymentRegistration(
   action: ReturnType<typeof VoidActions.finishPaymentRegistration>
 ) {
-  let paymentMethodId: string;
-  let state: RootState = yield select((s) => s);
-  try {
-    const response: AxiosResponse<SetOnetouchResponse> = yield call(requestSetOnetouch, {
-      enable_onetouch_pay: action.payload.enable_onetouch_pay,
-      validation_token: state.user.cardRegistrationToken
-    });
-    paymentMethodId = response.data.payment_method_id;
-    yield put(
-      UserActions.toggleOnetouchSuccess({ enable_onetouch_pay: action.payload.enable_onetouch_pay })
-    );
-    yield put(UserActions.updateCardRegistrationToken({ validation_token: '' }));
-  } catch (e) {
-    alert(e.data.message);
-    yield put(UserActions.registerPinFailure());
-    return;
-  }
-
-  state = yield select((s) => s);
+  const paymentMethodId: string = action.payload.payment_method_id;
+  const state: RootState = yield select((s) => s);
   if (state.user.urlToReturn) {
     alert('카드 등록이 완료되었습니다.');
     yield put(UserActions.registerPinSuccess());

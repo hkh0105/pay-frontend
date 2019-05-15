@@ -12,7 +12,7 @@ import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
-import { DeleteCardRequestPayload, OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
+import { DeleteCardRequestPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { rsgPopupCommonStyle } from 'app/styles';
 import { connect } from 'react-redux';
@@ -219,7 +219,7 @@ export class Settings extends React.Component<Props, State> {
   }
 
   public render() {
-    const { cards, isUsingOnetouchPay, hasPin } = this.props.user;
+    const { cards, hasPin } = this.props.user;
     return (
       <>
         <ConnectedSceneWrapper>
@@ -269,7 +269,6 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     requestDeleteCard: (payload: DeleteCardRequestPayload) => dispatch(UserActions.deleteCardRequest(payload)),
-    requestToggleOnetouch: (payload: OnetouchToggleRequestPaylaod) => dispatch(UserActions.toggleOnetouchRequest(payload))
   }
 }
 
