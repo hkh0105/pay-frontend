@@ -174,9 +174,9 @@ export class Settings extends React.Component<Props, State> {
         <div className={s.confirmDeletioPopupBody}>
           <h3 className={s.confirmDeletionPopupHeading}><Icon name="exclamation_3" className={s.confirmDeletionPopupIcon} />카드를 삭제하시겠습니까?</h3>
           {cards[0]!.subscriptions.length > 0 && (
-            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시 
+            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시&nbsp;
             <strong>{cards[0]!.subscriptions.join(', ')}</strong>          
-            됩니다.</p>
+            이 해지 예약됩니다.</p>
           )}
         </div>
       </Popup>

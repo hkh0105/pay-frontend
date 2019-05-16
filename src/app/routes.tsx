@@ -18,7 +18,7 @@ export const urls = {
   CHANGE_CARD: '/settings/cards/change',
   REGISTER_PIN: '/settings/pin/register',
   PAYMENT: '/payments/:reservationId',
-  SUBSCRIPTION_RESERVATION: '/payments/subscriptions/:reservation_id',
+  SUBSCRIPTION_RESERVATION: '/payments/subscriptions/:reservationId',
   UPDATE_PIN: '/settings/pin/update',
   TERMS: '/legal/terms',
 };
@@ -37,8 +37,8 @@ export const Routes: React.SFC = () => {
       <ConnectedEnsureLogin>
       <ConnectedScrollToTop>
         <Switch>
-          <Route exact={true} path={urls.PAYMENT} render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
-          <Route exact={true} path={urls.SUBSCRIPTION_RESERVATION} render={(props) => <ConnectedPayment reservationId={props.match.params.reservationId} />} />
+          <Route exact={true} path={urls.PAYMENT} render={(props) => <ConnectedPayment paymentType={'payment'} reservationId={props.match.params.reservationId} />} />
+          <Route exact={true} path={urls.SUBSCRIPTION_RESERVATION} render={(props) => <ConnectedPayment paymentType={'subscription'} reservationId={props.match.params.reservationId} />} />
           <Route exact={true} path={urls.SETTINGS} render={() => <ConnectedPrivateRoute component={ConnectedSettings} />} />
           <Route exact={true} path={urls.REGISTER_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />
           <Route exact={true} path={urls.CHANGE_CARD} render={() => <ConnectedPrivateRoute component={ConnectedRegisterCard} />} />

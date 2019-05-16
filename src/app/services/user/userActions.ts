@@ -1,7 +1,6 @@
 import {
   DeleteCardRequestPayload,
   FetchUserProfileFailurePayload,
-
   RegisterCardPayload,
   RegisterCardRequestPayload,
   RegisterCardResponse,
@@ -22,7 +21,6 @@ export enum UserActionTypes {
   DELETE_CARD_REQUEST = 'DELETE_CARD_REQUEST',
   DELETE_CARD_SUCCESS = 'DELETE_CARD_SUCCESS',
   DELETE_CARD_FAILURE = 'DELETE_CARD_FAILURE',
-
   UPDATE_URL_TO_RETURN = 'UPDATE_URL_TO_RETURN',
   UPDATE_REGISTER_TYPE = 'UPDATE_REGISTER_TYPE',
   UPDATE_CARD_REGISTRATION_TOKEN = 'UPDATE_CARD_REGISTRATION_TOKEN',
@@ -47,7 +45,6 @@ export const UserActions = {
   deleteCardSuccess: (payload: DeleteCardRequestPayload) =>
     createAction(UserActionTypes.DELETE_CARD_SUCCESS, payload),
   deleteCardFailure: () => createAction(UserActionTypes.DELETE_CARD_FAILURE),
-
   updateUrlToReturn: (payload: UpdateUrlToReturnPayload) =>
     createAction(UserActionTypes.UPDATE_URL_TO_RETURN, payload),
   updateRegisterType: (payload: UpdateRegisterTypePayload) =>
