@@ -49,7 +49,6 @@ class Payment extends React.Component<Props, State> {
       const result: AxiosResponse<CreateReservationResponse> = paymentType === 'payment' ? 
         await requestCreatePayment(reservationId, validationToken) :
         await requestCreatePaymentSubscription(reservationId, validationToken)
-      debugger;
       location.replace(result.data.return_url);
     } catch (e) {
       alert(e.data.message);
