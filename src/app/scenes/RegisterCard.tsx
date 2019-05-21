@@ -56,12 +56,6 @@ export class RegisterCard extends React.PureComponent<Props, State> {
   }
 };
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    registerType: state.user.registerType,
-  }
-}
-
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     updateUrlToReturn: (payload: UpdateUrlToReturnPayload) => dispatch(UserActions.updateUrlToReturn(payload)),

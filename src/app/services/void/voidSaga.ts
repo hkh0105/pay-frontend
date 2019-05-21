@@ -27,9 +27,13 @@ function* watchFinishPaymentRegistration(
     yield put(UserActions.registerPinSuccess());
     const { urlToReturn } = state.user;
     const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
-    const query: { payment_method_id: string } = qs.parse(queryString);
-    query.payment_method_id = paymentMethodId;
-    location.replace(`${host}?${qs.stringify(query)}`);
+    if (host.indexOf('/manage-subscription') > 0) {
+      location.replace(`${host}?payment=change`);
+    } else {
+      const query: { payment_method_id: string } = qs.parse(queryString);
+      query.payment_method_id = paymentMethodId;
+      location.replace(`${host}?${qs.stringify(query)}`);
+    }
   } else {
     yield call(loadUserProfileRequest);
     if (state.user.registerType === 'change') {
