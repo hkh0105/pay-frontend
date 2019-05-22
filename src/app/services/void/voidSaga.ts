@@ -19,29 +19,31 @@ function* watchFinishPaymentRegistration(
   const paymentMethodId: string = action.payload.payment_method_id;
   const state: RootState = yield select((s) => s);
   if (state.user.urlToReturn) {
+    yield put(UserActions.registerPinSuccess());
+    const { urlToReturn } = state.user;
+    const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
+
     if (state.user.registerType === 'change') {
+      if (host.indexOf('/manage-subscription') > 0) {
+        alert(alertMessageText.CHANGE_PAYMENT);
+        location.replace(host);
+        return;
+      }
       alert(alertMessageText.NEW_CARD_REGISTRATION);
     } else {
       alert(alertMessageText.CARD_REGISTRATION);
     }
-    yield put(UserActions.registerPinSuccess());
-    const { urlToReturn } = state.user;
-    const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
-    if (host.indexOf('/manage-subscription') > 0) {
-      location.replace(`${host}?payment=change`);
-    } else {
-      const query: { payment_method_id: string } = qs.parse(queryString);
-      query.payment_method_id = paymentMethodId;
-      location.replace(`${host}?${qs.stringify(query)}`);
-    }
+    const query: { payment_method_id: string } = qs.parse(queryString);
+    query.payment_method_id = paymentMethodId;
+    location.replace(`${host}?${qs.stringify(query)}`);
   } else {
     yield call(loadUserProfileRequest);
+    yield put(UserActions.registerPinSuccess());
     if (state.user.registerType === 'change') {
       alert(alertMessageText.CHANGE_PAYMENT)
     } else {
       alert(alertMessageText.CARD_REGISTRATION);
     }
-    yield put(UserActions.registerPinSuccess());
     history.replace(urls.SETTINGS);
   }
 }

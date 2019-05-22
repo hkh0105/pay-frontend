@@ -113,7 +113,7 @@ class Payment extends React.Component<Props, State> {
         <Helmet>
           <title>결제 - 리디</title>
         </Helmet>
-        <PageSpinner text="결제 완료를 위해 리디북스로 이동합니다." />
+        <PageSpinner text="결제 완료를 위해 리디셀렉트로 이동합니다." />
       </ConnectedSceneWrapper>
     );
   }
