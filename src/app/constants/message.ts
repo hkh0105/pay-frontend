@@ -2,7 +2,7 @@ export enum alertMessageText {
   CHANGE_PAYMENT_AUTO_CHARGING = '리디캐시 자동충전이 설정된 카드입니다. 결제 수단 변경 시 변경된 카드로 자동 충전됩니다.',
   CHANGE_PAYMENT_SUBSCRIPTION_FAILED = '구독에 실패했습니다.\n[잔액 부족]',
   CARD_REGISTRATION = '카드가 등록되었습니다.',
-  NEW_CARD_REGISTRATION = '새로운 등록한 카드로 구독이\n시작되었습니다.',
+  NEW_CARD_REGISTRATION = '새로 등록한 카드로 구독이\n시작되었습니다.',
   CHANGE_PAYMENT = '결제 수단이 변경되었습니다.',
   REMOVE_CARD = '카드가 삭제되었습니다.',
   INVALID_BILLING_INFORMATION = '유효하지 않은 결제 정보입니다.',
