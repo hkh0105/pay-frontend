@@ -1,14 +1,10 @@
 import {
   DeleteCardRequestPayload,
-  OnetouchSetRequestPaylaod,
-  OnetouchToggleRequestPaylaod,
   RegisterCardRequestPayload,
-  RegisterCardResponse,
   RegisterPinPayload,
   UpdatePinPayload,
   ValidatePasswordPayload,
   ValidatePinPayload,
-  ValidatePinResponse
 } from 'app/services/user/userTypes';
 import { request } from 'app/utils';
 
@@ -43,22 +39,6 @@ export const requestDeleteCard = (payload: DeleteCardRequestPayload) => {
   return request({
     method: 'DELETE',
     url: `/me/cards/${payload.payment_method_id}`
-  });
-};
-
-export const requestSetOnetouch = (payload: OnetouchSetRequestPaylaod) => {
-  return request({
-    method: 'POST',
-    url: '/me/onetouch',
-    data: payload
-  });
-};
-
-export const requestToggleOnetouch = (payload: OnetouchToggleRequestPaylaod) => {
-  return request({
-    method: 'PUT',
-    url: '/me/onetouch',
-    data: payload
   });
 };
 

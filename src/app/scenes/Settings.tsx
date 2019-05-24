@@ -12,7 +12,7 @@ import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
-import { DeleteCardRequestPayload, OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
+import { DeleteCardRequestPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { rsgPopupCommonStyle } from 'app/styles';
 import { connect } from 'react-redux';
@@ -174,9 +174,9 @@ export class Settings extends React.Component<Props, State> {
         <div className={s.confirmDeletioPopupBody}>
           <h3 className={s.confirmDeletionPopupHeading}><Icon name="exclamation_3" className={s.confirmDeletionPopupIcon} />카드를 삭제하시겠습니까?</h3>
           {cards[0]!.subscriptions.length > 0 && (
-            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시 
+            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시&nbsp;
             <strong>{cards[0]!.subscriptions.join(', ')}</strong>          
-            됩니다.</p>
+            이 해지 예약됩니다.</p>
           )}
         </div>
       </Popup>
@@ -192,7 +192,7 @@ export class Settings extends React.Component<Props, State> {
         size: "medium",
         className: changeCardButton,
         component: Link,
-        to: urls.REGISTER_CARD,
+        to: urls.CHANGE_CARD,
         children: <>
           <SwapIconComponent />
           결제 수단 변경
@@ -219,7 +219,7 @@ export class Settings extends React.Component<Props, State> {
   }
 
   public render() {
-    const { cards, isUsingOnetouchPay, hasPin } = this.props.user;
+    const { cards, hasPin } = this.props.user;
     return (
       <>
         <ConnectedSceneWrapper>
@@ -269,7 +269,6 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     requestDeleteCard: (payload: DeleteCardRequestPayload) => dispatch(UserActions.deleteCardRequest(payload)),
-    requestToggleOnetouch: (payload: OnetouchToggleRequestPaylaod) => dispatch(UserActions.toggleOnetouchRequest(payload))
   }
 }
 

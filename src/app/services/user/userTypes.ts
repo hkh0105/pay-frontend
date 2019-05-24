@@ -12,7 +12,6 @@ export interface UserProfileResponse {
     cards: Card[];
   };
   has_pin: boolean;
-  is_using_onetouch_pay: boolean;
   user_id: string;
 }
 
@@ -21,13 +20,12 @@ export interface UserState {
   isProfileFetching: boolean;
   isAddingCardFetching: boolean;
   isDeletingCardFetching: boolean;
-  isOnetouchTogglingFetching: boolean;
   isAddingPinFetching: boolean;
   hasPin: boolean;
-  isUsingOnetouchPay: boolean | null;
   cards: Card[];
   userId: string;
   urlToReturn?: string;
+  registerType?: string;
   cardRegistrationToken?: string;
 }
 
@@ -45,19 +43,12 @@ export interface RegisterCardRequestPayload {
 export interface RegisterCardResponse {
   card: Card;
 }
-
-export interface DeleteCardRequestPayload {
+export interface RegisterPinResponse {
   payment_method_id: string;
 }
 
-export interface OnetouchSetRequestPaylaod {
-  enable_onetouch_pay: boolean;
-  validation_token?: string;
-}
-
-export interface OnetouchToggleRequestPaylaod {
-  enable_onetouch_pay: boolean;
-  validation_token?: string;
+export interface DeleteCardRequestPayload {
+  payment_method_id: string;
 }
 
 export interface RegisterPinRequestPayload {
@@ -96,9 +87,8 @@ export interface ValidatePasswordResponse {
 export interface UpdateUrlToReturnPayload {
   url: string;
 }
-
-export interface SetOnetouchResponse {
-  payment_method_id: string;
+export interface UpdateRegisterTypePayload {
+  type: string;
 }
 
 export interface RegisterCardPayload {
