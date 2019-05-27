@@ -86,6 +86,11 @@ function* watchRegisterPinRequest(action: ReturnType<typeof UserActions.register
   } catch (e) {
     alert(e.data.message);
     yield put(UserActions.registerPinFailure());
+    const state: RootState = yield select((s) => s);
+    if (state.user.urlToReturn) {
+      history.replace(state.user.urlToReturn);
+    }
+    history.replace(urls.SETTINGS);
   }
 }
 
