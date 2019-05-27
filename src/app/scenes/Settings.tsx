@@ -150,6 +150,20 @@ export class Settings extends React.Component<Props, State> {
     isConfirmDeletionPopupOpened: false,
   }
 
+  private handleChangePayment = () => {
+    const { cards } = this.props.user;
+    if(cards[0].subscriptions) {
+      const subscriptionString = cards[0].subscriptions.join(",");
+      if (
+        subscriptionString.indexOf("리디캐시 자동충전") > 0 &&
+        !confirm("리디캐시 자동충전이 설정된 카드입니다.\n결제 수단 변경 시 변경된 카드로 자동 충전 됩니다.")
+      ) {
+        return;
+      }
+      history.push(urls.CHANGE_CARD);
+    }
+  }
+
   private renderConfrimCardDeletionPopup = () => {
     const { cards } = this.props.user;
     const { isConfirmDeletionPopupOpened } = this.state;
@@ -191,8 +205,8 @@ export class Settings extends React.Component<Props, State> {
         color: "gray",
         size: "medium",
         className: changeCardButton,
-        component: Link,
-        to: urls.CHANGE_CARD,
+        component: Button,
+        onClick: () => { this.handleChangePayment() },
         children: <>
           <SwapIconComponent />
           결제 수단 변경
