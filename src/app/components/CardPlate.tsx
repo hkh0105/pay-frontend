@@ -75,6 +75,7 @@ const cardDeleteButton = css({
   letterSpacing: '-0.3px',
   textDecoration: 'none',
   color: '#ffffff',
+  cursor: 'pointer',
 });
 
 export const CardPlate: React.SFC<CardPlateProps> = ({ card, className, handleDeletePopupOpend }) => {
@@ -96,7 +97,7 @@ export const CardPlate: React.SFC<CardPlateProps> = ({ card, className, handleDe
         src={logo_image_url}
         alt="카드 이미지"
       />
-      <a href="#" className={cardDeleteButton} onClick={handleDeletePopupOpend}>삭제</a>
+      <a className={cardDeleteButton} onClick={handleDeletePopupOpend}>삭제</a>
       <p className={cardNumberText}>{iin.replace(/(.{4})(.{2})/g, "$1 $2** **** ****")}</p>
     </div>
   );
