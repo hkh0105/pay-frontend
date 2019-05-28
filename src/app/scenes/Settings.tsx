@@ -155,7 +155,7 @@ export class Settings extends React.Component<Props, State> {
     if(cards[0].subscriptions) {
       const subscriptionString = cards[0].subscriptions.join(",");
       if (
-        subscriptionString.indexOf("리디캐시 자동충전") > 0 &&
+        subscriptionString.indexOf("리디캐시 자동충전") >= 0 &&
         !confirm("리디캐시 자동충전이 설정된 카드입니다.\n결제 수단 변경 시 변경된 카드로 자동 충전 됩니다.")
       ) {
         return;
