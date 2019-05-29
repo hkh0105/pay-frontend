@@ -210,7 +210,7 @@ export const agreeToTermsCheckbox = css({
 } as {});
 
 export const agreementLinkClass = css({
-  color: colors.slategray_40,
+  color: '#9eafbf',
   fontSize: '13px',
   textDecoration: 'none',
   marginTop: '1px',
