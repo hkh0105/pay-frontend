@@ -24,14 +24,14 @@ function* watchFinishPaymentRegistration(
     const [host, queryString] = decodeURIComponent(urlToReturn).split('?');
 
     if (state.user.registerType === 'change') {
-      if (host.indexOf('/manage-subscription') >= 0) {
+      if (host.indexOf('manage-subscription') >= 0) {
         alert(alertMessageText.CHANGE_PAYMENT);
         location.replace(host);
         return;
       }
       alert(alertMessageText.NEW_CARD_REGISTRATION);
     } else {
-      if (queryString.indexOf('/manage-subscription') >= 0) {
+      if (queryString.indexOf('manage-subscription') >= 0) {
         alert(alertMessageText.CHANGE_PAYMENT);
       } else {
         alert(alertMessageText.CARD_REGISTRATION);
