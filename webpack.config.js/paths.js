@@ -8,5 +8,6 @@ module.exports = {
   baseDir,
   srcDir: join(baseDir, 'src'),
   outputDir: join(baseDir, 'dist'),
+  publicDir: join(baseDir, 'public'),
   cacheRoot: `${tempDir}/.r_ulmtd_cache`,
 };
