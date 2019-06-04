@@ -10,10 +10,6 @@ import { refreshToken } from './refreshToken';
 const refreshTokenInstance = refreshToken();
 // Retry on a network error or a 5xx error on an idempotent request https://github.com/softonic/axios-retry
 // You can disable retry by request adding {'axios-retry': { retries: 0 }} to axios config
-axiosRetry(axios, {
-  retries: 3,
-  retryCondition: (err: AxiosError) => err.config.method === 'get'
-});
 
 // Redirect to login page in case of 401
 axios.interceptors.response.use(
