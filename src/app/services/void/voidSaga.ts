@@ -29,7 +29,11 @@ function* watchFinishPaymentRegistration(
         location.replace(host);
         return;
       }
-      alert(alertMessageText.NEW_CARD_REGISTRATION);
+      else if (queryString.indexOf('manage-subscription') >= 0) {
+        alert(alertMessageText.CHANGE_PAYMENT);
+      } else {
+        alert(alertMessageText.NEW_CARD_REGISTRATION);
+      }
     } else {
       if (queryString.indexOf('manage-subscription') >= 0) {
         alert(alertMessageText.CHANGE_PAYMENT);
