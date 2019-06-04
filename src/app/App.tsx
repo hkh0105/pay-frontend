@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux'
 
+import { loadFonts } from 'app/config/fonts';
 import { Routes } from 'app/routes';
 
 interface Props {
@@ -17,6 +18,7 @@ export class App extends React.Component<Props> {
       });
       Sentry.captureException(error);
     });
+    loadFonts();
   }
   public render() {
     return (
