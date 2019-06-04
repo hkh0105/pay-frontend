@@ -5,7 +5,7 @@ import { ConnectedSceneWrapper, sceneContents } from 'app/components';
 import { PageSpinner } from 'app/components/PageSpinner';
 import { ValidatePassword } from 'app/components/ValidatePassword';
 import { ensureReservation } from 'app/hocs/ensureReservation';
-import { requestCreatePayment } from 'app/services/payment/paymentRequests';
+import { requestCreatePayment, requestCreatePaymentSubscription } from 'app/services/payment/paymentRequests';
 import { CreateReservationResponse, ReservationInformationResponse } from 'app/services/payment/paymentTypes';
 import { PinForm } from 'app/services/pin/components/PinForm';
 import { PinList } from 'app/services/pin/components/PinInputGroup';
@@ -15,6 +15,7 @@ import { AxiosResponse } from 'axios';
 
 interface Props extends ReservationInformationResponse {
   reservationId: string;
+  paymentType: string;
 }
 
 interface State {
@@ -38,14 +39,16 @@ class Payment extends React.Component<Props, State> {
   }
 
   private createPayment = async () => {
-    const { reservationId } = this.props;
+    const { reservationId, paymentType } = this.props;
     const { validationToken, isRedirecting } = this.state;
     if (!validationToken || isRedirecting) {
       return;
     }
     try {
       this.setState({ isRedirecting: true });
-      const result: AxiosResponse<CreateReservationResponse> = await requestCreatePayment(reservationId, validationToken);
+      const result: AxiosResponse<CreateReservationResponse> = paymentType === 'payment' ? 
+        await requestCreatePayment(reservationId, validationToken) :
+        await requestCreatePaymentSubscription(reservationId, validationToken)
       location.replace(result.data.return_url);
     } catch (e) {
       alert(e.data.message);
@@ -110,7 +113,7 @@ class Payment extends React.Component<Props, State> {
         <Helmet>
           <title>결제 - 리디</title>
         </Helmet>
-        <PageSpinner text="결제 완료를 위해 리디북스로 이동합니다." />
+        <PageSpinner text="구독 완료를 위해 리디셀렉트로 이동합니다." />
       </ConnectedSceneWrapper>
     );
   }

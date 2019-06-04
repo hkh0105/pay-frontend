@@ -40,9 +40,14 @@ interface StorageData {
   state: State;
 }
 
+interface CardFormProps {
+  type: string;
+}
+
+
 type CleaveChangeEvent = React.ChangeEvent<HTMLInputElement & { rawValue: string }>;
 
-type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & CardFormProps
 interface State extends CardFormState {
   isFetching: boolean;
   cardNumber: string;
@@ -185,10 +190,16 @@ export class CardForm extends React.Component<Props, State> {
   }
 
   public componentDidMount = () =>  {
-    if (this.props.cardExists) {
+    if (this.props.cardExists && this.props.type === 'register') {
       history.replace(urls.SETTINGS);
       return;
     }
+    // 카드 변경 url로 들어왔는데 카드가 없을 때
+    if (!this.props.cardExists && this.props.type === 'change') {
+      history.replace(urls.SETTINGS);
+      return;
+    }
+
     if (!isTouchDevice) {
       // autofocus 속성을 사용하거나 requestAnimationFrame 사용 시
       // 포커스 outline 스타일이 보였다 사라지므로 setTimeout으로 처리

@@ -1,3 +1,3 @@
 export interface FinishPaymentRegistrationPayload {
-  enable_onetouch_pay: boolean;
+  payment_method_id: string;
 }

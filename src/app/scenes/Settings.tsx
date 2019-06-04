@@ -12,7 +12,7 @@ import { CardIssuerCode } from 'app/constants/cards';
 import { colors } from 'app/constants/colors';
 import { urls } from 'app/routes';
 import { UserActions } from 'app/services/user/userActions';
-import { DeleteCardRequestPayload, OnetouchToggleRequestPaylaod } from 'app/services/user/userTypes';
+import { DeleteCardRequestPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
 import { rsgPopupCommonStyle } from 'app/styles';
 import { connect } from 'react-redux';
@@ -117,6 +117,29 @@ const addCardIcon = css({
   fill: '#fff',
 })
 
+const changeCardButton = css({
+  display: 'inline-block',
+  width: '101px',
+  fontSize: '11px',
+})
+
+const changeCardIcon = css({
+  marginRight: '4px',
+  verticalAlign: 'text-top',
+})
+
+const SwapIconComponent = () => (
+  <svg width={16} height={12} viewBox="0 0 20 20" className={changeCardIcon}>
+    <title>{'icon_swap'}</title>
+    <path
+      d="M6 10l-6 5.5L6 21v-4h10v-3H6v-4zm18-1.5L18 3v4H8v3h10v4l6-5.5z"
+      fill="#808991"
+      fillRule="nonzero"
+    />
+  </svg>
+)
+
+
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 interface State {
   isConfirmDeletionPopupOpened: boolean;
@@ -125,6 +148,20 @@ interface State {
 export class Settings extends React.Component<Props, State> {
   public state: State = {
     isConfirmDeletionPopupOpened: false,
+  }
+
+  private handleChangePayment = () => {
+    const { cards } = this.props.user;
+    if(cards[0].subscriptions) {
+      const subscriptionString = cards[0].subscriptions.join(",");
+      if (
+        subscriptionString.indexOf("리디캐시 자동충전") >= 0 &&
+        !confirm("리디캐시 자동충전이 설정된 카드입니다.\n결제 수단 변경 시 변경된 카드로 자동 충전 됩니다.")
+      ) {
+        return;
+      }
+      history.push(urls.CHANGE_CARD);
+    }
   }
 
   private renderConfrimCardDeletionPopup = () => {
@@ -151,7 +188,9 @@ export class Settings extends React.Component<Props, State> {
         <div className={s.confirmDeletioPopupBody}>
           <h3 className={s.confirmDeletionPopupHeading}><Icon name="exclamation_3" className={s.confirmDeletionPopupIcon} />카드를 삭제하시겠습니까?</h3>
           {cards[0]!.subscriptions.length > 0 && (
-            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시 <strong>{cards[0]!.subscriptions.join(', ')}</strong>이 해지 예약됩니다.</p>
+            <p className={s.confirmDeletionPopupDescription}>카드 삭제 시&nbsp;
+            <strong>{cards[0]!.subscriptions.join(', ')}</strong>          
+            이 해지 예약됩니다.</p>
           )}
         </div>
       </Popup>
@@ -159,20 +198,19 @@ export class Settings extends React.Component<Props, State> {
   }
 
   private getCardActionButtonProps = (): ButtonProps => {
-    const { cards, isDeletingCardFetching } = this.props.user;
+    const { cards } = this.props.user;
     return cards.length
       ? {
         outline: true,
         color: "gray",
         size: "medium",
-        className: deleteCardButton,
-        spinner: isDeletingCardFetching,
-        onClick: () => {
-          if (!isDeletingCardFetching) {
-            this.setState({ isConfirmDeletionPopupOpened: true })
-          }
-        },
-        children: '카드 삭제',
+        className: changeCardButton,
+        component: Button,
+        onClick: () => { this.handleChangePayment() },
+        children: <>
+          <SwapIconComponent />
+          결제 수단 변경
+        </>
       }
       : {
         color: "blue",
@@ -186,24 +224,16 @@ export class Settings extends React.Component<Props, State> {
         </>
       };
   }
+  private handleDeletePopupOpend = () => {
+    const { isDeletingCardFetching } = this.props.user;
 
-  private handleOnetouchSwitchButtonClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (this.props.user.isOnetouchTogglingFetching) {
-      return;
-    }
-    if (e.target.checked) {
-      e.preventDefault();
-      history.push(urls.ENABLE_ONETOUCH);
-      return;
-    } else {
-      this.props.requestToggleOnetouch({ enable_onetouch_pay: false });
+    if (!isDeletingCardFetching) {
+      this.setState({ isConfirmDeletionPopupOpened: true })
     }
   }
 
   public render() {
-    const { cards, isUsingOnetouchPay, isDeletingCardFetching, hasPin } = this.props.user;
-    const { isConfirmDeletionPopupOpened } = this.state;
-    const isOnetouchPayNotSet = isUsingOnetouchPay === null;
+    const { cards, hasPin } = this.props.user;
     return (
       <>
         <ConnectedSceneWrapper>
@@ -225,21 +255,9 @@ export class Settings extends React.Component<Props, State> {
               <div className={cardPlateWrapper}>
                 <CardPlate
                   card={cards.length ? cards[0] : undefined}
+                  handleDeletePopupOpend={this.handleDeletePopupOpend}
                 />
               </div>
-            </div>
-            <div className={classNames(settingItem, settingDefaultItem, isOnetouchPayNotSet && settingsDefaultItemDisabled)}>
-              <h3 className={settingItemName}>원터치 결제 사용</h3>
-              {!isOnetouchPayNotSet && <div className={settingSwitchButtonWrapper}>
-                <SwtichButton
-                  isChecked={isUsingOnetouchPay || false}
-                  onChange={this.handleOnetouchSwitchButtonClick}
-                  id="oneTouchModeInput"
-                />
-              </div>}
-            </div>
-            <div className={settingDescriptionWrapper}>
-              <p>10만원 미만 결제 시 비밀번호 입력 없이 바로 결제하는 기능입니다.</p>
             </div>
             <Link
               className={classNames(settingItem, settingDefaultItem, !hasPin && settingsDefaultItemDisabled)}
@@ -265,7 +283,6 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     requestDeleteCard: (payload: DeleteCardRequestPayload) => dispatch(UserActions.deleteCardRequest(payload)),
-    requestToggleOnetouch: (payload: OnetouchToggleRequestPaylaod) => dispatch(UserActions.toggleOnetouchRequest(payload))
   }
 }
 

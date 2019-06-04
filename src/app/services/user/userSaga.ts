@@ -5,25 +5,24 @@ import {
   requestDeleteCard,
   requestProfile,
   requestRegisterCard,
-  requestToggleOnetouch
+  requestRegisterPin,
 } from 'app/services/user/userRequests';
 import {
-  OnetouchToggleRequestPaylaod,
   RegisterCardResponse,
-  UserProfileResponse
+  RegisterPinResponse,
 } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
-import { request } from 'app/utils';
 import { AxiosError, AxiosResponse } from 'axios';
 import { call, put, select, take, takeEvery } from 'redux-saga/effects';
-import { TrackingActions } from '../tracking/trackingActions';
 import { initializeTracker, trackCurrentPage, tracker } from '../tracking/trackingSaga';
+import { VoidActions } from '../void/voidActions';
+
 
 export function* userSaga() {
   yield takeEvery(UserActionTypes.FETCH_USER_PROFILE_REQUEST, watchLoadUserProfileRequest);
   yield takeEvery(UserActionTypes.REGISTER_CARD_REQUEST, watchAddCardRequest);
+  yield takeEvery(UserActionTypes.REGISTER_PIN_REQUEST, watchRegisterPinRequest);
   yield takeEvery(UserActionTypes.DELETE_CARD_REQUEST, watchDeleteCardRequest);
-  yield call(watchToggleOnetouch);
 }
 
 function* watchLoadUserProfileRequest() {
@@ -59,7 +58,7 @@ function* watchAddCardRequest(action: ReturnType<typeof UserActions.registerCard
     );
     const state: RootState = yield select((s) => s);
     // Ask whther user wants to use one touch payment when they don't have cards registered
-    const nextUrl = state.user.cards.length ? urls.SETTINGS : urls.SET_ONETOUCH;
+    const nextUrl = urls.SETTINGS;
     yield put(UserActions.registerCardSuccess(response.data));
     history.replace(nextUrl);
   } catch (e) {
@@ -78,28 +77,20 @@ function* watchDeleteCardRequest(action: ReturnType<typeof UserActions.deleteCar
   }
 }
 
-function* watchToggleOnetouch() {
-  while (true) {
-    const action: ReturnType<typeof UserActions.toggleOnetouchRequest> = yield take(
-      UserActionTypes.TOGGLE_ONETOUCH_REQUEST
-    );
-    yield call(toggleOnetouch, action.payload);
+function* watchRegisterPinRequest(action: ReturnType<typeof UserActions.registerPinRequest>) {
+  try {
+    const response: AxiosResponse<RegisterPinResponse> = yield call(requestRegisterPin, action.payload);
+    const payment_method_id = response.data.payment_method_id;
+    // 원터치페이 false값으로 고정
+    yield put(VoidActions.finishPaymentRegistration({ payment_method_id }));
+  } catch (e) {
+    alert(e.data.message);
+    yield put(UserActions.registerPinFailure());
+    const state: RootState = yield select((s) => s);
+    if (state.user.urlToReturn) {
+      history.replace(state.user.urlToReturn);
+    }
+    history.replace(urls.SETTINGS);
   }
 }
 
-export function* toggleOnetouch(payload: OnetouchToggleRequestPaylaod) {
-  try {
-    const result: AxiosResponse = yield call(requestToggleOnetouch, payload);
-    if (result.status === 200) {
-      yield put(UserActions.toggleOnetouchSuccess(payload));
-      if (payload.enable_onetouch_pay) {
-        alert('원터치 결제가 설정되었습니다.');
-        history.replace(urls.SETTINGS);
-      }
-    } else {
-      yield put(UserActions.toggleOnetouchFailure(payload));
-    }
-  } catch (e) {
-    yield put(UserActions.toggleOnetouchFailure(payload));
-  }
-}

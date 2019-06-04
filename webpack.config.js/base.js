@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {
   baseDir,
   srcDir,
+  publicDir,
   outputDir,
 } = require('./paths');
 
@@ -72,6 +73,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [
       srcDir,
+      publicDir,
       'node_modules',
     ],
     symlinks: false, // for performance

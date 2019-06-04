@@ -1,17 +1,15 @@
 import { UserActions, UserActionTypes } from 'app/services/user/userActions';
 import { UserState } from 'app/services/user/userTypes';
 import { Reducer } from 'redux';
-import { cardFormSubmitButtonClass } from '../cards/components/CardForm.styles';
 
 const initailState: UserState = {
   isProfileFetching: false,
   isUserLoggedIn: false,
   isAddingCardFetching: false,
   isDeletingCardFetching: false,
-  isOnetouchTogglingFetching: false,
+  isAddingPinFetching: false,
   cards: [],
   hasPin: false,
-  isUsingOnetouchPay: null,
   userId: ''
 };
 
@@ -32,7 +30,6 @@ export const userReducer: Reducer<UserState, UserActions> = (
         isProfileFetching: false,
         isUserLoggedIn: true,
         hasPin: action.payload.has_pin,
-        isUsingOnetouchPay: action.payload.is_using_onetouch_pay,
         cards: action.payload.payment_methods.cards
       };
     }
@@ -41,6 +38,24 @@ export const userReducer: Reducer<UserState, UserActions> = (
         ...state,
         isProfileFetching: false,
         isUserLoggedIn: action.payload.isUserLoggedIn
+      };
+    }
+    case UserActionTypes.REGISTER_PIN_REQUEST: {
+      return {
+        ...state,
+        isAddingPinFetching: true
+      };
+    }
+    case UserActionTypes.REGISTER_PIN_SUCCESS: {
+      return {
+        ...state,
+        isAddingPinFetching: false
+      };
+    }
+    case UserActionTypes.REGISTER_PIN_FAILURE: {
+      return {
+        ...state,
+        isAddingCardFetching: false
       };
     }
     case UserActionTypes.REGISTER_CARD_REQUEST: {
@@ -77,7 +92,6 @@ export const userReducer: Reducer<UserState, UserActions> = (
         isDeletingCardFetching: false,
         cards: filteredCards,
         hasPin: filteredCards.length === 0 ? false : state.hasPin,
-        isUsingOnetouchPay: filteredCards.length === 0 ? null : state.isUsingOnetouchPay
       };
     }
     case UserActionTypes.DELETE_CARD_FAILURE: {
@@ -86,31 +100,16 @@ export const userReducer: Reducer<UserState, UserActions> = (
         isDeletingCardFetching: false
       };
     }
-    case UserActionTypes.TOGGLE_ONETOUCH_REQUEST: {
-      return {
-        ...state,
-        isOnetouchTogglingFetching: true,
-        isUsingOnetouchPay: action.payload.enable_onetouch_pay
-      };
-    }
-    case UserActionTypes.TOGGLE_ONETOUCH_SUCCESS: {
-      return {
-        ...state,
-        isOnetouchTogglingFetching: false,
-        isUsingOnetouchPay: action.payload.enable_onetouch_pay
-      };
-    }
-    case UserActionTypes.TOGGLE_ONETOUCH_FAILURE: {
-      return {
-        ...state,
-        isOnetouchTogglingFetching: false,
-        isUsingOnetouchPay: !action.payload.enable_onetouch_pay
-      };
-    }
     case UserActionTypes.UPDATE_URL_TO_RETURN: {
       return {
         ...state,
         urlToReturn: action.payload.url
+      };
+    }
+    case UserActionTypes.UPDATE_REGISTER_TYPE: {
+      return {
+        ...state,
+        registerType: action.payload.type
       };
     }
     case UserActionTypes.UPDATE_CARD_REGISTRATION_TOKEN: {

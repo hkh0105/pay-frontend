@@ -8,6 +8,7 @@ import { Card } from 'app/services/user/userTypes';
 export interface CardPlateProps {
   card?: Card;
   className?: string;
+  handleDeletePopupOpend: () => void;
 }
 
 const wrapper = css({
@@ -66,7 +67,18 @@ const cardIssuerNameText = css({
   fontWeight: 'bold',
 });
 
-export const CardPlate: React.SFC<CardPlateProps> = ({ card, className }) => {
+const cardDeleteButton = css({
+  position: 'absolute',
+  right: '10px',
+  top: '10px',
+  fontSize: '12px',
+  letterSpacing: '-0.3px',
+  textDecoration: 'none',
+  color: '#ffffff',
+  cursor: 'pointer',
+});
+
+export const CardPlate: React.SFC<CardPlateProps> = ({ card, className, handleDeletePopupOpend }) => {
   if (!card) {
     return (
       <div className={classNames([wrapper, className, emptyCardPlate])} style={{ backgroundColor: '#fff' }}>
@@ -85,6 +97,7 @@ export const CardPlate: React.SFC<CardPlateProps> = ({ card, className }) => {
         src={logo_image_url}
         alt="카드 이미지"
       />
+      <a className={cardDeleteButton} onClick={handleDeletePopupOpend}>삭제</a>
       <p className={cardNumberText}>{iin.replace(/(.{4})(.{2})/g, "$1 $2** **** ****")}</p>
     </div>
   );

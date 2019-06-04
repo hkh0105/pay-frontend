@@ -69,6 +69,7 @@
     "@ridi/object-case-converter": "^2.0.0-alpha",
     "@ridi/rsg": "2.0.15",
     "@sentry/browser": "4.2.1",
+    "@types/webfontloader": "^1.6.29",
     "axios": "0.19.0",
     "axios-retry": "^3.1.1",
     "classnames": "^2.2.5",
@@ -95,7 +96,8 @@
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "vex-dialog": "1.0.6",
-    "vex-js": "3.0.0"
+    "vex-js": "3.0.0",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "webpack-dev-server",

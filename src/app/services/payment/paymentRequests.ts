@@ -16,3 +16,21 @@ export const requestCreatePayment = (reservationId: string, validationToken: str
     }
   });
 };
+
+export const requestReservationSubscriptionInformation = (id: string) => {
+  return request({
+    method: 'GET',
+    url: `/payments/subscriptions/${id}`
+  });
+};
+
+export const requestCreatePaymentSubscription = (reservationId: string, validationToken: string) => {
+  return request({
+    method: 'POST',
+    url: `/payments/subscriptions/${reservationId}`,
+    data: {
+      validation_token: validationToken
+    }
+  });
+};
+
