@@ -100,6 +100,7 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin([
+      'RIDI_PAY_HOST',
       'RIDI_PAY_API_SERVER_HOST',
       'RIDIBOOKS_HOST',
       'ACCOUNT_SERVER_HOST',

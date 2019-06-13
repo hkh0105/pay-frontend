@@ -21,7 +21,7 @@ store.dispatch(requestInitializeEnvironment());
 
 render(
   <>
-    <Favicon url="public/images/pay-favicon.ico" />
+    <Favicon url={`//${process.env.RIDI_PAY_HOST}/public/images/pay-favicon.ico`} />
     <App store={store} />
   </>
 , document.getElementById('app'));
