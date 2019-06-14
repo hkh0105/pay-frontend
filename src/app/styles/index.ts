@@ -5,7 +5,6 @@ import 'normalize.css/normalize.css';
 import '@ridi/rsg/components/dist/components.css';
 
 import { colors } from 'app/constants/colors';
-import { spinners } from './base64';
 import { spinnerRotation } from './keyFrames';
 
 export const defaultFontFamily = 'Noto Sans KR, NotoSansKR, Sans-serif';
@@ -115,7 +114,7 @@ export const applyGraySpinner = (size: string) => ({
     height: `${size}`,
     transform: 'translate3d(-50%, -50%, 0)',
     transformOrigin: 'center',
-    backgroundImage: `url(${spinners.gray})`,
+    backgroundImage: `url(/public/images/spinner/spinner-gray.png)`,
     backgroundPosition: 'left top',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
