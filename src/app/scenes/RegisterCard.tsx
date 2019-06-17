@@ -6,9 +6,11 @@ import { CardForm, ConnectedCardForm } from 'app/services/cards/components';
 import { UserActions } from 'app/services/user/userActions';
 import { UpdateRegisterTypePayload, UpdateUrlToReturnPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
+import { isClean, isDirty } from 'app/utils/validator';
 import * as qs from 'qs';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 
 interface State {
   type: string;
@@ -36,7 +38,18 @@ export class RegisterCard extends React.PureComponent<Props, State> {
       ignoreQueryPrefix: true,
     });
     if (queryString.returnUrl) {
-      this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
+      /* returnUrl XSS Reflect 이슈 처리 */
+      if(isDirty(queryString.returnUrl)) {
+        alert('잘못된 URL경로입니다.')
+        location.replace('/');
+        return
+      }
+      if(isClean(queryString.returnUrl)) {
+        this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
+      } else {
+        alert('잘못된 URL경로입니다.')
+        location.replace('/');
+      }
     }
   }
 
