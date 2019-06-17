@@ -47,7 +47,7 @@ export class RegisterCard extends React.PureComponent<Props, State> {
         location.replace('/');
         return
       }
-      if(url.host.indexOf('ridibooks.com') >= 0 || url.host.indexOf('ridi.io') >= 0) {
+      if(url.host.match(/(?:^|\.)(?:ridibooks\.com|ridi\.io)$/)) {
         this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
       } else {
         alert('잘못된 URL경로입니다.')
