@@ -9,7 +9,7 @@ import { RootState } from 'app/store';
 import * as qs from 'qs';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as Url from 'url-parse';
+import 'url-polyfill';
 
 interface State {
   type: string;
@@ -40,7 +40,7 @@ export class RegisterCard extends React.PureComponent<Props, State> {
       /* returnUrl XSS Reflect 이슈 처리 */
       try {
         const originUrl = decodeURIComponent(queryString.returnUrl);
-        const url = new Url(originUrl);
+        const url = new URL(originUrl);
         
         if(url.protocol !== 'https:' && url.protocol !== 'http:') {
           alert('잘못된 URL경로입니다.')
