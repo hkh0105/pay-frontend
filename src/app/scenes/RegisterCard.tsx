@@ -6,7 +6,6 @@ import { CardForm, ConnectedCardForm } from 'app/services/cards/components';
 import { UserActions } from 'app/services/user/userActions';
 import { UpdateRegisterTypePayload, UpdateUrlToReturnPayload } from 'app/services/user/userTypes';
 import { RootState } from 'app/store';
-import { isClean, isDirty } from 'app/utils/validator';
 import * as qs from 'qs';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
