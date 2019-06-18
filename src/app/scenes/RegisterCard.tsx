@@ -10,6 +10,7 @@ import * as qs from 'qs';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
+
 interface State {
   type: string;
 }
@@ -36,7 +37,21 @@ export class RegisterCard extends React.PureComponent<Props, State> {
       ignoreQueryPrefix: true,
     });
     if (queryString.returnUrl) {
-      this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
+      /* returnUrl XSS Reflect 이슈 처리 */
+      const originUrl = decodeURIComponent(queryString.returnUrl);
+      const url = new URL(originUrl);
+      
+      if(url.protocol !== 'https:' && url.protocol !== 'http:') {
+        alert('잘못된 URL경로입니다.')
+        location.replace('/');
+        return
+      }
+      if(url.host.match(/(?:^|\.)(?:ridibooks\.com|ridi\.io)$/)) {
+        this.props.updateUrlToReturn({ url: encodeURIComponent(queryString.returnUrl) });
+      } else {
+        alert('잘못된 URL경로입니다.')
+        location.replace('/');
+      }
     }
   }
 

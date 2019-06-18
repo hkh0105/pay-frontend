@@ -29,13 +29,13 @@ function* watchFinishPaymentRegistration(
         location.replace(host);
         return;
       }
-      else if (queryString.indexOf('manage-subscription') >= 0) {
+      else if (queryString && queryString.indexOf('manage-subscription') >= 0) {
         alert(alertMessageText.CHANGE_PAYMENT);
       } else {
         alert(alertMessageText.NEW_CARD_REGISTRATION);
       }
     } else {
-      if (queryString.indexOf('manage-subscription') >= 0) {
+      if (queryString && queryString.indexOf('manage-subscription') >= 0) {
         alert(alertMessageText.CHANGE_PAYMENT);
       } else {
         alert(alertMessageText.CARD_REGISTRATION);
