@@ -69,6 +69,7 @@
     "@ridi/object-case-converter": "^2.0.0-alpha",
     "@ridi/rsg": "2.0.15",
     "@sentry/browser": "4.2.1",
+    "@types/url-parse": "^1.4.3",
     "@types/webfontloader": "^1.6.29",
     "axios": "0.19.0",
     "axios-retry": "^3.1.1",
@@ -97,6 +98,8 @@
     "redux": "4",
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
+    "url-parse": "^1.4.7",
+    "url-polyfill": "^1.1.5",
     "vex-dialog": "1.0.6",
     "vex-js": "3.0.0",
     "webfontloader": "^1.6.28"
