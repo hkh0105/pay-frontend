@@ -29,9 +29,15 @@ export const initializeTracker = (state: RootState) => {
   tracker = new Tracker({
     deviceType,
     userId: state.user.userId,
-    tagManagerOptions: {
-      trackingId: TRACKING_ID
-    }
+    pixelOptions: { pixelId: "417351945420295" },
+    gaOptions: {
+      trackingId: "UA-10567409-2",
+      pathPrefix: "/PAY",
+      fields: {
+        contentGroup1: "PAY",
+        allowAdFeatures: false
+      }
+    },
   });
   tracker.initialize();
 };

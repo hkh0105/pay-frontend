@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
-    "@ridi/event-tracker": "^0.5.6",
+    "@ridi/event-tracker": "^0.6.0",
     "@ridi/object-case-converter": "^2.0.0-alpha",
     "@ridi/rsg": "2.0.15",
     "@sentry/browser": "4.2.1",
