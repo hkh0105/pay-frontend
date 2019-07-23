@@ -868,10 +868,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.8.2.tgz#576ff7fb1230185b619a75d258cbc98f0867a8dc"
   integrity sha512-rLu3wcBWH4P5q1CGoSSH/i9hrXs7SlbRLkoq9IGuoPYNGQvDJ3pt/wmOM+XgYjIDRMVIdkUWt0RsfzF50JfnCw==
 
-"@ridi/event-tracker@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@ridi/event-tracker/-/event-tracker-0.6.0.tgz#d3b5983f96622a1fc0347526ba1e03292e2f34fc"
-  integrity sha512-FLMpbifi1gjy2fr/Eir2QWJbcm+4mdYFcDj84RhVW7MaoAajFtEA8r2oPSepefxEMJdcGwA5iaVNWxXDotQx6w==
+"@ridi/event-tracker@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@ridi/event-tracker/-/event-tracker-0.7.0.tgz#cdad8fac3b26ea69f1c0a5b11d351af68a12ef7c"
+  integrity sha512-ajazmJUjiFRAVTDkdPQPHwlpfqSCajGEaCR9iAfe+fKOqztAXX7OgoIHojNPg21wIhgtSoG8YxCRRxpRbdFv1Q==
   dependencies:
     "@types/google.analytics" "0.0.39"
     js-cookie "^2.2.0"
