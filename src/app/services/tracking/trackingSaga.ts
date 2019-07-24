@@ -38,6 +38,9 @@ export const initializeTracker = (state: RootState) => {
         allowAdFeatures: false
       }
     },
+    gTagOptions: {
+      trackingId: 'AW-971507236'
+    },
   });
   tracker.initialize();
 };
