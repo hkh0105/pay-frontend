@@ -82,7 +82,7 @@
     "emotion": "^9.2.6",
     "history": "^4.7.2",
     "js-yaml": "3.13.1",
-    "lodash-es": "^4.17.10",
+    "lodash-es": "^4.17.14",
     "normalize.css": "^8.0.0",
     "object-path-immutable": "^3.0.0",
     "qs": "^6.5.2",
