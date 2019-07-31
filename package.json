@@ -64,7 +64,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
+    "@babel/polyfill": "^7.4.4",
     "@ridi/event-tracker": "^0.7.0",
     "@ridi/object-case-converter": "^2.0.0-alpha",
     "@ridi/rsg": "2.0.15",
@@ -75,7 +75,7 @@
     "axios-retry": "^3.1.1",
     "classnames": "^2.2.5",
     "cleave.js": "^1.4.4",
-    "core-js": "^2.5.7",
+    "core-js": "^3",
     "date-fns": "^1.29.0",
     "detect-it": "^3.0.5",
     "dotenv-safe": "^6.0.0",
@@ -99,7 +99,7 @@
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "url-parse": "^1.4.7",
-    "url-polyfill": "^1.1.5",
+    "url-polyfill": "^1.1.7",
     "vex-dialog": "1.0.6",
     "vex-js": "3.0.0",
     "webfontloader": "^1.6.28"
