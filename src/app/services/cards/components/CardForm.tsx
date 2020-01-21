@@ -166,6 +166,12 @@ export class CardForm extends React.Component<Props, State> {
     }
     const { numberInputs, cardNumber } = this.state;
     const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
+
+    // 생년월일 또는 사업자 등록번호가 6자리 또는 10자리가 아닐 경우 return
+    if(birthdate.length !== 6 && birthdate.length !== 10) {
+      return;      
+    }
+
     const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
     this.setState({ isFetching: true })
 
