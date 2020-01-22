@@ -53,17 +53,22 @@ const cardInputLength: {
   ccmonth: 2,
   ccyear: 2,
   password: 2,
-  birthdate: 6
+  birthdate: 10
 };
 
 export const numberInputRegexes: Record<string, RegExp> = Object.keys(cardNumberInputKey)
-  .filter((key) => key !== cardNumberInputKey.cardnumber)
-  .reduce((acc, key) => {
-    return {
-      ...acc,
-      [key]: new RegExp(`[0-9]{${cardInputLength[key]}}`)
-    };
-  }, {});
+  .filter((key) => ![cardNumberInputKey.cardnumber, cardNumberInputKey.birthdate].includes(key))
+  .reduce(
+    (acc, key) => {
+      return {
+        ...acc,
+        [key]: new RegExp(`^\\d{${cardInputLength[key]}}$`)
+      };
+    },
+    {
+      [cardNumberInputKey.birthdate]: new RegExp(`^(\\d{6}|\\d{${cardInputLength.birthdate}})$`)
+    }
+  );
 
 export type CardNumberInputKey = (typeof cardNumberInputKey)[keyof typeof cardNumberInputKey];
 

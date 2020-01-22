@@ -166,26 +166,32 @@ export class CardForm extends React.Component<Props, State> {
     }
     const { numberInputs, cardNumber } = this.state;
     const { ccmonth, ccyear, cardnumber, password, birthdate } = cardNumberInputKey;
-    const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
-    this.setState({ isFetching: true })
 
-    try {
-      const response: AxiosResponse<RegisterCardPayload> = await requestRegisterCard({
-        card_expiration_date: expirationDate,
-        card_number: cardNumber,
-        card_password: numberInputs[password].value,
-        tax_id: numberInputs[birthdate].value,
-      });
-      this.props.dispatchUpdateCardRegistrationToken({ validation_token: response.data.validation_token });
-      this.isSubmitted = true;
-      history.replace(urls.REGISTER_PIN);
-    } catch (e) {
-      if (e.data.code === 'CARD_REGISTRATION_FAILED') {
-        alert(`${e.data.message}\n[${e.data.pg_message}]`);
-      } else {
-        alert(e.data.message);
+    const birthdateLength = numberInputs[birthdate].value.length;
+
+    // 생년월일 또는 사업자 등록번호가 6자리 또는 10자리가 아닐 경우 return
+    if(birthdateLength === 6 || birthdateLength === 10) {
+      const expirationDate = `${numberInputs[ccyear].value}${numberInputs[ccmonth].value}`
+      this.setState({ isFetching: true })
+
+      try {
+        const response: AxiosResponse<RegisterCardPayload> = await requestRegisterCard({
+          card_expiration_date: expirationDate,
+          card_number: cardNumber,
+          card_password: numberInputs[password].value,
+          tax_id: numberInputs[birthdate].value,
+        });
+        this.props.dispatchUpdateCardRegistrationToken({ validation_token: response.data.validation_token });
+        this.isSubmitted = true;
+        history.replace(urls.REGISTER_PIN);
+      } catch (e) {
+        if (e.data.code === 'CARD_REGISTRATION_FAILED') {
+          alert(`${e.data.message}\n[${e.data.pg_message}]`);
+        } else {
+          alert(e.data.message);
+        }
+        this.setState({ isFetching: false });
       }
-      this.setState({ isFetching: false });
     }
   }
 
@@ -309,10 +315,10 @@ export class CardForm extends React.Component<Props, State> {
             </div>
           </div>
           <div className={cardInputBox60}>
-            <label htmlFor={cardNumberInputKey.birthdate} className={cardInputBoxLabel}>생년월일</label>
+            <label htmlFor={cardNumberInputKey.birthdate} className={cardInputBoxLabel}>생년월일 / 사업자번호</label>
             {this.renderCardInput({
               currentInputKey: cardNumberInputKey.birthdate,
-              placeholder: '6자리 입력 (예: 840331)',
+              placeholder: '생년월일 6자리 / 사업자번호 10자리',
             })}
             <div className={cardInputBoxBorderInteractive} />
           </div>
