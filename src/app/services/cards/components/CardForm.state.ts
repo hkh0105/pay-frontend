@@ -57,14 +57,18 @@ const cardInputLength: {
 };
 
 export const numberInputRegexes: Record<string, RegExp> = Object.keys(cardNumberInputKey)
-  .filter((key) => key !== cardNumberInputKey.cardnumber)
-  .reduce((acc, key) => {
-    return {
-      ...acc,
-      // 생년월일의 경우 사업자번호가 포함되면서 6자리부터 10자리까지 허용가능하도록 수정
-      [key]: new RegExp(`[0-9]{${key !== cardNumberInputKey.birthdate ? cardInputLength[key] : 6}}`)
-    };
-  }, {});
+  .filter((key) => ![cardNumberInputKey.cardnumber, cardNumberInputKey.birthdate].includes(key))
+  .reduce(
+    (acc, key) => {
+      return {
+        ...acc,
+        [key]: new RegExp(`^\\d{${cardInputLength[key]}}$`)
+      };
+    },
+    {
+      [cardNumberInputKey.birthdate]: new RegExp(`^(\\d{6}|\\d{${cardInputLength.birthdate}})$`)
+    }
+  );
 
 export type CardNumberInputKey = (typeof cardNumberInputKey)[keyof typeof cardNumberInputKey];
 
