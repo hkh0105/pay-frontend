@@ -250,9 +250,9 @@ export class CardForm extends React.Component<Props, State> {
               }}
               className={classNames([innerInput])}
               placeholder="'-' 없이 입력"
-              name={cardNumberInputName[cardNumberInputKey.cardnumber]}
+              name={'creditCardNumber'}
               autoComplete={cardNumberInputAutoCompleteProps[cardNumberInputKey.cardnumber]}
-              id={cardNumberInputKey.cardnumber}
+              id={'creditCardNumber'}
               htmlRef={cardNumberRef => this.cardNumberRef = cardNumberRef}
               value={this.state.cardNumber}
               type="tel"
