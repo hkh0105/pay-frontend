@@ -4,9 +4,17 @@ import * as React from 'react';
 
 import { Header, HeaderProps } from 'app/components/Header';
 import { RidiIcon } from 'app/components/RidiIcon';
-import { colors } from 'app/constants/colors';
 import { RootState } from 'app/store';
-import { breakpoints, desktopViewCondition, desktopViewShortHeightCondition, full, half, paperProStylesClassName, paperStylesClassName, resetLayout } from 'app/styles';
+import {
+  breakpoints,
+  desktopViewCondition,
+  desktopViewShortHeightCondition,
+  full,
+  half,
+  paperProStylesClassName,
+  paperStylesClassName,
+  resetLayout
+} from 'app/styles';
 import { connect } from 'react-redux';
 
 export interface SceneWrapperProps {
@@ -15,28 +23,26 @@ export interface SceneWrapperProps {
   onBackButtonClick?: HeaderProps['onBackButtonClick'];
 }
 
-export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, isPaperPro, onBackButtonClick }) => (
+export const SceneWrapper: React.SFC<SceneWrapperProps> = ({
+  children,
+  isPaper,
+  isPaperPro,
+  onBackButtonClick
+}) => (
   <>
     <div
-      className={classNames(
-        sceneBg,
-        {
-          [paperStylesClassName]: isPaper,
-          [paperProStylesClassName]: isPaperPro,
-        },
-      )}
-    />
-    <main className={classNames(
-      sceneMain,
-      {
+      className={classNames(sceneBg, {
         [paperStylesClassName]: isPaper,
-        [paperProStylesClassName]: isPaperPro,
-      },
-    )}>
-      <Header
-        isPaper={isPaper}
-        onBackButtonClick={onBackButtonClick}
-      >
+        [paperProStylesClassName]: isPaperPro
+      })}
+    />
+    <main
+      className={classNames(sceneMain, {
+        [paperStylesClassName]: isPaper,
+        [paperProStylesClassName]: isPaperPro
+      })}
+    >
+      <Header isPaper={isPaper} onBackButtonClick={onBackButtonClick}>
         <RidiIcon className={ridiIcon} />
       </Header>
       {children}
@@ -44,11 +50,14 @@ export const SceneWrapper: React.SFC<SceneWrapperProps> = ({ children, isPaper, 
   </>
 );
 
-const mapStateToProps = (state: RootState, ownProps: Partial<SceneWrapperProps>): SceneWrapperProps => {
+const mapStateToProps = (
+  state: RootState,
+  ownProps: Partial<SceneWrapperProps>
+): SceneWrapperProps => {
   return {
     isPaper: state.environment.platform.isPaper,
     isPaperPro: state.environment.platform.isPaperPro,
-    ...ownProps,
+    ...ownProps
   };
 };
 
@@ -56,7 +65,7 @@ export const ConnectedSceneWrapper = connect(mapStateToProps)(SceneWrapper);
 
 const desktopViewMinHeight = '640px';
 
-const sceneBg =  css({
+const sceneBg = css({
   display: 'none',
   [breakpoints.desktopView]: {
     display: 'block',
@@ -64,14 +73,14 @@ const sceneBg =  css({
     width: full,
     height: full,
     backgroundColor: '#b8bfc4',
-    minHeight: desktopViewMinHeight,
+    minHeight: desktopViewMinHeight
   },
   [`&.${paperStylesClassName}`]: {
-    display: 'none',
+    display: 'none'
   }
 });
 
-const sceneMain =  css({
+const sceneMain = css({
   position: 'absolute',
   width: full,
   height: full,
@@ -84,11 +93,11 @@ const sceneMain =  css({
     width: '360px',
     height: desktopViewMinHeight,
     marginTop: '-320px',
-    marginLeft: '-180px',
+    marginLeft: '-180px'
   },
   [`@media ${desktopViewCondition} and ${desktopViewShortHeightCondition}`]: {
     marginTop: 0,
-    top: 0,
+    top: 0
   },
   [`&.${paperStylesClassName}`]: {
     ...resetLayout,
@@ -96,7 +105,7 @@ const sceneMain =  css({
     left: 0,
     width: full,
     height: full,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   }
 });
 
@@ -105,10 +114,10 @@ export const sceneContents = css({
 });
 
 export const ridiIcon = css({
-  width: '30px',
-  fill: colors.dodgerblue_50,
+  width: '35px',
+  height: '13px',
   [`.${paperStylesClassName} &`]: {
     fill: 'black',
-    marginTop: '2px',
+    marginTop: '2px'
   }
-})
+});
