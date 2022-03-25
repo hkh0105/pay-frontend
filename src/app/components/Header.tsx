@@ -2,7 +2,17 @@ import { Icon } from '@ridi/rsg';
 import { css, cx } from 'emotion';
 import * as React from 'react';
 
-import { a11y, flexCenter, flexSpaceBetween, full, invisible, paperStylesClassName, resetButton, resetHeading, resetLayout } from 'app/styles';
+import {
+  a11y,
+  flexCenter,
+  flexSpaceBetween,
+  full,
+  invisible,
+  paperStylesClassName,
+  resetButton,
+  resetHeading,
+  resetLayout
+} from 'app/styles';
 
 export interface HeaderProps {
   isPaper: boolean;
@@ -49,7 +59,7 @@ const backButton = css({
   height: full,
   [`.${paperStylesClassName} &`]: {
     paddingLeft: '20px',
-    width: '44px',
+    width: '44px'
   }
 });
 
@@ -61,7 +71,7 @@ const backButtonIcon = css({
   [`.${paperStylesClassName} &`]: {
     width: '24px',
     height: '19px',
-    fill: '#3d4142',
+    fill: '#3d4142'
   }
 });
 
@@ -69,7 +79,8 @@ const headerTitle = css({
   ...resetHeading,
   color: '#1f8ce6',
   fontSize: '12px',
+  marginTop: '1px',
   [`.${paperStylesClassName} &`]: {
-    color: 'black',
+    color: 'black'
   }
 });
