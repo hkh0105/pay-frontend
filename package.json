@@ -68,7 +68,7 @@
     "@ridi/event-tracker": "^0.7.0",
     "@ridi/object-case-converter": "^2.0.0-alpha",
     "@ridi/rsg": "2.0.15",
-    "@sentry/browser": "4.2.1",
+    "@sentry/browser": "4.3.4",
     "@types/url-parse": "^1.4.3",
     "@types/webfontloader": "^1.6.29",
     "axios": "0.19.0",
